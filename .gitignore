@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Research data (temporary during development)
+
+# Research data (do not upload large raw data)
+data/raw/google_reviews/*
+data/raw/*.csv
+data/raw/*.geojson
+data/raw/*.shp
