@@ -1,4 +1,4 @@
-# Pipeline workflow (draft)
+# Pipeline workflow
 
 ## Supply
 1. Park polygons (City of Vancouver)
