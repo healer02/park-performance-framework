@@ -206,10 +206,28 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# cache
+cache/
+
+# python
+__pycache__/
+*.pyc
+
+# mac
 .DS_Store
 
 # Research data (do not upload large raw data)
+data/
 data/census/raw/*
 data/osm/*
 data/parks/raw/*
 
+# geospatial
+*.shp
+*.dbf
+*.shx
+*.prj
+*.cpg
+*.geojson
+*.gpkg
+*.graphml
