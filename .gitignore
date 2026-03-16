@@ -216,6 +216,8 @@ __pycache__/
 # mac
 .DS_Store
 
+.venv/
+
 # Research data (do not upload large raw data)
 data/
 data/census/raw/*

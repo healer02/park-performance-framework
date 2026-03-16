@@ -7,21 +7,20 @@ inputs:
 - [done: 2026/3/9] Metro Vancouver Regional Parks (Metro Van open data: https://open-data-portal-metrovancouver.hub.arcgis.com/)
 - [done: 2026/3/9] Burnaby parks (Burnaby open data: https://data.burnaby.ca/)
 - [done: 2026/3/6] DA boundaries: lda_000b21a_e.shp (StatCan 2021: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/index2021-eng.cfm?year=21)
-- [done: 2026/3/6] DB points and population (StatCan 2021, population-weighted representative points: https://www150.statcan.gc.ca/n1/en/catalogue/92-151-X)
-- [done: 2026/3/9] run scripts > 01-get-osm-network.py
+- [done: 2026/3/6] DA points and DB population (StatCan 2021, population-weighted representative points: https://www150.statcan.gc.ca/n1/en/catalogue/92-151-X)
+- [done: 2026/3/9] run scripts (to get OSM network + DA-level data) > 01-get-osm-network.py
 - [for Experience dimension] google_reviews.csv (Apify, park_id, rating, text, date)
 - [for analysis 2] DA census profile 
 
-1. Park entrance extraction: ArcGIS or Python
-1a. Buffer park boundaries by 30m
-1b. Intersect buffered park polygons with OSM walkable streets
-     (keep: footway, path, pedestrian, residential, service)
-1c. Extract intersection points as candidate entrances
-1d. Snap entrance points to nearest OSM node
-    if no entrance detected → use nearest boundary point
-1e. Output: park_entrances.shp (park_id, entrance_id, geometry)
-
-Validation: spot-check 10 entrances against Google Maps satellite
+1. Park entrance extraction: Python (script 02, Part B)
+1a. Extract park boundary lines from merged park polygons
+1b. Buffer park boundaries by 10m
+1c. Intersect buffered park polygons with OSM walk edge centrelines → result is points where roads enter the park buffer zone
+1d. Deduplicate entrances within 15m of each other per park
+1e. Snap entrance points to nearest OSM node using ox.distance.nearest_nodes(G, x, y)
+1f. Parks with zero entrances flagged for manual review
+1g. Output: vancouver_park_entrances.shp
+     (park_id, park_name, entrance_id, nearest_node, snap_dist_m, geometry)
 
 2. DB → nearest entrance distance 
 2a. Load OSM network graph (NetworkX or ArcGIS Network Analyst)

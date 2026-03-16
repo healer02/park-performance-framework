@@ -18,8 +18,8 @@ Inputs:
     - data/parks/raw/Vancouver/parks-polygon-representation/    (Vancouver park polygons)
     - data/parks/raw/Burnaby/Park_Inventory.shp                 (Burnaby park polygons)
     - data/parks/raw/Metro Vancouver Regional Parks/            (Metro Van park polygons)
-    - data/osm/Vancouver_study_area_boundary.shp                          (Vancouver + 1km buffer)
-    - data/osm/Vancouver_osm_edges.shp                                    (OSM walk edges, EPSG:3005)
+    - data/osm/study_area_boundary.shp                          (Vancouver + 1km buffer)
+    - data/osm/osm_edges.shp                                    (OSM walk edges, EPSG:3005)
 
 Outputs:
     - data/parks/processed/vancouver_parks_merged.shp       (merged + clipped polygons, EPSG:3005)
@@ -42,6 +42,7 @@ import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import osmnx as ox
 
 # -- Paths ---------------------------------------------------------------------
 
@@ -57,7 +58,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(FIG_DIR, exist_ok=True)
 
 MIN_AREA_HA = 0.1   # minimum park size (methods threshold)
-BUFFER_M    = 30.5  # road buffer for entrance extraction (T2P paper)
+# BUFFER_M and DEDUP_M defined in Part B
 
 # ==============================================================================
 # PART A: MERGE PARK POLYGONS
@@ -83,7 +84,8 @@ print(f"  Columns: {list(van.columns)}")
 
 van = van.to_crs('EPSG:3005')
 van['source'] = 'Vancouver'
-van = van[['geometry', 'source']].copy()
+van['park_name'] = van['PARK_NAME']
+van = van[['geometry', 'source', 'park_name']].copy()
 
 # -- Step 2: Load Burnaby park polygons ----------------------------------------
 
@@ -94,7 +96,13 @@ print(f"  Columns: {list(burnaby.columns)}")
 
 burnaby = burnaby.to_crs('EPSG:3005')
 burnaby['source'] = 'Burnaby'
-burnaby = burnaby[['geometry', 'source']].copy()
+burnaby['park_name'] = burnaby['NAME']
+burnaby = burnaby[['geometry', 'source', 'park_name']].copy()
+
+# Dissolve fragmented Burnaby polygons by park name
+# (Burnaby shapefile stores multi-part parks as separate rows)
+burnaby = burnaby.dissolve(by='park_name', aggfunc='first').reset_index()
+print(f"  Burnaby after dissolve by name: {len(burnaby)} parks")
 
 # -- Step 3: Load Metro Vancouver Regional Parks -------------------------------
 
@@ -109,8 +117,8 @@ print(f"  Columns: {list(metro.columns)}")
 
 metro = metro.to_crs('EPSG:3005')
 metro['source'] = 'MetroVancouver'
-metro = metro[['geometry', 'source']].copy()
-
+metro['park_name'] = metro['parkname']
+metro = metro[['geometry', 'source', 'park_name']].copy()
 
 # -- Step 4: Load study boundary -----------------------------------------------
 
@@ -139,12 +147,6 @@ print(parks_all.geometry.geom_type.value_counts().to_string())
 
 # Filter by area FIRST using pre-clip original geometries
 parks_all['area_ha'] = parks_all.geometry.area / 10_000
-print(parks_all['area_ha'].describe())
-print((parks_all['area_ha'] < 0.1).sum())
-print((parks_all['area_ha'] < 0.25).sum())
-print((parks_all['area_ha'] < 0.5).sum())
-
-
 parks_filtered_preclip = parks_all[parks_all['area_ha'] >= MIN_AREA_HA].copy()
 print(f"\n  After area filter (>={MIN_AREA_HA} ha): {len(parks_filtered_preclip)}")
 
@@ -156,11 +158,26 @@ print(f"  After clip to study boundary: {len(parks_clipped)}")
 # Recompute area after clip
 parks_clipped['area_ha'] = parks_clipped.geometry.area / 10_000
 
+# Second area filter: remove fragments created by clipping at study boundary
+# (e.g. Burnaby parks that straddle the boundary and shrink below threshold)
+parks_clipped = parks_clipped[parks_clipped['area_ha'] >= MIN_AREA_HA].copy()
+parks_clipped = parks_clipped.reset_index(drop=True)
+print(f"  After post-clip area filter: {len(parks_clipped)}")
+print(f"\n  Source breakdown:\n{parks_clipped['source'].value_counts().to_string()}")
+
+# exclude two parks with no entrances via OSM walk network 
+EXCLUDE_PARKS = ['Iona Beach Regional Park']
+parks_clipped = parks_clipped[~parks_clipped['park_name'].isin(EXCLUDE_PARKS)].copy()
+print(f"  After excluding two parks: {len(parks_clipped)}")
+print(f"\n  Source breakdown:\n{parks_clipped['source'].value_counts().to_string()}")
+
+
 # Stable, traceable park IDs: {source}_{index}
 parks_clipped['park_id'] = (
     parks_clipped['source'] + '_' + parks_clipped.index.astype(str)
 )
 print(f"\n  Source breakdown:\n{parks_clipped['source'].value_counts().to_string()}")
+print(f"\n  Park names sample:\n{parks_clipped[['park_id', 'park_name', 'source', 'area_ha']].to_string()}")
 
 # -- Step 6: Overlap diagnostic ------------------------------------------------
 
@@ -208,134 +225,246 @@ print(f"  Saved: {fig_path}")
 # ==============================================================================
 # PART B: EXTRACT PARK ENTRANCES
 # ==============================================================================
+# Method (T2P paper):
+#   1. Buffer park boundaries by BUFFER_M
+#   2. Intersect buffered park polygons with OSM walk edge centrelines
+#      → intersection points where roads enter the park buffer zone
+#   3. Deduplicate: merge entrance points within DEDUP_M of each other per park
+#   4. Snap entrance points to nearest OSM node via ox.distance.nearest_nodes()
 
-# -- Step 9: Load OSM edges ----------------------------------------------------
+BUFFER_M = 10    # park boundary buffer distance (metres)
+DEDUP_M  = 25    # merge entrances within this distance (metres)
 
-print("\nStep 9: Loading OSM walk edges...")
+# -- Step 9: Load OSM graph and edges ------------------------------------------
+
+print("\nStep 9: Loading OSM walk network...")
+G     = ox.load_graphml('data/osm/Vancouver_walk.graphml')
 edges = gpd.read_file(EDGES_PATH)
 print(f"  OSM edges: {len(edges)}, CRS: {edges.crs}")
 assert parks_clipped.crs == edges.crs, \
     f"CRS mismatch: parks={parks_clipped.crs}, edges={edges.crs}"
 
-# -- Step 10: Buffer OSM road edges --------------------------------------------
+# -- Step 10: Buffer park boundaries -------------------------------------------
 
-print(f"\nStep 10: Buffering OSM edges by {BUFFER_M}m...")
-edges_buffered = edges.copy()
-edges_buffered['geometry'] = edges.geometry.buffer(BUFFER_M)
-edges_buffered = edges_buffered.reset_index().rename(columns={'index': 'edge_id'})
+print(f"\nStep 10: Buffering park boundaries by {BUFFER_M}m...")
+parks_buffered = parks_clipped.copy()
+parks_buffered['geometry'] = parks_clipped.geometry.boundary.buffer(BUFFER_M)
+print(f"  Buffered park boundaries: {len(parks_buffered)}")
 
-# -- Step 11: Extract park boundary lines --------------------------------------
+# -- Step 11: Intersect buffered parks with OSM edge centrelines ---------------
 
-print("\nStep 11: Extracting park boundary lines...")
-parks_boundary = parks_clipped.copy()
-parks_boundary['geometry'] = parks_clipped.geometry.boundary
-parks_boundary = parks_boundary[~parks_boundary.geometry.is_empty]
-print(f"  Park boundaries: {len(parks_boundary)}")
+print("\nStep 11: Intersecting buffered park boundaries with OSM edge centrelines...")
 
-# -- Step 12: Spatial join: buffered roads x park boundaries -------------------
-
-print("\nStep 12: Intersecting buffered roads with park boundaries...")
+# Spatial join: which edges fall within each buffered park boundary
 joined = gpd.sjoin(
-    parks_boundary[['park_id', 'source', 'area_ha', 'geometry']],
-    edges_buffered[['edge_id', 'geometry']],
+    edges[['geometry']].reset_index().rename(columns={'index': 'edge_idx'}),
+    parks_buffered[['park_id', 'park_name', 'source', 'area_ha', 'geometry']],
     how='inner',
     predicate='intersects'
 )
-print(f"  Park-edge intersections: {len(joined)}")
+print(f"  Edge-park intersections: {len(joined)}")
 
-# -- Step 13: Extract entrance centroids ---------------------------------------
-
-print("\nStep 13: Extracting entrance centroids...")
-
+# Compute actual intersection points (road centreline x buffered park boundary)
 entrance_records = []
 
-for _, row in joined.iterrows():
-    park_geom = parks_clipped.loc[
-        parks_clipped['park_id'] == row['park_id'], 'geometry'
-    ].iloc[0]
-    edge_geom = edges_buffered.loc[
-        edges_buffered['edge_id'] == row['edge_id'], 'geometry'
-    ].iloc[0]
+parks_buffered_idx = parks_buffered.set_index('park_id')
 
-    intersection = park_geom.boundary.intersection(edge_geom)
+for _, row in joined.iterrows():
+    edge_geom = edges.iloc[row['edge_idx']].geometry
+    park_geom = parks_buffered_idx.loc[row['park_id'], 'geometry']
+
+    intersection = edge_geom.intersection(park_geom)
 
     if intersection.is_empty:
         continue
 
-    entrance_records.append({
-        'park_id':  row['park_id'],
-        'source':   row['source'],
-        'area_ha':  row['area_ha'],
-        'edge_id':  row['edge_id'],
-        'geometry': intersection.centroid
-    })
+    # Extract point(s) from intersection result
+    if intersection.geom_type == 'Point':
+        pts = [intersection]
+    elif intersection.geom_type == 'MultiPoint':
+        pts = list(intersection.geoms)
+    elif intersection.geom_type in ('LineString', 'MultiLineString'):
+        # Road runs along boundary — use midpoint
+        pts = [intersection.interpolate(0.5, normalized=True)]
+    else:
+        pts = [intersection.centroid]
+
+    for pt in pts:
+        entrance_records.append({
+            'park_id':   row['park_id'],
+            'park_name': row['park_name'],
+            'source':    row['source'],
+            'area_ha':   row['area_ha'],
+            'geometry':  pt
+        })
 
 entrances_raw = gpd.GeoDataFrame(entrance_records, crs=parks_clipped.crs)
 print(f"  Raw entrance points: {len(entrances_raw)}")
 
-# -- Step 14: Deduplicate ------------------------------------------------------
+print(entrances_raw.columns.tolist())
 
-print("\nStep 14: Deduplicating (one entrance per road edge per park)...")
-entrances = entrances_raw.drop_duplicates(subset=['park_id', 'edge_id']).copy()
+# -- Step 12: Deduplicate entrances within DEDUP_M per park --------------------
+
+print(f"\nStep 12: Deduplicating entrances within {DEDUP_M}m per park...")
+
+deduped = []
+
+for park_id, group in entrances_raw.groupby('park_id'):
+    group = group.copy().reset_index(drop=True)
+    used  = [False] * len(group)
+
+    for i in range(len(group)):
+        if used[i]:
+            continue
+        # Find all points within DEDUP_M of point i
+        cluster = [i]
+        for j in range(i + 1, len(group)):
+            if not used[j]:
+                dist = group.geometry.iloc[i].distance(group.geometry.iloc[j])
+                if dist <= DEDUP_M:
+                    cluster.append(j)
+                    used[j] = True
+        used[i] = True
+
+        # Representative point = centroid of cluster
+        cluster_geom = group.geometry.iloc[cluster]
+        rep_point    = cluster_geom.union_all().centroid \
+                       if hasattr(cluster_geom, 'union_all') \
+                       else cluster_geom.unary_union.centroid
+
+        deduped.append({
+            'park_id':   park_id,
+            'park_name': group['park_name'].iloc[0],
+            'source':    group['source'].iloc[0],
+            'area_ha':   group['area_ha'].iloc[0],
+            'geometry':  rep_point
+        })
+
+entrances = gpd.GeoDataFrame(deduped, crs=parks_clipped.crs)
 entrances = entrances.reset_index(drop=True)
-entrances['entrance_id'] = entrances.index + 1
 print(f"  Entrances after dedup: {len(entrances)}")
+print(f"  Reduction: {len(entrances_raw)} → {len(entrances)} "
+      f"({100*(1 - len(entrances)/len(entrances_raw)):.1f}% removed)")
+
+entrances['area_ha'] = entrances['park_id'].map(parks_clipped.set_index('park_id')['area_ha'])
+print(entrances.columns.tolist())
+
+# -- Step 13: Snap entrances to nearest OSM node -------------------------------
+
+print("\nStep 13: Snapping entrances to nearest OSM node...")
+
+# ox.nearest_nodes expects EPSG:4326 coordinates
+entrances_4326 = entrances.to_crs('EPSG:4326')
+xs = entrances_4326.geometry.x.values
+ys = entrances_4326.geometry.y.values
+
+nearest_node_ids = ox.distance.nearest_nodes(G, xs, ys)
+entrances['nearest_node'] = nearest_node_ids
+
+# Compute snap distance in metres (EPSG:3005)
+# Build nodes lookup directly from the projected graph
+nodes_gdf = ox.graph_to_gdfs(G, edges=False)[['geometry']].to_crs('EPSG:3005')
+# nodes_gdf is already indexed by osmid
+snap_dists = []
+for _, row in entrances.iterrows():
+    node_geom = nodes_gdf.loc[row['nearest_node'], 'geometry']
+    snap_dists.append(row.geometry.distance(node_geom))
+
+entrances['snap_dist_m'] = snap_dists
+
+print(f"  Snap distance — mean:  {entrances['snap_dist_m'].mean():.1f}m")
+print(f"  Snap distance — median:{entrances['snap_dist_m'].median():.1f}m")
+print(f"  Snap distance — max:   {entrances['snap_dist_m'].max():.1f}m")
+if entrances['snap_dist_m'].max() > 50:
+    print("  WARNING: some entrances snap >50m — review those parks manually")
+
+# -- Step 14: Assign entrance IDs ----------------------------------------------
+
+entrances['entrance_id'] = entrances.index + 1
 
 # -- Step 15: Flag parks with no entrances -------------------------------------
 
 print("\nStep 15: Checking for parks with no entrances...")
 parks_with_entrances = entrances['park_id'].unique()
-parks_no_entrance = parks_clipped[~parks_clipped['park_id'].isin(parks_with_entrances)]
+parks_no_entrance    = parks_clipped[~parks_clipped['park_id'].isin(parks_with_entrances)]
 print(f"  Parks with >=1 entrance: {len(parks_with_entrances)}")
 print(f"  Parks with 0 entrances:  {len(parks_no_entrance)} <- review manually")
 if len(parks_no_entrance) > 0:
-    print(parks_no_entrance[['park_id', 'source', 'area_ha']].to_string())
+    print(parks_no_entrance[['park_id', 'park_name', 'source', 'area_ha']].to_string())
 
-# -- Step 16: Save entrances ---------------------------------------------------
+# Dedup Shaughnessy entrances
+s_gdf = gpd.GeoDataFrame(records_s, crs=parks_clipped.crs)
+s_gdf = s_gdf.reset_index(drop=True)
 
-print("\nStep 16: Saving entrance points...")
+# Simple distance-based dedup
+used = [False] * len(s_gdf)
+s_deduped = []
+for i in range(len(s_gdf)):
+    if used[i]: continue
+    cluster = [i]
+    for j in range(i+1, len(s_gdf)):
+        if not used[j] and s_gdf.geometry.iloc[i].distance(s_gdf.geometry.iloc[j]) <= DEDUP_M:
+            cluster.append(j)
+            used[j] = True
+    used[i] = True
+    s_deduped.append({
+        'park_id':   s_gdf['park_id'].iloc[0],
+        'park_name': s_gdf['park_name'].iloc[0],
+        'source':    s_gdf['source'].iloc[0],
+        'area_ha':   s_gdf['area_ha'].iloc[0],
+        'geometry':  s_gdf.geometry.iloc[cluster].unary_union.centroid
+    })
+
+s_entrances = gpd.GeoDataFrame(s_deduped, crs=parks_clipped.crs)
+
+# Snap to nearest node
+s_4326 = s_entrances.to_crs('EPSG:4326')
+s_entrances['nearest_node'] = ox.distance.nearest_nodes(
+    G, s_4326.geometry.x.values, s_4326.geometry.y.values)
+s_entrances['snap_dist_m'] = [
+    s_entrances.geometry.iloc[i].distance(nodes_gdf.loc[s_entrances['nearest_node'].iloc[i], 'geometry'])
+    for i in range(len(s_entrances))
+]
+
+# Concat and reassign entrance_ids
+entrances = pd.concat([entrances, s_entrances], ignore_index=True)
+entrances['entrance_id'] = entrances.index + 1
+print(f"  Shaughnessy entrances after dedup: {len(s_entrances)}")
+print(f"  Total entrances now: {len(entrances)}")
+print(entrances.columns.tolist())
+
+# -- Step 16: Sanity checks ----------------------------------------------------
+
+print("\nStep 16: Sanity checks...")
+
+# Entrances per park
+ent_per_park = entrances.groupby('park_id').size()
+print(f"  Entrances per park — mean:   {ent_per_park.mean():.1f}")
+print(f"  Entrances per park — median: {ent_per_park.median():.1f}")
+print(f"  Entrances per park — max:    {ent_per_park.max()}")
+print(f"  Parks with 1 entrance: {(ent_per_park == 1).sum()}")
+print(f"  Parks with >20 entrances: {(ent_per_park > 20).sum()} <- may need review")
+
+# CRS check
+assert entrances.crs.to_epsg() == 3005, "Entrances CRS is not EPSG:3005"
+print(f"  CRS: EPSG:{entrances.crs.to_epsg()} ✓")
+
+# All nearest_node values are valid graph nodes
+valid_nodes = set(G.nodes())
+invalid     = entrances[~entrances['nearest_node'].isin(valid_nodes)]
+print(f"  Entrances with invalid nearest_node: {len(invalid)}")
+
+print(entrances.nlargest(5, 'snap_dist_m')[['park_id', 'park_name', 'snap_dist_m']])
+print(ent_per_park.nlargest(10))
+
+
+# -- Step 17: Save entrances ---------------------------------------------------
+
+print("\nStep 17: Saving entrance points...")
 ent_path = os.path.join(OUTPUT_DIR, 'vancouver_park_entrances.shp')
-entrances[['entrance_id', 'park_id', 'source', 'area_ha', 'geometry']].to_file(ent_path)
+entrances[['entrance_id', 'park_id', 'park_name', 'source',
+           'area_ha', 'nearest_node', 'snap_dist_m', 'geometry']].to_file(ent_path)
 print(f"  Saved: {ent_path}")
-print(f"  Entrances per park -- mean:   {len(entrances) / len(parks_clipped):.1f}")
-print(f"  Entrances per park -- median: {entrances.groupby('park_id').size().median():.1f}")
 
-# -- Step 17: Visual validation — sample parks ---------------------------------
-
-print("\nStep 17: Generating entrance visual check (sample parks)...")
-
-sample_parks = parks_clipped.sample(min(6, len(parks_clipped)), random_state=42)
-
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-axes = axes.flatten()
-
-for i, (_, park_row) in enumerate(sample_parks.iterrows()):
-    ax = axes[i]
-    pid = park_row['park_id']
-    bbox = park_row.geometry.buffer(100).bounds
-    park_entrances = entrances[entrances['park_id'] == pid]
-
-    gpd.GeoDataFrame([park_row], crs=parks_clipped.crs).plot(
-        ax=ax, color='#2ca25f', alpha=0.5, edgecolor='darkgreen', linewidth=1
-    )
-    if len(park_entrances) > 0:
-        park_entrances.plot(ax=ax, color='red', markersize=20, zorder=5)
-
-    ax.set_xlim(bbox[0], bbox[2])
-    ax.set_ylim(bbox[1], bbox[3])
-    ax.set_title(
-        f"{pid} | {park_row['source']}\n"
-        f"{park_row['area_ha']:.1f} ha | {len(park_entrances)} entrances",
-        fontsize=8
-    )
-    ax.set_axis_off()
-
-plt.suptitle('Park Entrance Extraction — Sample Check (red = entrances)', fontsize=12)
-plt.tight_layout()
-
-fig_path = os.path.join(FIG_DIR, 'vancouver_entrances_check.png')
-plt.savefig(fig_path, dpi=150)
-plt.show()
-print(f"  Saved: {fig_path}")
-
-print("\nDone.")
+# -- Step 18: Visual validation — sample parks ---------------------------------
+# run 02b-entrance-review.py for detailed entrance review maps (for parks with 20+ entrances or 1 entrances)
