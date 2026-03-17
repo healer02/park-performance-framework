@@ -6,39 +6,64 @@ inputs:
 - [done: 2026/3/6] Vancouver parks + parks-facilities + parks-special-features + drinking-fountains + public-washrooms (City of Vancouver open data: https://opendata.vancouver.ca/pages/home/)
 - [done: 2026/3/9] Metro Vancouver Regional Parks (Metro Van open data: https://open-data-portal-metrovancouver.hub.arcgis.com/)
 - [done: 2026/3/9] Burnaby parks (Burnaby open data: https://data.burnaby.ca/)
-- [done: 2026/3/6] DA boundaries: lda_000b21a_e.shp (StatCan 2021: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/index2021-eng.cfm?year=21)
+- [done: 2026/3/6] DA boundaries (lda_000b21a_e.shp) & DB boundaries (ldb_000b21a_e.shp) (StatCan 2021: https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/index2021-eng.cfm?year=21)
 - [done: 2026/3/6] DA points and DB population (StatCan 2021, population-weighted representative points: https://www150.statcan.gc.ca/n1/en/catalogue/92-151-X)
 - [done: 2026/3/9] run scripts (to get OSM network + DA-level data) > 01-get-osm-network.py
 - [for Experience dimension] google_reviews.csv (Apify, park_id, rating, text, date)
 - [for analysis 2] DA census profile 
 
-1. Park entrance extraction: Python (script 02, Part B)
+1. Park entrance extraction: Python (script 02, Part B) [done: 2026/3/16]
 1a. Extract park boundary lines from merged park polygons
 1b. Buffer park boundaries by 10m
 1c. Intersect buffered park polygons with OSM walk edge centrelines → result is points where roads enter the park buffer zone
 1d. Deduplicate entrances within 15m of each other per park
 1e. Snap entrance points to nearest OSM node using ox.distance.nearest_nodes(G, x, y)
-1f. Parks with zero entrances flagged for manual review
+1f. Parks with zero entrances or 20+ entrances flagged for manual review (script 02b for manual review)
 1g. Output: vancouver_park_entrances.shp
      (park_id, park_name, entrance_id, nearest_node, snap_dist_m, geometry)
 
-2. DB → nearest entrance distance 
-2a. Load OSM network graph (NetworkX or ArcGIS Network Analyst)
-2b. For each DB representative point:
-     - find nearest network node
-     - run Closest Facility to all park entrances
-     - record: db_id, park_id, distance_m, reachable (1 if ≤400m)
-2c. Output: db_park_distances.csv (db_id, park_id, distance_m, reachable)
+2. DB centroid extraction
+2a. Load DB boundary polygons (ldb_000b21a_e.shp)
+2b. Filter to Vancouver DAs (DAUID from GAF, CSDUID 5915022)
+2c. Compute geometric centroids from DB polygons
+2d. Join DB population from GAF (DBUID → DBPOP2021)
+2e. Snap each DB centroid to nearest OSM node
+     using ox.distance.nearest_nodes(G, x, y)
+2f. Output: vancouver_db_centroids.gpkg
+     (DAUID, DBUID, db_pop, nearest_node, geometry)
 
-Note: record park_id for all reachable parks per DB, not just nearest (two cases: 400m vs. 800m for sensitivity analysis)
+3. Network distance: entrances → all nodes (multi-source Dijkstra)
+3a. Load OSM graph, DB centroids, park entrances
+3b. Collect all unique entrance nearest_nodes as source set
+3c. Run multi-source Dijkstra (cutoff 800m):
+     nx.multi_source_dijkstra_path_length(G, entrance_nodes,
+                                          cutoff=800, weight='length')
+     → distance from every network node to nearest entrance
+3d. For each DB: look up distance via nearest_node
+3e. Assign reachable_400 = 1 if distance ≤ 400m
+         reachable_800 = 1 if distance ≤ 800m
+3f. Output: vancouver_db_reachability.csv
+     (DBUID, DAUID, db_pop, nearest_node,
+      dist_nearest_entrance, reachable_400, reachable_800)
 
-3. DA reachability
-3a. Join db_park_distances to db_population
-3b. For each DA:
-     - sum DB pop where reachable = 1 (any park within 400m)
-     - divide by total DA population
-3c. DA_reachability = sum(DB_pop_reachable) / sum(DB_pop_total)
-3d. Output: da_reachability.csv (da_id, reachability_proportion)
+4. DA reachability + park quantity (two parts)
+Part A — reachability:
+4a. DA_reachability = sum(DB_pop where reachable_400=1) / sum(DB_pop)
+4b. Sensitivity: repeat with reachable_800
+4c. Output: vancouver_da_reachability.csv
+     (DAUID, DA_reachability_400, DA_reachability_800, db_count, db_pop_total)
+
+Part B — quantity (separate pass):
+4d. For each DB node: run single_source_dijkstra_path_length(G, db_node, cutoff=400m)
+4e. Intersect result nodes with entrance node set → reachable entrances
+4f. Deduplicate by park_id → reachable park set per DB
+4g. Aggregate to DA:
+     - unique reachable parks = union of park sets across all DBs in DA
+     - total_reachable_area_ha = sum of area_ha for unique reachable parks
+     - quantity_per_1000pop = total_reachable_area_ha / DA_pop * 1000
+4h. Output: vancouver_da_quantity.csv
+     (DAUID, reachable_park_count, total_reachable_area_ha, quantity_per_1000pop)
+
 
 4. Quantity (per-capita reachable park area)
 <!-- Why union parks at DA level for quantity? -->

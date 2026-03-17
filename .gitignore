@@ -217,6 +217,7 @@ __pycache__/
 .DS_Store
 
 .venv/
+.vscode/
 
 # Research data (do not upload large raw data)
 data/
