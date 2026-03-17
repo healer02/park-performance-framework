@@ -12,68 +12,88 @@ inputs:
 - [for Experience dimension] google_reviews.csv (Apify, park_id, rating, text, date)
 - [for analysis 2] DA census profile 
 
+```markdown
 1. Park entrance extraction: Python (script 02, Part B) [done: 2026/3/16]
 1a. Extract park boundary lines from merged park polygons
 1b. Buffer park boundaries by 10m
-1c. Intersect buffered park polygons with OSM walk edge centrelines → result is points where roads enter the park buffer zone
-1d. Deduplicate entrances within 15m of each other per park
-1e. Snap entrance points to nearest OSM node using ox.distance.nearest_nodes(G, x, y)
-1f. Parks with zero entrances or 20+ entrances flagged for manual review (script 02b for manual review)
+1c. Intersect buffered park polygons with OSM walk edge centrelines
+     → result is points where roads enter the park buffer zone
+1d. Deduplicate entrances within 25m of each other per park
+1e. Snap entrance points to nearest OSM node
+     using ox.distance.nearest_nodes(G, x, y)
+1f. Parks with zero entrances flagged for manual review (script 02b)
+     Special case: Shaughnessy Park handled with 35m buffer
+     (park polygon ~28m inside road centrelines — digitisation offset)
 1g. Output: vancouver_park_entrances.shp
      (park_id, park_name, entrance_id, nearest_node, snap_dist_m, geometry)
+     Note: nearest_node truncated to nearest_no in shapefile (10-char limit)
 
-2. DB centroid extraction
+2. DB centroid extraction (script 03) [done: 2026/3/17]
 2a. Load DB boundary polygons (ldb_000b21a_e.shp)
-2b. Filter to Vancouver DAs (DAUID from GAF, CSDUID 5915022)
+2b. Filter to Vancouver DAs (CSDUID 5915022) → 4,561 DBs, 1,016 DAs
 2c. Compute geometric centroids from DB polygons
+     Note: geometric centroid used; DB scale small enough that
+     positional error is negligible for 400m network analysis
 2d. Join DB population from GAF (DBUID → DBPOP2021)
+     Total population: 662,248; zero-pop DBs: 498 (retained)
 2e. Snap each DB centroid to nearest OSM node
      using ox.distance.nearest_nodes(G, x, y)
+     Mean snap distance: 50.5m; 2 DBs flagged >200m (snap_flag=1)
 2f. Output: vancouver_db_centroids.gpkg
-     (DAUID, DBUID, db_pop, nearest_node, geometry)
+     (DAUID, DBUID, db_pop, nearest_node, snap_dist_m, snap_flag, geometry)
+     Note: GeoPackage used to avoid int64 truncation of osmid
 
-3. Network distance: entrances → all nodes (multi-source Dijkstra)
+3. Network distance: entrances → all nodes (script 04, Part A) [done: 2026/3/17]
 3a. Load OSM graph, DB centroids, park entrances
-3b. Collect all unique entrance nearest_nodes as source set
-3c. Run multi-source Dijkstra (cutoff 800m):
+3b. Collect all unique entrance nearest_nodes → 2,648 unique nodes
+3c. Run multi-source Dijkstra (cutoff=800m):
      nx.multi_source_dijkstra_path_length(G, entrance_nodes,
                                           cutoff=800, weight='length')
      → distance from every network node to nearest entrance
+     Coverage: 58,961 / 60,400 nodes reached (97.6%)
 3d. For each DB: look up distance via nearest_node
-3e. Assign reachable_400 = 1 if distance ≤ 400m
-         reachable_800 = 1 if distance ≤ 800m
+3e. Assign reachable_400 = 1 if distance ≤ 400m (3,085 DBs)
+         reachable_800 = 1 if distance ≤ 800m (4,451 DBs)
 3f. Output: vancouver_db_reachability.csv
      (DBUID, DAUID, db_pop, nearest_node,
-      dist_nearest_entrance, reachable_400, reachable_800)
+      dist_nearest_entrance, reachable_400, reachable_800, snap_flag)
 
-4. DA reachability + park quantity (two parts)
-Part A — reachability:
+4. DA reachability (script 04, Part B) [done: 2026/3/17]
 4a. DA_reachability = sum(DB_pop where reachable_400=1) / sum(DB_pop)
 4b. Sensitivity: repeat with reachable_800
-4c. Output: vancouver_da_reachability.csv
-     (DAUID, DA_reachability_400, DA_reachability_800, db_count, db_pop_total)
+4c. Results: mean=0.715, median=1.0; 528 DAs fully covered;
+     127 DAs with 0% reachability (genuine access gaps, populated)
+4d. Output: vancouver_da_reachability.csv + vancouver_da_reachability.gpkg
+     (DAUID, DA_reach_400, DA_reach_800, db_count, db_pop_total)
 
-Part B — quantity (separate pass):
-4d. For each DB node: run single_source_dijkstra_path_length(G, db_node, cutoff=400m)
-4e. Intersect result nodes with entrance node set → reachable entrances
-4f. Deduplicate by park_id → reachable park set per DB
-4g. Aggregate to DA:
-     - unique reachable parks = union of park sets across all DBs in DA
-     - total_reachable_area_ha = sum of area_ha for unique reachable parks
-     - quantity_per_1000pop = total_reachable_area_ha / DA_pop * 1000
-4h. Output: vancouver_da_quantity.csv
-     (DAUID, reachable_park_count, total_reachable_area_ha, quantity_per_1000pop)
+5. DA park quantity (script 05) [done: 2026/3/17]
+5a. For each DB: run single_source_dijkstra_path_length(G, db_node, cutoff=400m)
+5b. Intersect result nodes with entrance node set → reachable entrances
+5c. Deduplicate by park_id → reachable park set per DB
+5d. Aggregate to DA using union of park sets across all DBs
+     (avoids double-counting parks reachable by multiple DBs)
+5e. Area cap: main = min(area_ha, 20); sensitivity = min(area_ha, 10); uncapped
+5f. Denominator: db_pop_valid (DBs with valid nearest_node only)
+5g. DAs with no reachable parks → qty = 0 (genuine access gaps, not null)
+5h. Output: vancouver_da_quantity.csv + vancouver_da_supply.gpkg
+     (DAUID, n_unique_parks, area_raw, area_cap20, area_cap10,
+      qty_raw, qty_cap20, qty_cap10, db_pop_total, db_pop_valid)
+
+6. Supply typology (visualization)(script 05) [done: 2026/3/17]
+6a. Median split on DA_reach_400 (threshold=0.8) and qty_cap20 (median=5.0 ha/1,000)
+     Note: 0.8 threshold used instead of median (median=1.0 is too brittle)
+6b. Four supply types:
+     HH — Well-served (n=354): high reachability + high quantity
+     HL — High access, small area (n=239): high reachability + low quantity
+     LH — High area, partial access (n=154): low reachability + high quantity
+     LL — Underserved (n=269): low reachability + low quantity
+6c. Bivariate colour scheme (matrix logic):
+     HH=#3b2f3a (dark), HL=#4e8bab (blue), LH=#c27d4f (orange), LL=#f2eadf (light)
+6d. ~39% of DAs show divergence between coverage and intensity (HL+LH)
+     Asymmetry: HL (239) > LH (154) — access-without-area more common
+6e. Output: vancouver_da_supply_typology.png + vancouver_da_supply.gpkg
 
 
-4. Quantity (per-capita reachable park area)
-<!-- Why union parks at DA level for quantity? -->
-4a. From db_park_distances, get unique park_ids reachable from any DB in each DA
-4b. Join to park_boundaries to get park area (ha)
-4c. Dissolve to DA level: sum unique park areas
-4d. Quantity(DA) = sum(unique_park_area_ha) / DA_pop × 1000
-4e. Output: da_quantity.csv (da_id, quantity_ha_per_1000)
-
-Sensitivity: rerun with 800m threshold, no population division
 
 
 5. Google review extraction (done for City of Vancouver, except for Destination Parks, in Dec 2025)
