@@ -1,0 +1,41 @@
+ParkName,new_placeid,note
+Coal Harbour Park,ChIJta9pnIZxhlQRjOVLcnemBFE,"Got 'Coal Harbour Community Centre', switched to 'Coal Harbour Park'."
+Sun Yat-sen Gardens Park,ChIJr31-jxtxhlQREFvHCIcvI48,Changed from 'Dr. Sun Yat-Sen Classical Chinese Garden' to 'Dr. Sun Yat-Sen Public Park'.
+Memorial West Park,ChIJy6XHNhRzhlQRgMzwOxCqpZ0,"Got 'Dunbar Community Centre', switched to 'Memorial West Park'."
+Sutcliffe Park,ChIJi8uFFc9zhlQRsj44EqhKgzA,"Got 'False Creek Community Centre', switched to 'Sutcliffe Park'."
+Templeton Park,ChIJKcr50CJxhlQRAfbaI6BCHD4,"Got 'Templeton Park Pool', switched to 'Templeton Park'."
+Victoria Park,ChIJFZRR0DhxhlQRx0NrqkpG4x4,"Got 'Victoria Park Playground', switched to 'Victoria Park'."
+Burrard View Park,ChIJJdYerONwhlQRjHzqGcMZNHo,"Got 'Burrard View Park Community Room', switched to 'Burrard View Park'."
+Park Site on Point Grey at Stephens,ChIJBR-XSExyhlQRVaU4Z8qga0I,Used 'Point Grey Park Site at Stephens Street'.
+China Creek South Park,ChIJ5XTCEFBxhlQRSX_XuEGkLJA,"Got 'China Creek Community Garden', switched to 'China Creek South Park'."
+Carleton Park,ChIJqTIU0Op2hlQRnLzWdxS4vXg,"Got 'Carleton Park Playground', switched to 'Carleton Park'."
+Hillcrest Park,ChIJy1jYS_RzhlQRAGB4_a8DoeI,Changed from 'Hillcrest Community Centre' to 'Hillcrest Park'.
+Douglas Park,ChIJAUw1JNRzhlQRCnHVzI24sCs,"Got '801 W 22nd Ave' (random address near Douglas Park Community Centre), switched to 'Douglas Park'."
+Nanaimo Park,ChIJ73Xm_iZ0hlQR58-9FJWTvZs,"Got 'Nanaimo Park Playground' (says Permanently closed), switched to 'Nanaimo Park'."
+Locarno Beach Park,"ChIJwzH1iPNyhlQRnNtrx--1dRo, ChIJU85SfvNyhlQROqo2GnhKkPY",Also added PlaceID for 'Locarno Beach' in addition to 'Locarno Park'.
+West Point Grey Park,ChIJF3ZzyvpyhlQR2PRpa6WD4yw,"Got 'Trimble Park Playground', switched to 'West Point Grey Park (Trimble Park)'."
+Fraser River Trail Park,ChIJ0ecUEQB1hlQRTrKBmU-etuc,"Got '9149 Hudson St' (random parking lot), switched to 'Fraser River Park'."
+West End minipark - CARDERO ST @ COMOX ST (Lord Roberts Field Park),ChIJzdD-3yhyhlQR9TvnmTwhdMw,"Couldn't find park, used 'Lord Roberts Field' nearby."
+Street End - Wall St @ Slocan (Commissioner Park),ChIJXayKduNwhlQRCIpah-P90nQ,Changed from 'WB E Broadway @ Slocan St' to 'Commissioner Park'.
+Street End - Wall St @ Penticton (Harbour View Park),ChIJCSGA_eJwhlQRJo-DM9T0oVw,Changed from 'WB E Broadway @ Penticton St' to 'Harbour View Park'.
+Street End - Wall St @ Nanaimo (Meditation Park),ChIJV6yYZh1xhlQRJb41JgTpR54,"Got 'Nanaimo Lane' (random lane), switched to nearby 'Meditation Park'."
+Street End - Wall St @ Kamloops (Portside View Park),ChIJ0Ry2keJwhlQRx1QZL7yHxGg,Changed from 'WB E Broadway @ Kamloops St' to 'Portside View Park'.
+Mont Royal Square Park,ChIJYzCnw-F3hlQRENLWmNE7TJU,"Chaned from 'Champlain Square' to 'Mont Royal Park', since 'Mont Royal Square' did not have a placeid."
+Kinross Corridor - Middle Park,ChIJ97K1cFF1hlQRZbJi19XTdwA,Changed from '3299 Riverwalk Ave' to 'Kinross Middle Park'.
+Kinross Corridor - North Park,ChIJ7Xx4ht51hlQRhjfWRhTTv8A,Used 'Kinross North Park'.
+Promontory Park,ChIJl6aPJBl1hlQRc7lNZlu_qqQ,Changed from 'Promontory Park Playground' to 'Promontory Park'.
+Spanish Banks Beach Park,"ChIJLQnMgZJyhlQRnRaqpqnAhgg, ChIJIxV11ZZyhlQR6lOWn2aTIlQ",Used multiple placeids 'Spanish Banks Beach Park' and 'Spanish Banks Off Leash Dog Area'.
+East Fraserlands Neighbourhood Park North,ChIJveRTKMt1hlQRM8ozUUpVVeI,"Changed to 'Neighborhood Park North Playground', according to EAST FRASER LANDS AREA 2 PARKS DISCOVER PHASE SUMMARY REPORT (OCTOBER 2017)."
+East Fraserlands Neighbourhood Park South,ChIJu-Wa8tp1hlQRoQT6IP3WzW0,"Couldn't find official park, gave placeholder for '3170 Riverwalk Ave', location is according to EAST FRASER LANDS AREA 2 PARKS DISCOVER PHASE SUMMARY REPORT (OCTOBER 2017)."
+West End minipark - BUTE ST @ HARO ST (Bute Street Pedestrian Walkway Park),ChIJD842oIBxhlQRlqBtvXLhgLg,"Got 'Nelson Park', switched to nearby 'Bute Street Pedestrian Walkway'."
+Street End - Wall St @ Renfrew (Shingle Park),ChIJFycHewBxhlQRxQKSKaoey4w,"Had non-working PlaceID, switched to nearby 'Shingle Park'."
+Fraser River Trail Park,ChIJkZyYPuh0hlQR-O6-mDuHWKY,Switched to nearby 'Fraser River Trail - Hudson Gateway' with more reviews.
+English Bay Beach Park,"ChIJ7WHSBi9yhlQRdLXmpczA6wo, ChIJ86zkaC9yhlQR4GhBA8iTiy4",Added PlaceID for 'English Bay Beach' in addition to 'English Bay Beach Park'.
+Park Site On Trinity Street,ChIJe9a54hxxhlQRdnmu96eNPx4,Changed PlaceID from 'Park Site On Trinity Street' to 'Trinity Park'.
+Price Park,ChIJRRoBy4J3hlQR-uUkl4HSaBo,Changed PlaceID from 'Price Park' to 'Price Park Playground'.
+Moberly Park,ChIJ7Rw__kV0hlQRQ_CXlmJWnFU,Changed PlaceID from 'Moberly Park' to 'Moberly Park - SW Diamond'.
+Fraserview Park,ChIJp46ViGt1hlQRr2L0RXVYFoc,Changed PlaceID from 'Fraserview Park' to 'Fraserview Park Playground'.
+Park Site On Shaughnessy Street,ChIJATo6iOV0hlQRFQbsRk6mgH0,Changed PlaceID from 'Park Site On Shaughnessy Street' to 'Shaughnessy Street Park'.
+6th and Fir (Burrard Slopes Park),ChIJQ1sOFchzhlQRoXMYDrzBCi8,Change to nearby `Burrard Slopes Park` as the original had no reviews and this one has many reviews.
+Kitsilano Beach Park,"ChIJnVFsezVyhlQRf5O-Pe5uQ04, ChIJHUYfoDVyhlQRrGFzpe5fhaQ",Added 'Kitsilano Beach's PlaceID in addition to 'Kitsilano Park'.
+Jericho Beach Park,"ChIJ5xH-_PZyhlQR2oyzoLe8M-c, ChIJBdOUdVhyhlQRf5X1qM6aus8",Added 'Jericho Beach's PlaceID in addition to 'Jericho Beach Park'.

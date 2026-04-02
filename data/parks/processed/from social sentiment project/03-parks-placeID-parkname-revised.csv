@@ -1,0 +1,222 @@
+ParkID,ParkName,PlaceID,NeighbourhoodName,Classification,AvgSentiment,AvgRating,PartialStreetClosure,Washrooms,Fenced,WaterAccess,Seating,RedBinProgram,DrinkingFountainPeople,DrinkingFountainDogs,Caretaker,Playgrounds,Softball,BaseballDiamonds,FootballFields,SoccerFields,FieldHouses,JoggingTrails,DiscGolfCourses,SkateboardParks,DogsOffLeashAreas,UltimateFields,CricketPitches,LightedFields,TennisCourts,BasketballCourts,FieldHockey,CommunityHalls,WaterSprayParks,Restaurants,CommunityCentres,WadingPool,RugbyFields,RunningTracks,BowlingGreens,BallHockey,SwimmingPools,PicnicSites,FoodConcessions,GolfCourses,PickleBall,Rinks,Beaches,OutdoorRollerHockeyRinks,LacrosseBoxes
+1.0,Arbutus Village Park,ChIJNa3NzqFzhlQRKYEj2VkGFK0,Arbutus-Ridge,Local,0.565988561,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+2.0,Carnarvon Park,ChIJU_7O9QdzhlQRT1nFVPrl2yE,Arbutus-Ridge,Community,0.34412382,4.6,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+3.0,Prince Of Wales Park,ChIJy5zamnVzhlQROs6bOMWf3m4,Arbutus-Ridge,Neighbourhood,0.512294718,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+4.0,Park Site On Puget Drive,ChIJp6VqdwtzhlQRk-LYOrZdl9o,Arbutus-Ridge,Local,0.600741615,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+5.0,Park Site On Quesnel Drive,ChIJBaLyfgxzhlQRlScTuiTtlIo,Arbutus-Ridge,Local,0.480952941,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+6.0,Quilchena Park,ChIJQR19tJ1zhlQRHjXiVUw7YjQ,Arbutus-Ridge,Community,0.462212928,4.4,0,1,0,0,1,0,1,0,1,1,0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+7.0,Ravine Park,ChIJ8YDE_HZzhlQRHs20Hhi1pyk,Arbutus-Ridge,Local,0.586833106,4.8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+8.0,Trafalgar Park,ChIJFZtqm6BzhlQRViBt0mI2ZIU,Arbutus-Ridge,Neighbourhood,0.514782962,4.6,0,1,0,0,0,0,0,0,1,1,1,1,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+9.0,Park Site On Trafalgar Street,ChIJ8fOBnnRzhlQR1SHDplFAH3g,Arbutus-Ridge,Local,0.45774464,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+10.0,Andy Livingstone Park,ChIJFRGrHHtxhlQRAZVZlqaROSw,Downtown,Community,0.558100266,4.4,0,1,1,0,1,0,1,0,0,1,1,0,1,1,1,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+11.0,Cardero Park,ChIJu1Lnq6lxhlQR6pcX6rbjjts,West End,Local,0.49134542,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+13.0,Coal Harbour Park,ChIJta9pnIZxhlQRjOVLcnemBFE,Downtown,Neighbourhood,0.442822768,4.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+14.0,Coopers' Park,ChIJMVTzBthzhlQRW6T6LQaOxoU,Downtown,Community,0.448822866,3.2,0,1,0,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+15.0,Creekside Park,ChIJdT38dmRxhlQRq93GlaDNzn4,Downtown,Neighbourhood,0.610153371,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+16.0,David Lam Park,ChIJxe0X69BzhlQRN8arE-4IpMY,Downtown,Community,0.673291989,5.0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+18.0,Devonian Harbour Park,ChIJicVMCYlxhlQRLly-YmGOfu4,Downtown,Neighbourhood,0.547565081,5.0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+20.0,Emery Barnes Park,ChIJHTh_ntZzhlQRfufbHHTUOrY,Downtown,Neighbourhood,0.454168264,4.4,0,0,1,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+21.0,Harbour Green Park,ChIJQwI_Q4RxhlQRJ-IPbxaY9Os,Downtown,Community,0.436340657,4.2,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+24.0,Marina Square Park,ChIJO-T6lIhxhlQRCWwZrAhZ7vA,Downtown,Neighbourhood,0.492951241,3.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+25.0,May & Lorne Brown Park,ChIJy45ZONJzhlQR8LQwVz87pzA,Downtown,Local,0.350262829,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+28.0,CRAB Park at Portside,ChIJj3G_rkdxhlQRwXb7n3u0aG8,Downtown,Community,0.547277772,4.8,0,1,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+30.0,Sun Yat-sen Gardens Park,ChIJr31-jxtxhlQREFvHCIcvI48,,Local,0.536081054,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+32.0,Wendy Poole Park,ChIJz1nZtHZxhlQR3tXNXM6ZCuY,Downtown,Local,0.536426432,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+34.0,Balaclava Park,ChIJXfWhew1zhlQRxF2EcUJj18U,Dunbar-Southlands,Community,0.659573249,4.6,0,1,0,0,1,0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0
+35.0,Park Site on Blenheim,ChIJxaN7ewZzhlQRx8EAfFpKGg0,Arbutus-Ridge,Local,0.507091267,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+37.0,Chaldecott Park,ChIJ0f6r_RlzhlQRG3hs6hOQHDc,Dunbar-Southlands,Neighbourhood,0.482458944,3.8,0,1,0,0,0,0,0,0,1,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+38.0,Deering Island Park,ChIJ2YWjyVdzhlQRbrb5QTvwKQs,Dunbar-Southlands,Neighbourhood,0.445756588,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+39.0,Memorial West Park,ChIJy6XHNhRzhlQRgMzwOxCqpZ0,Dunbar-Southlands,Community,0.507091267,4.6,0,1,0,0,0,0,0,0,1,1,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+40.0,Musqueam Park,ChIJF0eHNERzhlQRvbsIL32Zi6I,Dunbar-Southlands,Neighbourhood,0.516094641,4.6,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+41.0,Quadra West Park,ChIJeZSkvAZzhlQRQdKZJ08SxVU,Dunbar-Southlands,Local,0.667518853,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42.0,Valdez Park,ChIJ1XTxNQ9zhlQRC65vCiN3u-E,Dunbar-Southlands,Local,0.5333389,3.6,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+43.0,Charleson Park,ChIJpcthL9tzhlQRctQyvr0X2MI,Fairview,Community,0.351658766,4.2,1,0,0,0,1,1,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+44.0,Granville Park,ChIJcbmkHLxzhlQRkMlWXjPgShU,Fairview,Neighbourhood,0.660937304,4.8,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+45.0,Granville Loop Park,ChIJ47iOlshzhlQRTY5NyGaKwuU,Fairview,Neighbourhood,0.40697399,4.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+47.0,Sutcliffe Park,ChIJi8uFFc9zhlQRsj44EqhKgzA,Fairview,Community,0.554406993,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+48.0,Willow Park,ChIJI6DcWsNzhlQRkRpRrXP9q0w,Fairview,Local,0.572879433,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+49.0,Alice Townley Park,ChIJM4NmxEZxhlQRAM7rBUX3uN4,Grandview-Woodland,Local,0.468285518,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+50.0,Cambridge Park,ChIJx7px5sJxhlQR3z59zzUHUrI,Grandview-Woodland,Local,0.561271676,4.2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+51.0,Garden Park,ChIJZ13eaDdxhlQR4XCkXOKSOAU,Grandview-Woodland,Neighbourhood,0.405274424,4.4,0,1,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+52.0,Grandview Park,ChIJlRlWCz9xhlQREiA2lK11iBA,Grandview-Woodland,Community,0.543383344,4.6,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+53.0,McGill Park,ChIJuRwPsR1xhlQRlVZ7Wa4LGok,Grandview-Woodland,Local,0.556992018,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+54.0,McSpadden Park,ChIJ2cKodkhxhlQRF9dd0FsDc14,Grandview-Woodland,Neighbourhood,0.564191833,5.0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+55.0,Mosaic Creek Park,ChIJAStCZUBxhlQRNnG7eEcbtxw,Grandview-Woodland,Local,0.638214431,3.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+56.0,Oxford Park,ChIJTRl33BtxhlQRM2vJsGWhUj8,Grandview-Woodland,Neighbourhood,0.497096163,4.6,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+57.0,Pandora Park,ChIJEWq_7hhxhlQR_k-jUi4iX1I,Grandview-Woodland,Neighbourhood,0.558581898,4.0,0,1,1,0,1,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+58.0,Salsbury Park,ChIJhQHU_z1xhlQRMzIBq7vJ02A,Grandview-Woodland,Neighbourhood,0.459827538,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+60.0,Templeton Park,ChIJKcr50CJxhlQRAfbaI6BCHD4,Grandview-Woodland,Community,0.617232493,4.8,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0
+61.0,Park Site On Trinity Street,ChIJe9a54hxxhlQRdnmu96eNPx4,Hastings-Sunrise,Local,0.539434642,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+62.0,Victoria Park,ChIJFZRR0DhxhlQRx0NrqkpG4x4,Grandview-Woodland,Neighbourhood,0.592819162,4.0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+63.0,W.C. Shelly Park,ChIJN7q5Ek9xhlQRnuYOz9pJpoM,Grandview-Woodland,Neighbourhood,0.578673443,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+64.0,Woodland Park,ChIJjyFfrRVxhlQRAM9mIepSnEo,Grandview-Woodland,Neighbourhood,0.587864688,4.8,0,1,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+65.0,Adanac Park,ChIJc-9iJdFwhlQRLBxxhG8Aos0,Hastings-Sunrise,Neighbourhood,0.461754068,4.8,0,1,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+66.0,Bates Park,ChIJn6ZWa8JwhlQR9bGRxUHxkfE,Hastings-Sunrise,Local,0.39601714,4.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+67.0,Burrard View Park,ChIJJdYerONwhlQRjHzqGcMZNHo,Hastings-Sunrise,Neighbourhood,0.503147499,3.8,0,1,0,0,1,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+68.0,Callister Park,ChIJJZf3XeBwhlQR85cMSoejEXw,Hastings-Sunrise,Neighbourhood,0.630262374,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+69.0,Charles Park,ChIJyRYm0NVwhlQRhx_safq7qa8,Hastings-Sunrise,Neighbourhood,0.578536809,4.8,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+70.0,Clinton Park,ChIJu9PyFjBxhlQRcu77PZFWKM0,Hastings-Sunrise,Community,0.529545808,5.0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+71.0,Dusty Greenwell Park,ChIJh6pVh-NwhlQR5Q9CISVPPm8,Hastings-Sunrise,Local,0.561019664,4.8,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+73.0,Hastings Community Park,ChIJ7a4QtdhwhlQRJG5RiFTWPe4,Hastings-Sunrise,Community,0.712331533,4.8,0,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+74.0,Kaslo Park,ChIJfecbAzNxhlQRuPoXxBEQCio,Hastings-Sunrise,Local,0.528710448,4.8,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+75.0,New Brighton Park,ChIJYTzEQeZwhlQRvYumbduROOs,Hastings-Sunrise,Community,0.668576623,3.8,0,1,1,1,1,0,1,1,1,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
+76.0,Rupert Park,ChIJVVQ1MipxhlQRJzWpvSkLUvs,Hastings-Sunrise,Community,0.486780351,4.4,0,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+77.0,Sunrise Park,ChIJM2LXoixxhlQR6cOFWdWtq4w,Hastings-Sunrise,Neighbourhood,0.600594734,4.8,0,1,0,0,0,0,1,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+78.0,Thunderbird Park,ChIJdY0tlipxhlQRGfacJ8at8O4,Hastings-Sunrise,Local,0.567381461,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+79.0,Brewers Park,ChIJZyqg6a52hlQRP-UiMhm_Sdw,Kensington-Cedar Cottage,Neighbourhood,0.68919041,4.8,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0
+80.0,Cedar Cottage Park,ChIJtRQtKlBxhlQRaIjzYLWTH8c,Kensington-Cedar Cottage,Neighbourhood,0.435506056,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+81.0,Clark Park,ChIJJ_kBcVJxhlQRiqlikNPSCLY,Kensington-Cedar Cottage,Community,0.516384608,4.2,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+82.0,General Brock Park,ChIJM0glEqV2hlQRKWLMXS0IhBQ,Kensington-Cedar Cottage,Neighbourhood,0.416000896,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+83.0,Glen Park,ChIJryDxBQB0hlQRbtirTQEAV5Y,Kensington-Cedar Cottage,Neighbourhood,0.677312803,4.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+84.0,Grays Park,ChIJ0Y_5UwR0hlQR-iOTsGZ7xEw,Kensington-Cedar Cottage,Neighbourhood,0.497867382,4.8,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0
+85.0,John Hendry (Trout Lake) Park,ChIJNTdgR7N2hlQRsGx3wkOQ0sk,Kensington-Cedar Cottage,Community,0.498781687,4.333333333,0,1,0,0,0,0,0,0,1,1,1,1,0,1,1,1,0,0,1,0,0,1,1,1,0,0,0,0,1,0,1,0,0,1,0,1,1,0,1,1,0,0,0
+86.0,Jones Park,ChIJDa_CRR50hlQR6O1HYuG72ys,Kensington-Cedar Cottage,Neighbourhood,0.525425556,5.0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+87.0,Kensington Park,ChIJO8AziRx0hlQRVI1T6sf_Gdo,Kensington-Cedar Cottage,Community,0.516370185,4.0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+88.0,Kingcrest Park,ChIJhShFK6p2hlQRScal2yKlk_Y,Kensington-Cedar Cottage,Neighbourhood,0.49318959,4.8,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+89.0,Sunnyside Park,ChIJlTfKFFRxhlQRUctT1m7IU8c,Kensington-Cedar Cottage,Neighbourhood,0.533171524,4.4,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+90.0,Arbutus Park,ChIJz4_4Rph0hlQR-dUPngR--es,Kerrisdale,Local,0.426522797,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+91.0,Elm Park,ChIJk1uxP2VzhlQRi5nrQ102bFA,Kerrisdale,Neighbourhood,0.467179168,4.8,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+92.0,Fraser River Park,ChIJi06rTb50hlQRBFFBzgkGIBM,Kerrisdale,Neighbourhood,0.411390661,4.6,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+93.0,Kerrisdale Centennial Park,ChIJMbvsBntzhlQRBbPTAp4qVpY,Kerrisdale,Neighbourhood,0.509591277,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+95.0,Malkin Park,ChIJz07OE2hzhlQRIlnM7UC9NLg,Kerrisdale,Local,0.468935285,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+96.0,Maple Grove Park,ChIJ8aj4P550hlQRjTZU5Nstqok,Kerrisdale,Community,0.488478019,4.8,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0
+97.0,McCleery Park,ChIJK9gkC2FzhlQRXlcBrT9bETA,Kerrisdale,Local,0.563827478,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+99.0,Captain Cook Park,ChIJY-gCRX52hlQRZGZEgqY7bQU,Killarney,Neighbourhood,0.403049579,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+100.0,Champlain Heights Park,ChIJP8TmK392hlQRs8kUSp-kvQI,Killarney,Community,0.523529389,4.2,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+101.0,Everett Crowley Park,ChIJC7uNpdd1hlQRud9Kp4snUtU,Killarney,Neighbourhood,0.478194088,4.4,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+103.0,Killarney Park,ChIJL9zIRYN2hlQRS0ojoIdUiPE,Killarney,Community,0.422344096,4.6,0,0,0,0,1,0,1,0,0,1,1,1,0,1,1,0,0,0,1,1,0,1,0,0,0,1,0,0,1,1,0,1,0,0,1,0,0,0,0,1,0,0,0
+104.0,Kinross Ravine Park,ChIJOQXOBtp1hlQR9z7z1XRMcyI,Killarney,Local,0.344291196,4.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+105.0,Sparwood Park,ChIJHYNgmH12hlQR0gLImPSspGs,Killarney,Neighbourhood,0.53109356,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+106.0,Almond Park,ChIJzy68lgFzhlQR3bAMfmlJakQ,Kitsilano,Neighbourhood,0.435074522,4.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+108.0,Connaught Park,ChIJwwg2M65zhlQR4r-M83JybOI,Kitsilano,Community,0.610897263,5.0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0
+109.0,Delamont Park,ChIJz8ibx7ZzhlQRfNxBURpAlo0,Kitsilano,Neighbourhood,0.419604978,4.8,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+110.0,Hadden Park,ChIJk9VbpjVyhlQRoPnK3Fg0pTg,Kitsilano,Community,0.506951218,4.8,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+111.0,Jean Beaty Park,ChIJnRglPVFyhlQR03Sua9dIDi0,West Point Grey,Local,0.624184091,4.6,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+112.0,Kitsilano Beach Park,"ChIJnVFsezVyhlQRf5O-Pe5uQ04, ChIJHUYfoDVyhlQRrGFzpe5fhaQ",Kitsilano,Community,0.631867435,5.0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0
+113.0,Margaret Pigott Park,ChIJQcEWtE1yhlQRq5EvZuP3fYM,Kitsilano,Local,0.466880093,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+114.0,McBride Park,ChIJqYcdRFRyhlQRaECLerpvnGU,Kitsilano,Neighbourhood,0.595956414,3.4,0,1,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+115.0,Park Site on Point Grey at Trutch,ChIJd7CrglFyhlQRhCfsNwzHzYE,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+116.0,Park Site on Point Grey at Stephens,ChIJBR-XSExyhlQRVaU4Z8qga0I,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+117.0,Park Site on Point Grey at Trafalgar,ChIJqeRyDUxyhlQRhqdvgElWoRo,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+118.0,Seaforth Peace Park,ChIJJ0-wUspzhlQRKt_ZlwgVYYs,Kitsilano,Neighbourhood,0.436249568,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+119.0,Tatlow Park,ChIJj9LmgVJyhlQRMSv-tmobp8U,Kitsilano,Neighbourhood,0.421194858,4.0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+120.0,Vanier Park (Cultural Harmony Grove),ChIJDVxdVcxzhlQR4VVMIenhbVE,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+121.0,Volunteer Park,ChIJnfJjlE1yhlQR6fGIpVjE_9E,Kitsilano,Local,0.589609798,3.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+122.0,Ash Park,ChIJmfKAD_R0hlQR2etVxiSVvu8,Marpole,Local,0.577871102,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+123.0,Eburne Park,ChIJi1Mbee50hlQRKK0mG1GDtUc,Marpole,Local,0.51920153,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+124.0,Marpole Park,ChIJaUl9s-t0hlQRgz7XB6izdek,Marpole,Local,0.387942493,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+126.0,Oak Park,ChIJM_hBYox0hlQRcujRUfx1r24,Marpole,Community,0.569459046,4.8,0,1,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,0,0,0,0,1,1,1,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0
+127.0,Riverview Park,ChIJLWJQgpZ0hlQR7ZOtwMe5urQ,Marpole,Neighbourhood,0.606376599,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+128.0,Shannon Park,ChIJK86qDpF0hlQRY2FkPtkYryw,Marpole,Neighbourhood,0.62116829,4.6,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+130.0,William Mackie Park,ChIJt8HMwOp0hlQRoABp_Ffp65Q,Marpole,Neighbourhood,0.547817473,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+131.0,Winona Park,ChIJC5SWvl90hlQRB89ZpxoUHI4,Marpole,Neighbourhood,0.611409638,3.8,0,1,0,0,0,0,0,0,1,1,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+133.0,China Creek North Park,ChIJP2cAOltxhlQROoXZvfN2rdY,Mount Pleasant,Neighbourhood,0.502794151,4.6,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+134.0,China Creek South Park,ChIJ5XTCEFBxhlQRSX_XuEGkLJA,Mount Pleasant,Neighbourhood,0.510360598,4.2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+136.0,Guelph Park,ChIJ4bD6IF9xhlQRslSTYK4lOfM,Mount Pleasant,Neighbourhood,0.487659738,4.8,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+137.0,Jonathan Rogers Park,ChIJuxe5nuBzhlQRGzxeBtLX_90,Mount Pleasant,Neighbourhood,0.591751145,4.6,0,1,0,0,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+138.0,Major Matthews Park,ChIJ2Zs7K-FzhlQRUrWRcS8n4jE,Mount Pleasant,Local,0.494743414,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+139.0,Mount Pleasant Park,ChIJ2-nGU-RzhlQRg10wKBoIhv4,Mount Pleasant,Neighbourhood,0.495426201,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+140.0,Robson Park,ChIJ4w9s-VdxhlQRmt-tSScFR8I,Mount Pleasant,Neighbourhood,0.56562838,4.2,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0
+141.0,Tea Swamp Park,ChIJxxdSOONzhlQRSddacN9azVQ,Mount Pleasant,Neighbourhood,0.411908729,4.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+142.0,Cambie Park,ChIJp0x5YWF0hlQRYMKUL3U2BcE,Oakridge,Neighbourhood,0.600150676,4.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+143.0,Columbia Park,ChIJM302BHF0hlQRqFOUt6e8n90,Oakridge,Neighbourhood,0.498781687,4.8,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+146.0,Montgomery Park,ChIJg7fz5n50hlQRo9GXpVhSDlM,Oakridge,Neighbourhood,0.454717833,4.0,0,1,0,0,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+147.0,Tisdall Park,ChIJG6h0OXt0hlQRY4B37Wd5hPs,Oakridge,Neighbourhood,0.498781687,4.5,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+148.0,Beaconsfield Park,ChIJBzAe6bV2hlQRzPY-vJUxr-s,Renfrew-Collingwood,Neighbourhood,0.510066836,4.8,0,1,0,0,0,0,0,0,1,1,1,1,0,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+149.0,Cariboo Park,ChIJ7U-FfOp2hlQRNtM0uW9ApMc,Renfrew-Collingwood,Neighbourhood,0.440159937,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+150.0,Carleton Park,ChIJqTIU0Op2hlQRnLzWdxS4vXg,Renfrew-Collingwood,Neighbourhood,0.545978996,4.4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+151.0,Collingwood Park,ChIJQWLyspZ2hlQRcqZoordgcDc,Renfrew-Collingwood,Neighbourhood,0.555719431,4.6,0,1,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+152.0,Earles Park,ChIJcU6_Epx2hlQRNvEPUWuryHI,Renfrew-Collingwood,Neighbourhood,0.495868741,4.2,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+153.0,Falaise Park,ChIJmWmNzdp2hlQRWjnSYGKO9j8,Renfrew-Collingwood,Neighbourhood,0.559095791,3.6,0,1,0,0,1,0,1,0,0,1,0,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+154.0,Foster Park,ChIJZ6OKcZJ2hlQRP7l2hZWu-ZQ,Renfrew-Collingwood,Local,0.519543113,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+155.0,Gaston Park,ChIJGxWYt5N2hlQRpSVP-1KR7mM,Renfrew-Collingwood,Neighbourhood,0.363287397,5.0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+156.0,Melbourne Park,ChIJG_DeAJN2hlQRchN6SnOa_Ok,Renfrew-Collingwood,Neighbourhood,0.513444715,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+157.0,Norquay Park,ChIJdWKlgZh2hlQRzqmlKiCHq5w,Renfrew-Collingwood,Community,0.575360086,4.6,0,1,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+158.0,Price Park,ChIJRRoBy4J3hlQR-uUkl4HSaBo,Renfrew-Collingwood,Neighbourhood,0.505351091,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+159.0,Renfrew Community Park,ChIJGxBSE8h2hlQREGZuQbBmLk4,Renfrew-Collingwood,Community,0.567902945,4.2,0,1,1,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1
+160.0,Renfrew Ravine Park,ChIJJc32Trl2hlQR8l9XDVPjlFM,Renfrew-Collingwood,Neighbourhood,0.539710565,4.2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+161.0,Slocan Park,ChIJq74VcLx2hlQRqTLGA5zPWJw,Renfrew-Collingwood,Community,0.42923307,5.0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+162.0,Cartier Park,ChIJN2vpOgx0hlQReb3pmmh_wZI,Riley Park,Neighbourhood,0.536918692,3.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+163.0,Grimmett Park,ChIJIbUdIftzhlQR3FxYHnV9bFA,Riley Park,Local,0.600051997,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+164.0,Hillcrest Park,ChIJy1jYS_RzhlQRAGB4_a8DoeI,Riley Park,Community,0.49321388,4.0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0
+166.0,Prince Edward Park,ChIJm9c-2_tzhlQRCZ0h-hxuSaw,Riley Park,Neighbourhood,0.555048789,5.0,0,1,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+168.0,Riley Park,ChIJk2TkDgp0hlQRkWrt4bl_2QM,Riley Park,Community,0.597897366,5.0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+169.0,Angus Park,ChIJOTyt_ZdzhlQRszXvVBYi0ws,Shaughnessy,Local,0.44559946,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+170.0,Devonshire Park,ChIJ4eZqHpBzhlQRbF5hkWtQPN8,Shaughnessy,Neighbourhood,0.500597012,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+171.0,Kerrisdale Park,ChIJuZnNIHpzhlQRH-rkHfIn4bI,Shaughnessy,Neighbourhood,0.471316879,5.0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0
+172.0,Shaughnessy Park,ChIJSbuugZVzhlQRTdS00C0zXyY,Shaughnessy,Local,0.468933008,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+174.0,Braemar Park,ChIJr5Ykeo1zhlQRxTFCPQi4ndQ,South Cambie,Neighbourhood,0.629689653,4.4,0,1,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+175.0,Douglas Park,ChIJAUw1JNRzhlQRCnHVzI24sCs,South Cambie,Community,0.53774798,4.2,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+177.0,Heather Park,ChIJmUG1iutzhlQRMbhW_oYYz6s,South Cambie,Neighbourhood,0.449016051,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+179.0,Maclean Park,ChIJbyrrMGxxhlQRY5TfOsP4DfI,Strathcona,Neighbourhood,0.58847764,4.0,0,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+180.0,Oppenheimer Park,ChIJF0sFL3JxhlQRkjUfpiWMnXo,Strathcona,Neighbourhood,0.448359072,4.8,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+181.0,Strathcona Park,ChIJSyp71WtxhlQReZtp3mzmPnY,Strathcona,Community,,,0,1,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+182.0,Strathcona Linear Park,ChIJGc_YA2xxhlQRYCN8Qrra0a4,Strathcona,Neighbourhood,0.498775614,4.2,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+183.0,Thornton Park,ChIJDyI5MmRxhlQRgNoRd-LruNU,Strathcona,Neighbourhood,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+184.0,George Park,ChIJO7VBr1p0hlQRkXQcCX3w55k,Sunset,Neighbourhood,0.381842196,4.2,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+185.0,MacDonald Park,ChIJMdSO6Wx0hlQRZVtjAbrtrW8,Sunset,Neighbourhood,0.642063979,4.25,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+186.0,Memorial South Park,ChIJ_V-LvhZ0hlQRPyVZcd83YiY,Sunset,Community,0.489516053,5.0,0,1,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,0,1
+187.0,Moberly Park,ChIJ7Rw__kV0hlQRQ_CXlmJWnFU,Sunset,Community,0.383701927,5.0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+188.0,Ross Park,ChIJX_EtwUd0hlQRSqoCuc14Pjs,Sunset,Neighbourhood,0.562666095,4.8,0,1,0,0,0,0,0,0,0,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+189.0,Sunset Park,ChIJj76x_Wl0hlQRo_4SU8yo40k,Sunset,Community,0.645157679,4.4,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+191.0,Bobolink Park,ChIJTU9RhTJ0hlQReT_ozcd7LFU,Victoria-Fraserview,Neighbourhood,0.494318333,4.2,0,1,0,0,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+192.0,Fraserview Park,ChIJp46ViGt1hlQRr2L0RXVYFoc,Victoria-Fraserview,Neighbourhood,0.628471719,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+193.0,Gladstone-Riverside Park,ChIJk11occl1hlQRUEwbZnbL6gc,Victoria-Fraserview,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+194.0,Gordon Park,ChIJ____Ezt0hlQRbH4nQIeSKys,Victoria-Fraserview,Community,0.595244023,4.6,1,1,0,0,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+195.0,Humm Park,ChIJq6rqyDF0hlQRXLjveZ83HR8,Victoria-Fraserview,Neighbourhood,0.534763681,5.0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+196.0,Nanaimo Park,ChIJ73Xm_iZ0hlQR58-9FJWTvZs,Victoria-Fraserview,Neighbourhood,,,0,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+197.0,Riverfront Park,ChIJaVvpl891hlQRMxprW0l3Vgc,Killarney,Neighbourhood,,,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+198.0,Tecumseh Park,ChIJj9M8XCJ0hlQRPKFMohArkMo,Victoria-Fraserview,Neighbourhood,0.455660982,4.8,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+199.0,Alexandra Park,ChIJrzzU_y5yhlQR3gtnchw_YCI,West End,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+200.0,Barclay Heritage Square Park,ChIJuRmp2ylyhlQRRRIBDobG380,West End,Neighbourhood,,,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+201.0,English Bay Beach Park,"ChIJ7WHSBi9yhlQRdLXmpczA6wo, ChIJ86zkaC9yhlQR4GhBA8iTiy4",West End,Community,0.469620729,5.0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+202.0,Morton Park,ChIJ__wzVS9yhlQRXRtamFaDvyY,West End,Local,0.463496522,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+203.0,Nelson Park,ChIJp6Yu-ipyhlQRTLUcQSOMft8,West End,Community,0.54082147,5.0,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+204.0,Rosemont Park,ChIJK2UkddV1hlQRTBAqFsTxlhg,Killarney,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+207.0,Sunset Beach Park,ChIJAWo0tC1yhlQRAL6Iz7Cs6G4,West End,Community,,,0,1,0,1,0,0,1,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,1,1,0
+208.0,Rosemary Brown Park,ChIJS5wbJLBzhlQRoCRPmPuGU8Y,Kitsilano,Neighbourhood,0.608442039,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+209.0,Langara Park,ChIJZzh7dhB1hlQRSlV-04fDXD0,Oakridge,Local,0.519071729,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+212.0,Sahalli Park,ChIJnUSZ3VtxhlQRHp5L-dYmDbA,Mount Pleasant,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+213.0,Park Site On Shaughnessy Street,ChIJATo6iOV0hlQRFQbsRk6mgH0,Marpole,Neighbourhood,0.477109371,4.6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+217.0,Hastings Mill Park,ChIJBdvqe1dyhlQR7Nf9Nd_YHIA,West Point Grey,Neighbourhood,,,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+218.0,Jericho Beach Park,"ChIJ5xH-_PZyhlQR2oyzoLe8M-c, ChIJBdOUdVhyhlQRf5X1qM6aus8",West Point Grey,Community,,,0,1,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0
+219.0,Locarno Beach Park,"ChIJwzH1iPNyhlQRnNtrx--1dRo, ChIJU85SfvNyhlQROqo2GnhKkPY",,Community,,,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0
+220.0,Spanish Banks Beach Park,"ChIJLQnMgZJyhlQRnRaqpqnAhgg, ChIJIxV11ZZyhlQR6lOWn2aTIlQ",West Point Grey,Community,0.522934655,4.6,0,1,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0
+221.0,West Point Grey Park,ChIJF3ZzyvpyhlQR2PRpa6WD4yw,West Point Grey,Community,0.460543725,4.6,1,1,0,0,0,0,0,0,1,1,0,1,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0
+222.0,Westmount Park,ChIJxZsulu1yhlQRqT0pZTQ8X4s,West Point Grey,Local,0.568304874,3.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+224.0,Choklit Park,ChIJmYd6Q8RzhlQRnQcUS9mQFVo,Fairview,Local,,,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+225.0,George Wainborn Park,ChIJyc3aydFzhlQR43lpkTY-G0c,Downtown,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+228.0,Oak Meadows Park,ChIJafAXZYhzhlQRZ1X6Zx94FeU,South Cambie,Community,0.481907476,4.4,0,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+233.0,Arbutus Greenway Park,ChIJF391QrBzhlQRw86A7fL1egg,Kitsilano,Neighbourhood,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+234.0,Aberdeen Park,ChIJV40wYpJ2hlQRcNMAsizCLwY,Renfrew-Collingwood,Neighbourhood,0.509450089,4.6,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+235.0,Granville Island Water Park,ChIJ38kXhc1zhlQRSwgjFzVBDgE,Fairview,Community,0.487068419,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+236.0,Ebisu Park,ChIJKRZjqO50hlQRFUt8m76rzKw,Marpole,Neighbourhood,0.612682605,4.2,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+238.0,Carolina Park,ChIJi4cql2ZxhlQRt2G0F4-JFus,Mount Pleasant,Local,0.546006703,4.4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+240.0,Park Site On South East False Creek (Hinge Park),ChIJMzf4dmJxhlQRWGgp8cpI0eU,,Community,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+241.0,Habitat Island Park,ChIJrWwEf2JxhlQRKMuYEPVuOPU,Mount Pleasant,Community,0.674685649,4.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+244.0,Fraser River Trail Park,ChIJkZyYPuh0hlQR-O6-mDuHWKY,Kerrisdale,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+245.0,Trillium Park,ChIJqe3omWVxhlQRnQQZik9OmLk,Strathcona,Community,,,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+246.0,Creekway Park,ChIJDX5iWN1whlQRwiiUycZhmuw,Hastings-Sunrise,Local,0.517359638,4.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+247.0,McAuley Park,ChIJq6oaxVdxhlQRh60Yg_aLLj4,Mount Pleasant,Local,0.680682331,4.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,West End minipark - CARDERO ST @ COMOX ST (Lord Roberts Field Park),ChIJzdD-3yhyhlQR9TvnmTwhdMw,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,West End minipark - JERVIS ST @ BURNABY ST (Jervis Park),ChIJVXd-yJRzhlQRX9v0OrdFejs,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,West End minipark - BUTE ST @ HARO ST (Bute Street Pedestrian Walkway Park),ChIJD842oIBxhlQRlqBtvXLhgLg,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,6th and Fir (Burrard Slopes Park),ChIJQ1sOFchzhlQRoXMYDrzBCi8,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Street End - Wall St @ Renfrew (Shingle Park),ChIJFycHewBxhlQRxQKSKaoey4w,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,East Fraserlands Neighbourhood Park North,ChIJveRTKMt1hlQRM8ozUUpVVeI,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Street End - Wall St @ Slocan (Commissioner Park),ChIJXayKduNwhlQRCIpah-P90nQ,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Street End - Wall St @ Penticton (Harbour View Park),ChIJCSGA_eJwhlQRJo-DM9T0oVw,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Street End - Wall St @ Nanaimo (Meditation Park),ChIJV6yYZh1xhlQRJb41JgTpR54,,Neighbourhood,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Street End - Wall St @ Kamloops (Portside View Park),ChIJ0Ry2keJwhlQRx1QZL7yHxGg,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Laurel Landbridge Park,ChIJjZEhpMRzhlQRXE_k76Ovthk,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Lilian To Park,ChIJ5RWQau9zhlQR7QbpfAPnPME,,Local,,,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,Mont Royal Square Park,ChIJYzCnw-F3hlQRENLWmNE7TJU,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+264.0,5th and Pine Park,ChIJ__-vMMhzhlQRvgmDj4xwh40,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,East Fraserlands Neighbourhood Park South,ChIJu-Wa8tp1hlQRoQT6IP3WzW0,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,East Park,ChIJNf8SCQ9xhlQR0XX0ndH7c-U,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,Gibby's Field Park,ChIJz8WExvdxhlQRidQocfyDsGg,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,Kinross Corridor - Middle Park,ChIJ97K1cFF1hlQRZbJi19XTdwA,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,Kinross Corridor - North Park,ChIJ7Xx4ht51hlQRhjfWRhTTv8A,,Local,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,Kinross Corridor - South Park,ChIJDdlYSlV1hlQR1hzKJVB7Ckc,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,Promontory Park,ChIJl6aPJBl1hlQRc7lNZlu_qqQ,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow) Park,ChIJ91Xo0aRxhlQRRaOE88piwQ4,,Neighbourhood,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
