@@ -220,7 +220,6 @@ __pycache__/
 .vscode/
 
 # Research data (do not upload large raw data)
-data/
 data/census/raw/*
 data/osm/*
 data/parks/raw/*

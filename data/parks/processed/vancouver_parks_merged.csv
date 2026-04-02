@@ -1,0 +1,250 @@
+source,park_name,area_ha,park_id
+Burnaby,CENTRAL PARK,86.431246676120352,Burnaby_0
+Vancouver,Aberdeen Park,0.983090102441200,Vancouver_1
+Burnaby,GEORGE MCLEAN PARK,1.320234601313407,Burnaby_2
+Vancouver,Price Park,0.352134132510416,Vancouver_3
+Burnaby,WESBURN RAVINE PARK,0.328085575981834,Burnaby_4
+Burnaby,WESBURN PARK,3.490066504085698,Burnaby_5
+Burnaby,DISCOVERY PLACE CONSERVATION AREA,2.873836964204553,Burnaby_6
+Burnaby,AVONDALE PARK,1.502854259495680,Burnaby_7
+Burnaby,BROADVIEW PARK,3.712702350572090,Burnaby_8
+Burnaby,STILL CREEK CONSERVATION AREA,2.313355041880173,Burnaby_9
+Burnaby,JIM LORIMER PARK,1.247561721668805,Burnaby_10
+Vancouver,Kinross Corridor – South,0.364812996201993,Vancouver_11
+Vancouver,Gladstone-Riverside Park,1.134964642140593,Vancouver_12
+Vancouver,Riverfront Park,4.208470053261387,Vancouver_13
+Vancouver,East Fraserlands Neighbourhood Park South,0.119635985958894,Vancouver_14
+Vancouver,Kinross Corridor - Middle,0.142320470339399,Vancouver_15
+Vancouver,East Fraserlands Neighbourhood Park North,0.131982612274786,Vancouver_16
+Vancouver,Kinross Ravine Park,1.199974911892409,Vancouver_17
+Vancouver,Everett Crowley Park,38.205338194214043,Vancouver_18
+Vancouver,Bobolink Park,3.834472389476899,Vancouver_19
+Burnaby,BURNABY FRASER FORESHORE PARK,15.449836773862751,Burnaby_20
+Burnaby,RIVERWAY GOLF COURSE,1.002482238978178,Burnaby_21
+Vancouver,Promontory Park,0.295423955254772,Vancouver_22
+Burnaby,BOUNDARY CREEK RAVINE PARK,3.643765574351606,Burnaby_23
+Burnaby,KAYMAR CREEK RAVINE PARK,11.859393095440709,Burnaby_24
+Burnaby,SUNCREST SCHOOL PARK,2.774457450202355,Burnaby_25
+Vancouver,George Park,1.438329548046563,Vancouver_26
+Vancouver,Moberly Park,3.607226969443657,Vancouver_27
+Vancouver,Fraserview Park,1.274209015596828,Vancouver_28
+Vancouver,Ross Park,1.513043470465933,Vancouver_29
+Vancouver,Sunset Park,7.131510010227392,Vancouver_30
+Vancouver,Gordon Park,6.899491750809646,Vancouver_31
+Vancouver,MacDonald Park,1.055280204730099,Vancouver_32
+Vancouver,Tecumseh Park,2.097350540064336,Vancouver_33
+Vancouver,Memorial South Park,13.785598534037284,Vancouver_34
+Vancouver,Jones Park,1.427581418719290,Vancouver_35
+Vancouver,Champlain Heights Park,7.865381544147954,Vancouver_36
+Vancouver,Rosemont Park,1.363700596301298,Vancouver_37
+Vancouver,Humm Park,0.472134177962646,Vancouver_38
+Vancouver,Captain Cook Park,5.502350591445502,Vancouver_39
+Vancouver,Mont Royal Square,0.229073258531308,Vancouver_40
+Vancouver,Sparwood Park,3.621577429384373,Vancouver_41
+Vancouver,Killarney Park,13.398396050141994,Vancouver_42
+Vancouver,Nanaimo Park,2.920107048354131,Vancouver_43
+Vancouver,Earles Park,1.588401392097963,Vancouver_44
+Vancouver,Foster Park,0.296196193486217,Vancouver_45
+Vancouver,Gaston Park,1.507242563023939,Vancouver_46
+Vancouver,Melbourne Park,0.489665640339681,Vancouver_47
+Vancouver,Norquay Park,2.271164617365347,Vancouver_48
+Vancouver,Collingwood Park,1.271097031895204,Vancouver_49
+Vancouver,Carleton Park,0.684695877810531,Vancouver_50
+Vancouver,Slocan Park,4.215052562860889,Vancouver_51
+Vancouver,General Brock Park,2.163500758658856,Vancouver_52
+Vancouver,Cariboo Park,0.768656913531012,Vancouver_53
+Vancouver,Renfrew Ravine Park,6.142911707986188,Vancouver_54
+Vancouver,Renfrew Community Park,5.015662018149384,Vancouver_55
+Vancouver,Grimmett Park,0.242380702247800,Vancouver_56
+Vancouver,Gibby's Field,0.140958155183619,Vancouver_57
+Vancouver,Sun Hop Park,0.161312639467230,Vancouver_58
+Vancouver,Sunnyside Park,0.971854362038692,Vancouver_59
+Vancouver,John Hendry (Trout Lake) Park,27.393014994801621,Vancouver_60
+Vancouver,Mount Pleasant Park,1.118571507241686,Vancouver_61
+Vancouver,Tea Swamp Park,0.263323288138665,Vancouver_62
+Vancouver,Clark Park,4.298638142764009,Vancouver_63
+Vancouver,Robson Park,1.565242879959978,Vancouver_64
+Vancouver,Cedar Cottage Park,0.472878665826231,Vancouver_65
+Vancouver,Beaconsfield Park,4.445567960476784,Vancouver_66
+Vancouver,Falaise Park,7.589311685737394,Vancouver_67
+Vancouver,Kaslo Park,0.447239000922349,Vancouver_68
+Vancouver,Sunrise Park,3.186104295179520,Vancouver_69
+Vancouver,Garden Park,0.969977933120123,Vancouver_70
+Vancouver,Thunderbird Park,0.895033827774815,Vancouver_71
+Vancouver,Clinton Park,3.052240191903722,Vancouver_72
+Vancouver,Rupert Park,11.837228233496882,Vancouver_73
+Vancouver,Charles Park,1.542234314764985,Vancouver_74
+Vancouver,Templeton Park,1.932934274664114,Vancouver_75
+Vancouver,China Creek South Park,1.656173819425851,Vancouver_76
+Vancouver,W.C. Shelly Park,0.447904314469301,Vancouver_77
+Vancouver,Guelph Park,1.044701379411163,Vancouver_78
+Vancouver,Sahalli Park,0.547123386107460,Vancouver_79
+Vancouver,China Creek North Park,3.174219646946495,Vancouver_80
+Vancouver,McSpadden Park,1.629163017902988,Vancouver_81
+Vancouver,Alice Townley Park,0.224410495683972,Vancouver_82
+Vancouver,East Park,0.580667333635032,Vancouver_83
+Vancouver,,0.151198839256573,Vancouver_84
+Vancouver,Victoria Park,0.890598737273368,Vancouver_85
+Burnaby,WILLINGDON HEIGHTS PARK,5.784743445779544,Burnaby_86
+Vancouver,Adanac Park,4.183695111902693,Vancouver_87
+Burnaby,WEST-SELLS PARK,0.896037953162052,Burnaby_88
+Vancouver,Fraser River Trail Park,0.399804890197703,Vancouver_89
+Vancouver,Park Site On Shaughnessy Street,0.562538267441460,Vancouver_90
+Vancouver,Marpole Park,0.269647165989687,Vancouver_91
+Vancouver,Ebisu Park,0.420904546571834,Vancouver_92
+Vancouver,William Mackie Park,0.408843641021888,Vancouver_93
+Vancouver,Eburne Park,0.900865878753370,Vancouver_94
+Vancouver,Ash Park,0.513535190807785,Vancouver_95
+Vancouver,Shannon Park,0.943705706788886,Vancouver_96
+Vancouver,Oak Park,5.266789260162898,Vancouver_97
+Vancouver,Winona Park,5.326700024263770,Vancouver_98
+Vancouver,Fraser River Park,9.070290784799784,Vancouver_99
+Vancouver,Riverview Park,2.384425854114041,Vancouver_100
+Vancouver,Arbutus Park,0.739946428895890,Vancouver_101
+Vancouver,Deering Island Park,0.638397631157924,Vancouver_102
+Vancouver,Maple Grove Park,4.208258995151404,Vancouver_104
+Vancouver,McCleery Park,0.251243042481736,Vancouver_105
+Vancouver,Musqueam Park,23.765774741392363,Vancouver_106
+Vancouver,Malkin Park,2.428472988144378,Vancouver_107
+Vancouver,Kerrisdale Centennial Park,1.530003246437409,Vancouver_108
+Vancouver,Shannon Mews Park,0.288251430573733,Vancouver_109
+Vancouver,Cambie Park,0.934955273634183,Vancouver_110
+Vancouver,Langara Park,1.214421186692128,Vancouver_111
+Vancouver,Tisdall Park,5.036170002402160,Vancouver_112
+Vancouver,Montgomery Park,4.029881754480023,Vancouver_113
+Vancouver,Columbia Park,2.789145585757943,Vancouver_114
+Vancouver,Oak Meadows Park,4.739711729851576,Vancouver_115
+Vancouver,Vandusen Botanical Garden,22.361412850319518,Vancouver_116
+Vancouver,Queen Elizabeth Park,53.284541341295579,Vancouver_117
+Vancouver,Devonshire Park,1.528601680498402,Vancouver_118
+Vancouver,Elm Park,1.495538521680449,Vancouver_119
+Vancouver,Kerrisdale Park,2.997215126811029,Vancouver_120
+Vancouver,Ravine Park,0.920110340166691,Vancouver_121
+Vancouver,Memorial West Park,7.511579628139858,Vancouver_122
+Vancouver,Quilchena Park,7.692325821772762,Vancouver_123
+Vancouver,Prince Of Wales Park,2.894326664972962,Vancouver_124
+Vancouver,Park Site On Trafalgar Street,0.136497435141361,Vancouver_125
+Vancouver,Balaclava Park,4.898701529605988,Vancouver_126
+Vancouver,Chaldecott Park,3.457053433984689,Vancouver_127
+Vancouver,Arbutus Village Park,1.412258298487200,Vancouver_128
+Vancouver,Cartier Park,0.366544979107546,Vancouver_129
+Vancouver,Kensington Park,5.768300829266356,Vancouver_130
+Vancouver,Grays Park,1.617295115645168,Vancouver_131
+Vancouver,Riley Park,2.705905344236207,Vancouver_132
+Vancouver,Nat Bailey Stadium Park,6.225306778498832,Vancouver_133
+Vancouver,Hillcrest Park,7.533767664570320,Vancouver_134
+Vancouver,Kingcrest Park,2.476056799835172,Vancouver_135
+Vancouver,Brewers Park,1.386741930465705,Vancouver_136
+Vancouver,Glen Park,1.094707183737018,Vancouver_137
+Vancouver,Prince Edward Park,1.217281654082649,Vancouver_138
+Vancouver,Trafalgar Park,4.864674354124592,Vancouver_139
+Vancouver,Valdez Park,0.768936880757804,Vancouver_140
+Vancouver,Angus Park,0.899249048606294,Vancouver_141
+Vancouver,Carnarvon Park,4.243831294285206,Vancouver_142
+Vancouver,Quadra West Park,0.142110253541331,Vancouver_143
+MetroVancouver,Pacific Spirit Regional Park,511.013171304335515,MetroVancouver_144
+Vancouver,Granville Park,1.967067406206696,Vancouver_145
+Vancouver,Almond Park,1.614077026317408,Vancouver_146
+Vancouver,Connaught Park,5.998422871135608,Vancouver_147
+Vancouver,Arbutus Greenway Park,0.689291073191523,Vancouver_148
+Vancouver,Braemar Park,1.259933903814854,Vancouver_149
+Vancouver,Douglas Park,5.335434689248188,Vancouver_150
+Vancouver,Heather Park,0.978670955574525,Vancouver_151
+Vancouver,Shaughnessy Park,1.451121916096030,Vancouver_152
+Vancouver,Lilian To,0.141652912597990,Vancouver_153
+Vancouver,Jonathan Rogers Park,1.403440273467943,Vancouver_154
+Vancouver,Laurel Landbridge Park,0.154060485687299,Vancouver_155
+Vancouver,Granville Loop Park,1.057626249100503,Vancouver_156
+Vancouver,Charleson Park,7.245060949982710,Vancouver_157
+Vancouver,Sutcliffe Park,2.517210605838210,Vancouver_158
+Vancouver,Rosemary Brown Park,0.495077073228615,Vancouver_159
+Vancouver,West Point Grey Park,3.752669690812061,Vancouver_160
+Vancouver,Delamont Park,0.333320116966335,Vancouver_161
+Vancouver,6th and Fir,0.134478597034777,Vancouver_162
+Vancouver,5th and Pine,0.111516346670863,Vancouver_163
+Vancouver,McBride Park,1.713952815345929,Vancouver_164
+Vancouver,Tatlow Park,1.403307997861267,Vancouver_165
+Vancouver,Westmount Park,0.397083130255781,Vancouver_166
+Vancouver,Park Site on Point Grey at šxʷməθkʷəy̓əmasəm (Musq,0.213704688360158,Vancouver_167
+Vancouver,Volunteer Park,0.725567985306146,Vancouver_168
+Vancouver,Jean Beaty Park,0.126008566915336,Vancouver_169
+Vancouver,Jericho Beach Park,48.235374409690415,Vancouver_170
+Vancouver,Locarno Park,4.711829841610642,Vancouver_171
+Vancouver,Seaforth Peace Park,0.792671767245045,Vancouver_172
+Vancouver,Margaret Pigott Park,0.381529476994867,Vancouver_173
+Vancouver,Hastings Mill Park,1.235351224825536,Vancouver_174
+Vancouver,Park Site on Point Grey at Stephens,0.229035394241984,Vancouver_175
+Vancouver,Locarno Beach Park,14.735268868666857,Vancouver_176
+Vancouver,Park Site on Point Grey at Trafalgar,0.290548336268780,Vancouver_177
+Vancouver,Kitsilano Beach Park,13.612187785693147,Vancouver_178
+Vancouver,Granville Island Water Park,0.264516151282772,Vancouver_179
+Vancouver,Park Site On South East False Creek (Hinge Park),1.331330585933904,Vancouver_180
+Vancouver,David Lam Park,3.551907000153624,Vancouver_181
+Vancouver,George Wainborn Park,2.358932171481618,Vancouver_182
+Vancouver,Habitat Island Park,0.602833408950888,Vancouver_183
+Vancouver,Roundhouse Turntable Plaza,0.910498700314242,Vancouver_184
+Vancouver,Coopers' Park,1.851835196804662,Vancouver_185
+Vancouver,Vanier Park (Cultural Harmony Grove),0.294251618604549,Vancouver_186
+Vancouver,May & Lorne Brown Park,0.251247571914212,Vancouver_187
+Vancouver,Helmcken Park,0.174099895164152,Vancouver_188
+Vancouver,Creekside Park,2.542944538408232,Vancouver_189
+Vancouver,Mosaic Creek Park,0.113138612175076,Vancouver_190
+Vancouver,Thornton Park,1.498037626621152,Vancouver_191
+Vancouver,Grandview Park,0.893523757866088,Vancouver_192
+Vancouver,Trillium Park,2.983335770231069,Vancouver_193
+Vancouver,Strathcona Park,10.101651413974784,Vancouver_194
+Vancouver,Downtown Skateboard Plaza,0.277621467798589,Vancouver_195
+Vancouver,Strathcona Linear Park,0.504784409144348,Vancouver_196
+Vancouver,Salsbury Park,0.240991489520822,Vancouver_197
+Vancouver,Andy Livingstone Park,4.219575261419403,Vancouver_198
+Vancouver,Emery Barnes Park,0.897458887204571,Vancouver_199
+Vancouver,Yaletown Park,0.139303119777650,Vancouver_200
+Vancouver,Sunset Beach Park,3.644766694005966,Vancouver_201
+Vancouver,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow),0.306310884221517,Vancouver_202
+Vancouver,Victory Square,0.389803993429584,Vancouver_203
+Vancouver,Nelson Park,1.166710290358019,Vancouver_204
+Vancouver,Cathedral Square,0.267703527519291,Vancouver_205
+Vancouver,Art Phillips Park,0.103025595825005,Vancouver_206
+Vancouver,Barclay Heritage Square,0.633055662987741,Vancouver_207
+Vancouver,Portal Park,0.101438595436440,Vancouver_208
+Vancouver,Coal Harbour Park,0.954766910002646,Vancouver_209
+Vancouver,Harbour Green Park,3.202602245264767,Vancouver_210
+Vancouver,West End minipark - GILFORD ST @ HARO ST,0.160318203661103,Vancouver_211
+Vancouver,Cardero Park,0.326267930670813,Vancouver_212
+Vancouver,Marina Square,0.631900993408958,Vancouver_213
+Vancouver,Devonian Harbour Park,4.089583478244414,Vancouver_214
+Vancouver,Stanley Park,418.384379334564869,Vancouver_215
+Vancouver,Spanish Banks Beach Park,6.515685100503212,Vancouver_216
+Vancouver,Spanish Banks Extension,8.010373513298161,Vancouver_217
+Vancouver,Vanier Park,21.346225485185112,Vancouver_218
+Vancouver,Hadden Park,2.965751524179684,Vancouver_219
+Vancouver,English Bay Beach Park,9.979982869834673,Vancouver_220
+Vancouver,Alexandra Park,0.548802922190075,Vancouver_221
+Vancouver,Morton Park,0.219930680834164,Vancouver_222
+Vancouver,Hastings Community Park,4.200838717950418,Vancouver_223
+Vancouver,Pandora Park,1.668310597127346,Vancouver_224
+Vancouver,Hastings Park - Sanctuary,4.247097890902046,Vancouver_225
+Vancouver,Slidey Slides,1.185898733341574,Vancouver_226
+Vancouver,Empire Fields - Hastings Park,5.017747188680716,Vancouver_227
+Vancouver,Hastings Park - Italian Garden,1.965145443742453,Vancouver_228
+Vancouver,Callister Park,1.450492131792601,Vancouver_229
+Vancouver,Creekway Park,1.350292075324486,Vancouver_230
+Vancouver,McGill Park,0.257296253758188,Vancouver_231
+Vancouver,Park Site On Trinity Street,0.159545905751490,Vancouver_232
+Burnaby,BURNABY HEIGHTS PARK,4.051521065218757,Burnaby_233
+Burnaby,MCGILL PARK,1.435376908872299,Burnaby_234
+Burnaby,SECOND NARROWS PARK,11.358624305016896,Burnaby_235
+Vancouver,Maclean Park,1.211001050477633,Vancouver_236
+Vancouver,Woodland Park,1.584672815403337,Vancouver_237
+Vancouver,Sun Yat-sen Gardens Park,0.814224984200029,Vancouver_238
+Vancouver,Oppenheimer Park,0.979893545265892,Vancouver_239
+Vancouver,CRAB Park at Portside,3.303804497871211,Vancouver_240
+Vancouver,Oxford Park,0.248612693534866,Vancouver_241
+Vancouver,Cambridge Park,0.235167514472728,Vancouver_242
+Vancouver,New Brighton Park,10.634166713983541,Vancouver_243
+Vancouver,Burrard View Park,2.768720816906407,Vancouver_244
+Vancouver,Street End - Wall St @ Kamloops,0.134730781865241,Vancouver_245
+Vancouver,Street End - Wall St @ Penticton,0.105172212878610,Vancouver_246
+Vancouver,Dusty Greenwell Park,0.532757099624726,Vancouver_247
+Vancouver,Street End - Wall St @ Slocan,0.117201040871154,Vancouver_248
+Vancouver,Bates Park,0.338640114113804,Vancouver_249
