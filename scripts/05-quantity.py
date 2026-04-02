@@ -347,6 +347,7 @@ parks     = gpd.read_file('data/parks/processed/vancouver_parks_merged.shp')
 
 # Thresholds — 0.8 for reachability (avoids brittle 1.00 split), median for quantity
 REACH_THRESH = 0.8
+REACH_SENS   = 0.5   # sensitivity: majority presence threshold
 qty_med      = da_supply['qty_cap20'].median()
 
 da_supply['reach_cat'] = (da_supply['DA_reach_400'] >= REACH_THRESH).astype(int)
@@ -354,10 +355,10 @@ da_supply['qty_cat']   = (da_supply['qty_cap20']    >= qty_med).astype(int)
 
 def classify_supply(r, q):
     if pd.isna(r) or pd.isna(q): return 'No data'
-    if r==1 and q==1: return 'HH — Well-served'
-    if r==1 and q==0: return 'HL — High access, small area'
-    if r==0 and q==1: return 'LH — High area, partial access'
-    return 'LL — Underserved'
+    if r==1 and q==1: return 'HH — Broad coverage, high area'
+    if r==1 and q==0: return 'HL — Broad coverage, low area'
+    if r==0 and q==1: return 'LH — Limited coverage, high area'
+    return 'LL — Limited coverage, low area'
 
 da_supply['supply_type'] = [
     classify_supply(r, q)
@@ -373,10 +374,11 @@ print(f"Thresholds — Reachability: {REACH_THRESH}, Quantity median: {qty_med:.
 
 # Colours — HL more saturated to distinguish from LH
 colours = {
-    'HH — Well-served':               '#3b2f3a',  # deeper, more saturated dark (clear peak)
-    'HL — High access, small area':   '#4e8bab',  # blue (keep)
-    'LH — High area, partial access': '#c27d4f',  # warmer, clearer orange
-    'LL — Underserved':               '#f2eadf',  # lighter, more neutral base
+    'HH — Broad coverage, high area':   '#4b3f44',
+    'HL — Broad coverage, low area':    '#7ea6c2',
+    'LH — Limited coverage, high area': '#d0a07a',
+    'LL — Limited coverage, low area':  '#e9e2d8',
+    'No data':                          '#cccccc'
 }
 
 fig, ax = plt.subplots(figsize=(12, 10))
@@ -396,7 +398,6 @@ ax.legend(handles=patches, loc='lower left', fontsize=9, framealpha=0.9)
 
 ax.set_title(
     f'Park Supply Typology — Vancouver DAs\n'
-    f'Substantial mismatch between coverage and intensity (~{mismatch_pct:.0f}% of DAs)\n'
     f'Thresholds: reachability ≥ {REACH_THRESH}, quantity ≥ median ({qty_med:.1f} ha/1,000)',
     fontsize=11)
 ax.set_axis_off()
@@ -411,4 +412,64 @@ print(f"Mismatch asymmetry: HL={hl_n} vs LH={lh_n} — "
       f"small-park coverage more common than insufficient area")
 
 print('Saved.')
+
+
+# %% sensitivity analysis for 0.5 reachability
+da_supply['reach_cat'] = (da_supply['DA_reach_400'] >= REACH_SENS).astype(int)
+da_supply['qty_cat']   = (da_supply['qty_cap20']    >= qty_med).astype(int)
+
+def classify_supply(r, q):
+    if pd.isna(r) or pd.isna(q): return 'No data'
+    if r==1 and q==1: return 'HH — Broad coverage, high area'
+    if r==1 and q==0: return 'HL — Broad coverage, low area'
+    if r==0 and q==1: return 'LH — Limited coverage, high area'
+    return 'LL — Limited coverage, low area'
+
+da_supply['supply_type'] = [
+    classify_supply(r, q)
+    for r, q in zip(da_supply['reach_cat'], da_supply['qty_cat'])
+]
+
+counts = da_supply['supply_type'].value_counts()
+print(counts)
+mismatch_pct = 100 * (counts.get('HL — Access without area', 0) +
+                      counts.get('LH — Area without access', 0)) / len(da_supply)
+print(f"\nMismatch DAs (HL+LH): {mismatch_pct:.0f}%")
+print(f"Thresholds — Reachability: {REACH_SENS}, Quantity median: {qty_med:.1f} ha/1,000")
+
+# Colours — HL more saturated to distinguish from LH
+colours = {
+    'HH — Broad coverage, high area':   '#4b3f44',
+    'HL — Broad coverage, low area':    '#7ea6c2',
+    'LH — Limited coverage, high area': '#d0a07a',
+    'LL — Limited coverage, low area':  '#e9e2d8',
+    'No data':                          '#cccccc'
+}
+
+
+
+fig, ax = plt.subplots(figsize=(12, 10))
+
+for stype, colour in colours.items():
+    subset = da_supply[da_supply['supply_type'] == stype]
+    if len(subset) > 0:
+        subset.plot(ax=ax, color=colour, edgecolor='white', linewidth=0.2)
+
+parks.plot(ax=ax, facecolor='none', edgecolor='#2d6a2d', linewidth=1.0, zorder=2)
+
+patches = [mpatches.Patch(color=c, label=f"{t} (n={counts.get(t, 0)})")
+           for t, c in colours.items() if t != 'No data']
+patches.append(mpatches.Patch(facecolor='none', edgecolor='#2d6a2d',
+                               linewidth=1.0, label='Park boundaries'))
+ax.legend(handles=patches, loc='lower left', fontsize=9, framealpha=0.9)
+
+ax.set_title(
+    f'Park Supply Typology — Vancouver DAs\n'
+    f'Thresholds: reachability ≥ {REACH_SENS}, quantity ≥ median ({qty_med:.1f} ha/1,000)',
+    fontsize=11)
+ax.set_axis_off()
+plt.tight_layout()
+plt.savefig('outputs/figures/vancouver_da_supply_typology_sensitivity.png', dpi=150, bbox_inches='tight')
+plt.close()
+
 # %%

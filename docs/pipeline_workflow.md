@@ -92,7 +92,7 @@ inputs:
 6d. ~39% of DAs show divergence between coverage and intensity (HL+LH)
      Asymmetry: HL (239) > LH (154) — access-without-area more common
 6e. Output: vancouver_da_supply_typology.png + vancouver_da_supply.gpkg
-
+# At a 50% threshold (optimistic, presence-based), most areas appear adequately served, but this masks substantial intra-neighbourhood inequalities revealed at higher coverage thresholds (e.g., 80%).
 
 
 
