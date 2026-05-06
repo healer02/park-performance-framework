@@ -96,6 +96,39 @@ inputs:
 
 
 
+--
+next steps[2026/4/30]
+1) master park dataset
+- identify parks with review (October 2025) vs not; social sentiment list vs. Avery's list
+ 
+2) start Figure B; vancouver divergence
+You will be forced to decide:
+* supply threshold (coverage + area logic)
+* experience construction (salience + satisfaction)
+* handling low-review parks
+
+3) Lock the paper scope 
+- Three Metro Vancouver municipalities: Vancouver (large/core), Coquitlam (mid-sized), New Westminster (small/dense)
+- objectives
+         Diagnose supply–experience divergence at neighbourhood scale
+         Examine how patterns vary by city size and urban form within the same metro
+- Framing
+     Diagnostic framework for neighbourhood-level park performance
+     Demonstrates intra-metropolitan variation by urban context
+     Designed for data-sparse contexts; validated where ground truth available
+
+2) define the exact figures. e.g.,
+- Figure A: conceptual framework 
+- Figure B: main divergence matrix (Vancouver)
+- Figure C: equity-stratified divergence
+- Figure D: amenity profiles or mechanism
+
+
+
+
+
+--
+
 5. Google review extraction (done for City of Vancouver, except for Destination Parks, in Dec 2025)
 - add Google place ID to park list
 - for vancouver, we still need to add several destination parks (e.g., Stanley Park, Queen Elizabeth Park)
