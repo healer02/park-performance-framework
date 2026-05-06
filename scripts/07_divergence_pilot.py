@@ -46,24 +46,25 @@ print(park_metrics.sort_values("TotalReviews", ascending=False).head(10).to_stri
 
 
 # %% 3. DIVERGENCE MATRIX (PILOT - VANCOUVER ONLY, EXPERIENCE SIDE)
-# Supply side not yet re-run, so just sketch experience quadrants for now
-# Using AvgRating as satisfaction proxy, TotalReviews as salience proxy
+import numpy as np
 
 van = park_metrics[park_metrics["source"] == "Vancouver"].copy()
-
-# Drop parks with no experience data
 van_exp = van[van["AvgSentiment"].notna()].copy()
+van_exp = van_exp[van_exp["TotalReviews"] > 0].copy()
+
+# Log-transform review counts to compress skew from destination parks
+van_exp["LogReviews"] = np.log1p(van_exp["TotalReviews"])
 
 # Define high/low thresholds at city median
 rating_median  = van_exp["AvgRating"].median()
-reviews_median = van_exp["TotalReviews"].median()
+log_reviews_median = van_exp["LogReviews"].median()
 
 van_exp["satisfaction"] = (van_exp["AvgRating"] >= rating_median).map({True: "high", False: "low"})
-van_exp["salience"]     = (van_exp["TotalReviews"] >= reviews_median).map({True: "high", False: "low"})
+van_exp["salience"]     = (van_exp["LogReviews"] >= log_reviews_median).map({True: "high", False: "low"})
 van_exp["experience_type"] = van_exp["salience"] + "_salience_" + van_exp["satisfaction"] + "_satisfaction"
 
-print(f"Rating median:  {rating_median:.3f}")
-print(f"Reviews median: {reviews_median:.0f}")
+print(f"Rating median:       {rating_median:.3f}")
+print(f"Log-reviews median:  {log_reviews_median:.3f} (= ~{int(np.expm1(log_reviews_median))} raw reviews)")
 print(f"\nExperience quadrant distribution:")
 print(van_exp["experience_type"].value_counts())
 
@@ -74,8 +75,6 @@ print(hh[["park_name", "area_ha", "AvgRating", "TotalReviews"]].sort_values("Tot
 print(f"\nSample low salience + low satisfaction parks:")
 ll = van_exp[van_exp["experience_type"] == "low_salience_low_satisfaction"]
 print(ll[["park_name", "area_ha", "AvgRating", "TotalReviews"]].sort_values("TotalReviews", ascending=False).head(5).to_string(index=False))
-
-
 
 # %% 4. PEEK AT DIVERGENCE QUADRANTS
 print("High salience + LOW satisfaction (performing below expectations):")
