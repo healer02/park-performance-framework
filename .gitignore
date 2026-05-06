@@ -223,6 +223,7 @@ __pycache__/
 data/census/raw/*
 data/osm/*
 data/parks/raw/*
+data/google-reviews/*
 
 # geospatial
 *.shp
