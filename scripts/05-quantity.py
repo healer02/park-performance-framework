@@ -472,4 +472,4 @@ plt.tight_layout()
 plt.savefig('outputs/figures/vancouver_da_supply_typology_sensitivity.png', dpi=150, bbox_inches='tight')
 plt.close()
 
-# %%
+
