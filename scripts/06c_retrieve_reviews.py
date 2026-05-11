@@ -22,7 +22,10 @@ import time
 from datetime import datetime
 from apify_client import ApifyClient
 
-API_KEY       = "apify_api_3dgCTr9DPkbhSxUYptWKFbbjezPkOJ0a2pcR"
+# Load API key from local file (not committed to git)
+with open('scripts/apify_key.txt', 'r') as f:
+    API_KEY = f.read().strip()
+
 ACTOR_ID      = "Xb8osYTtOjlsgI6k9"
 AUDIT_PATH    = "data/processed/11-park-coverage-audit.csv"
 EXISTING_PATH = "data/google-reviews/processed/06-all-text-reviews-predicted.csv"

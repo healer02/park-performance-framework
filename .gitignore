@@ -224,6 +224,7 @@ data/census/raw/*
 data/osm/*
 data/parks/raw/*
 data/google-reviews/*
+scripts/apify_key.txt
 
 # geospatial
 *.shp
