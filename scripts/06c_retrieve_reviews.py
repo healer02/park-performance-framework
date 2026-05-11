@@ -4,7 +4,7 @@
 #
 # Inputs:
 #   - data/processed/11-park-coverage-audit.csv
-#   - data/google-reviews/processed/06-all-text-reviews-predicted.csv
+#   - data/google-reviews/raw/from_social_sentiment_study/05-merged-all-reviews.csv
 #
 # Outputs:
 #   - data/google-reviews/raw/07-missing-parks-raw/   (checkpoints)
@@ -28,7 +28,7 @@ with open('scripts/apify_key.txt', 'r') as f:
 
 ACTOR_ID      = "Xb8osYTtOjlsgI6k9"
 AUDIT_PATH    = "data/processed/11-park-coverage-audit.csv"
-EXISTING_PATH = "data/google-reviews/processed/06-all-text-reviews-predicted.csv"
+EXISTING_PATH = "data/google-reviews/raw/from_social_sentiment_study/05-merged-all-reviews.csv"
 CHECKPOINT_DIR= "data/google-reviews/raw/07-missing-parks-raw"
 RAW_OUT       = "data/google-reviews/raw/07-missing-parks-reviews.csv"
 DEST_OUT      = "data/google-reviews/raw/07-destination-parks-reviews.csv"
@@ -252,6 +252,10 @@ for name, pid in {
 
 
 # %% 5. MERGE WITH EXISTING FILE 06
+# Reload combined raw (already pulled, skip re-running Apify)
+combined_raw = pd.read_csv(RAW_OUT)
+print(f"Loaded combined raw: {len(combined_raw)} rows")
+
 existing = pd.read_csv(EXISTING_PATH, low_memory=False)
 print(f"\nExisting file 06 reviews: {len(existing)}")
 
@@ -329,4 +333,10 @@ for park, pids in dual_pid_parks.items():
         count = len(complete[complete['PlaceID'] == pid])
         print(f"{park} | {pid}: {count} reviews")
     print()
+# %%
+complete = pd.read_csv('data/google-reviews/processed/07-all-reviews-complete.csv', low_memory=False)
+has_text = complete['text'].notna() & (complete['text'].str.strip() != '')
+print(f"Total: {len(complete)}")
+print(f"With text: {has_text.sum()}")
+print(f"Without text: {(~has_text).sum()}")
 # %%

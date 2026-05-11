@@ -1,10 +1,10 @@
 # =============================================================================
-# 11-coverage-audit.py
+# 06b-coverage-audit.py
 # Purpose: Audit review coverage against 236-park master
 #
 # Inputs:
 #   - data/parks/processed/06-master-park-placeids.csv
-#   - data/google-reviews/processed/06-all-text-reviews-predicted.csv
+#   - data/google-reviews/raw/from_social_sentiment_study/06-all-text-reviews-predicted.csv
 #
 # Outputs:
 #   - data/processed/11-park-coverage-audit.csv
@@ -21,7 +21,7 @@ import numpy as np
 
 # %% 1. LOAD FILES
 master  = pd.read_csv("data/parks/processed/06-master-park-placeids.csv")
-reviews = pd.read_csv("data/google-reviews/processed/06-all-text-reviews-predicted.csv",
+reviews = pd.read_csv("data/google-reviews/raw/from_social_sentiment_study/06-all-text-reviews-predicted.csv",
                       low_memory=False)
 
 print(f"Master parks:       {len(master)}")
