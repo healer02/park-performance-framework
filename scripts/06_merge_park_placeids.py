@@ -77,6 +77,10 @@ MANUAL_IDS = {
     "Sun Hop Park": "ChIJPSghNvtzhlQRiFdqmVl152A",
     "Lilian To": "ChIJ5RWQau9zhlQR7QbpfAPnPME",
     "Yaletown Park": "ChIJ2UOPGdZzhlQRwvt3gDG7RIY",
+    "Choklit Park":                        "ChIJmYd6Q8RzhlQRnQcUS9mQFVo",
+    "Willow Park":                         "ChIJI6DcWsNzhlQRkRpRrXP9q0w",
+    "Street End - Wall St @ Nanaimo":      "ChIJV6yYZh1xhlQRJb41JgTpR54",
+    "Major Matthews Park":                 "ChIJ2Zs7K-FzhlQRUrWRcS8n4jE",
     "Street End - Wall St @ Kamloops": "ChIJ0Ry2keJwhlQRx1QZL7yHxGg", #Portside View Park
     "Street End - Wall St @ Penticton": "ChIJCSGA_eJwhlQRJo-DM9T0oVw", #Harbour View Park
     "Street End - Wall St @ Slocan" : "ChIJXayKduNwhlQRCIpah-P90nQ", #Commissioner Park
@@ -101,6 +105,26 @@ MANUAL_IDS = {
     "Helmcken Park": "REMOVE", # not a park
     "West End minipark - GILFORD ST @ HARO ST": "REMOVE", # not a park
     "Gibby's Field": "REMOVE", # not a park
+
+    # Fix Sunset Beach PlaceID (typo: 5→4)
+    # Sunset Beach -- two valid PlaceIDs
+    "Sunset Beach Park": "ChIJAWo0tC1yhlQRAL6Iz7Cs6G4, ChIJ0UCTbi1yhlQRQCKD7zPvHBk",
+
+
+    # Moberly Park -- keep SW Diamond as primary (has more reviews)
+    "Moberly Park": "ChIJ7Rw__kV0hlQRQ_CXlmJWnFU",
+
+    # Remove Vanier Park Cultural Harmony Grove (keep original Vanier Park)
+    "Vanier Park (Cultural Harmony Grove)": "REMOVE",
+
+    # East Fraserlands South -- remove place_id but keep in supply
+    "East Fraserlands Neighbourhood Park South": "",
+
+    # Fix Point Grey at Trafalgar PlaceID
+    "Park Site on Point Grey at Trafalgar": "ChIJqeRyDUxyhlQRhqdvgElWoRo",
+
+    # Fix Park Site on Trafalgar Street PlaceID
+    "Park Site On Trafalgar Street": "ChIJ3StweQBzhlQROdIhlxaHYNU",
 }
 
 patched = 0
@@ -143,6 +167,7 @@ print(merged["match_flag"].value_counts())
 
 merged.to_csv(OUTPUT_PATH, index=False)
 print(f"\n✅ Saved to: {OUTPUT_PATH}")
+
 
 
 # %%

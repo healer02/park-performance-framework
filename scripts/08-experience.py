@@ -72,6 +72,27 @@ print(f"Parks with experience data: {len(park_metrics)}")
 print(f"park_id sample: {park_metrics['park_id'].head(3).tolist()}")
 
 
+# %%
+# Merge experience variables back to master
+master_updated = master.merge(
+    park_metrics[['park_id', 'AvgSentiment', 'AvgRating', 'TotalReviews']],
+    on='park_id',
+    how='left'
+)
+
+# Flag missing parks
+master_updated['has_experience_data'] = master_updated['AvgSentiment'].notna()
+
+print(f"Parks with experience data: {master_updated['has_experience_data'].sum()}")
+print(f"Parks missing experience data: {(~master_updated['has_experience_data']).sum()}")
+print(master_updated[['park_id', 'park_name', 'AvgSentiment', 'AvgRating', 'TotalReviews', 'has_experience_data']].head())
+
+master_updated.to_csv("data/parks/processed/06-master-park-placeids.csv", index=False)
+print("Master updated.")
+
+
+
+
 # %% 3. REBUILD DA PARK SETS (network walk, ~5-15 min)
 # Same logic as 05-quantity.py step 3
 import geopandas as gpd
@@ -298,10 +319,14 @@ for dtype, colour in colours_2x2.items():
 
 parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.8, zorder=2)
 
-patches = [
-    mpatches.Patch(color=c, label=f"{t} (n={counts_2x2.get(t, 0)})")
-    for t, c in colours_2x2.items() if t != "No data"
-]
+legend_labels = {
+    "HH": "High supply / high experience",
+    "HL": "High supply / low experience",
+    "LH": "Low supply / high experience",
+    "LL": "Low supply / low experience",
+}
+
+patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q]) for q in ["HH", "HL", "LH", "LL"]]
 ax.legend(handles=patches, loc="lower left", fontsize=9, framealpha=0.9)
 ax.set_title(
     "Supply–Experience Divergence — Vancouver DAs\n"
@@ -440,14 +465,112 @@ print(f"Primary sentiment median:  {sentiment_med:.3f}")
 
 
 
-# %%
-census = pd.read_csv("/Users/keunpark/Documents/GitHub/social-sentiment-score/data/census/raw/parks_census_CANUE_Apportion_update2.csv")
-print(census.shape)
-print(census.columns.tolist())
 
-# %%
-da_census = pd.read_csv("/Users/keunpark/SynologyDrive/Research projects/park vitality and monitoring/social potentials/R/social_sentiment/census_CANUE_DA_nearVan.csv")
-print(da_census.shape)
-print(da_census.columns.tolist())
-print(da_census.head(3))
-# %%
+
+
+
+# %% 6. ADDITIONAL SES VARIABLES
+
+# Compute derived variables
+da_eq["pct_LIM_AT"] = (
+    da_eq["inc_LIM_AT"] / da_eq["inc_totalpop"] * 100
+).round(1)
+da_eq["pct_immigrant"] = (
+    da_eq["immigrant_immigrant"] / da_eq["immigrant_totalpop"] * 100
+).round(1)
+da_eq["pct_bachelor_plus"] = (
+    da_eq["education_bachelor_plus"] / da_eq["education_totalpop"] * 100
+).round(1)
+
+# Define strata
+da_eq["limat_stratum"] = pd.cut(
+    da_eq["pct_LIM_AT"],
+    bins=[0, 10, 20, 100],
+    labels=["Low poverty (<10%)", "Mid poverty (10-20%)", "High poverty (>20%)"]
+)
+da_eq["immigrant_stratum"] = pd.cut(
+    da_eq["pct_immigrant"],
+    bins=[0, 30, 50, 100],
+    labels=["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]
+)
+da_eq["edu_stratum"] = pd.cut(
+    da_eq["pct_bachelor_plus"],
+    bins=[0, 30, 50, 100],
+    labels=["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]
+)
+
+print("LIM-AT stratum counts:")
+print(da_eq["limat_stratum"].value_counts())
+print("\nImmigrant stratum counts:")
+print(da_eq["immigrant_stratum"].value_counts())
+print("\nEducation stratum counts:")
+print(da_eq["edu_stratum"].value_counts())
+
+# Crosstabs
+for stratum_col, label in [
+    ("limat_stratum",    "Low Income (LIM-AT)"),
+    ("immigrant_stratum","Immigrant Share"),
+    ("edu_stratum",      "Education (Bachelor+)"),
+]:
+    print(f"\n{'='*50}")
+    print(f"Divergence by {label}:")
+    ct = pd.crosstab(
+        da_eq[stratum_col],
+        da_eq["divergence_2x2"],
+        normalize="index"
+    ).round(3) * 100
+    print(ct.to_string())
+
+# Chart
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+strata2 = [
+    ("limat_stratum",     "Low Income (LIM-AT %)",
+     ["Low poverty (<10%)", "Mid poverty (10-20%)", "High poverty (>20%)"]),
+    ("immigrant_stratum", "Immigrant Share (%)",
+     ["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]),
+    ("edu_stratum",       "Education (Bachelor+ %)",
+     ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
+]
+
+for ax, (col, title, order) in zip(axes, strata2):
+    ct = pd.crosstab(
+        da_eq[col],
+        da_eq["divergence_2x2"],
+        normalize="index"
+    ) * 100
+    ct = ct.reindex(index=order, columns=["HH", "HL", "LH", "LL"])
+
+    bottom = np.zeros(len(ct))
+    for quad in ["HH", "HL", "LH", "LL"]:
+        if quad in ct.columns:
+            vals = ct[quad].fillna(0).values
+            ax.bar(range(len(ct)), vals, bottom=bottom,
+                   color=colours_2x2[quad], label=quad, width=0.6)
+            bottom += vals
+
+    ax.set_xticks(range(len(ct)))
+    ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
+    ax.set_ylabel("% of DAs")
+    ax.set_title(title)
+    ax.set_ylim(0, 100)
+
+legend_labels = {
+    "HH": "High supply / high experience",
+    "HL": "High supply / low experience",
+    "LH": "Low supply / high experience",
+    "LL": "Low supply / low experience",
+}
+patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q]) for q in ["HH", "HL", "LH", "LL"]]
+fig.legend(handles=patches, loc="lower center", ncol=4,
+           fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
+
+plt.suptitle(
+    "Supply–Experience Divergence by Additional SES Indicators — Vancouver",
+    fontsize=12, y=1.02
+)
+plt.tight_layout()
+plt.savefig(f"{FIG_DIR}/vancouver_equity_stacked_bar_ses.png",
+            dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved SES equity chart.")

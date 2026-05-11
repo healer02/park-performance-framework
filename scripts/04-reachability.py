@@ -34,6 +34,7 @@ Notes:
 """
 
 import os
+os.chdir('/Users/keunpark/Documents/GitHub/park-performance-framework')
 import pandas as pd
 import geopandas as gpd
 import osmnx as ox

@@ -1,0 +1,237 @@
+park_id,source,park_name,area_ha,place_id,match_flag,notes,place_id_list,in_file06,in_neither
+Burnaby_0,Burnaby,CENTRAL PARK,86.43124667612035,ChIJc6RIWYp2hlQRn1enR_bqb2A,exact,Main park ID only,['ChIJc6RIWYp2hlQRn1enR_bqb2A'],False,True
+Vancouver_1,Vancouver,Foster Park,0.2961961934862165,ChIJZ6OKcZJ2hlQRP7l2hZWu-ZQ,exact,,['ChIJZ6OKcZJ2hlQRP7l2hZWu-ZQ'],True,False
+Vancouver_2,Vancouver,Aberdeen Park,0.9830901024412002,ChIJV40wYpJ2hlQRcNMAsizCLwY,exact,,['ChIJV40wYpJ2hlQRcNMAsizCLwY'],True,False
+Burnaby_3,Burnaby,GEORGE MCLEAN PARK,1.320234601313407,ChIJeZApNfJ2hlQRBkl5DdS55n4,exact,,['ChIJeZApNfJ2hlQRBkl5DdS55n4'],False,True
+Vancouver_4,Vancouver,Price Park,0.352134132510416,ChIJ____gOx2hlQRFFnP-o_4Quo,exact,Previous was just for playground. Note that Price Park has 0 reviews but playground has 1 review.,['ChIJ____gOx2hlQRFFnP-o_4Quo'],False,True
+Burnaby_5,Burnaby,WESBURN RAVINE PARK,0.3280855759818343,ChIJfwIDQTh3hlQR2IcSmppKEwo,exact,,['ChIJfwIDQTh3hlQR2IcSmppKEwo'],False,True
+Burnaby_6,Burnaby,WESBURN PARK,3.490066504085698,ChIJDzRKSAB3hlQRQ6KtnnNUH9c,fuzzy,Alternative: Wesburn Spray Park - ChIJFREVfO92hlQRqzc4mVwcrKA,['ChIJDzRKSAB3hlQRQ6KtnnNUH9c'],False,True
+Burnaby_7,Burnaby,DISCOVERY PLACE CONSERVATION AREA,2.873836964204553,ChIJKS61DfV3hlQRIvEUMTi7k8E,exact,,['ChIJKS61DfV3hlQRIvEUMTi7k8E'],False,True
+Burnaby_8,Burnaby,AVONDALE PARK,1.5028542594956795,ChIJb0USbNx2hlQRlgEmn_YekGE,exact,,['ChIJb0USbNx2hlQRlgEmn_YekGE'],False,True
+Burnaby_9,Burnaby,BROADVIEW PARK,3.7127023505720897,ChIJ74xCONl2hlQRkat0UqHiG-Q,exact,,['ChIJ74xCONl2hlQRkat0UqHiG-Q'],False,True
+Burnaby_10,Burnaby,JIM LORIMER PARK,1.2475617216688053,ChIJJUHa9ih3hlQRNLbTZnBaVIs,exact,,['ChIJJUHa9ih3hlQRNLbTZnBaVIs'],False,True
+Vancouver_11,Vancouver,Kinross Corridor – South,0.3648129962019925,ChIJDdlYSlV1hlQR1hzKJVB7Ckc,manual,,['ChIJDdlYSlV1hlQR1hzKJVB7Ckc'],True,False
+Vancouver_12,Vancouver,Gladstone-Riverside Park,1.1349646421405928,ChIJk11occl1hlQRUEwbZnbL6gc,exact,,['ChIJk11occl1hlQRUEwbZnbL6gc'],True,False
+Vancouver_13,Vancouver,Riverfront Park,4.2084700532613875,ChIJaVvpl891hlQRMxprW0l3Vgc,exact,,['ChIJaVvpl891hlQRMxprW0l3Vgc'],True,False
+Vancouver_14,Vancouver,East Fraserlands Neighbourhood Park South,0.1196359859588936,,manual,,[],False,True
+Vancouver_15,Vancouver,Kinross Corridor - Middle,0.142320470339399,ChIJ97K1cFF1hlQRZbJi19XTdwA,manual,,['ChIJ97K1cFF1hlQRZbJi19XTdwA'],True,False
+Vancouver_16,Vancouver,East Fraserlands Neighbourhood Park North,0.1319826122747862,ChIJveRTKMt1hlQRM8ozUUpVVeI,uncertain,,['ChIJveRTKMt1hlQRM8ozUUpVVeI'],False,True
+Vancouver_17,Vancouver,Kinross Ravine Park,1.1999749118924086,ChIJOQXOBtp1hlQR9z7z1XRMcyI,exact,,['ChIJOQXOBtp1hlQR9z7z1XRMcyI'],True,False
+Vancouver_18,Vancouver,Everett Crowley Park,38.20533819421404,ChIJC7uNpdd1hlQRud9Kp4snUtU,exact,,['ChIJC7uNpdd1hlQRud9Kp4snUtU'],True,False
+Vancouver_19,Vancouver,Bobolink Park,3.834472389476899,ChIJTU9RhTJ0hlQReT_ozcd7LFU,exact,,['ChIJTU9RhTJ0hlQReT_ozcd7LFU'],True,False
+Burnaby_20,Burnaby,BURNABY FRASER FORESHORE PARK,15.449836773862751,ChIJ5QquEQF2hlQRtCOKuJ4Zh1U,fuzzy,Very spread out park,['ChIJ5QquEQF2hlQRtCOKuJ4Zh1U'],False,True
+Vancouver_21,Vancouver,Promontory Park,0.2954239552547721,ChIJl6aPJBl1hlQRc7lNZlu_qqQ,exact,,['ChIJl6aPJBl1hlQRc7lNZlu_qqQ'],True,False
+Burnaby_22,Burnaby,KAYMAR CREEK RAVINE PARK,11.859393095440709,ChIJkTBzFHF2hlQRLCCYot0Z5Pw,fuzzy,,['ChIJkTBzFHF2hlQRLCCYot0Z5Pw'],False,True
+Burnaby_23,Burnaby,SUNCREST SCHOOL PARK,2.7744574502023553,ChIJk2ojTWV2hlQRDpU3m6pEVlM,exact,,['ChIJk2ojTWV2hlQRDpU3m6pEVlM'],False,True
+Vancouver_24,Vancouver,Sparwood Park,3.6215774293843728,ChIJHYNgmH12hlQR0gLImPSspGs,exact,,['ChIJHYNgmH12hlQR0gLImPSspGs'],True,False
+Vancouver_25,Vancouver,George Park,1.4383295480465623,ChIJO7VBr1p0hlQRkXQcCX3w55k,exact,,['ChIJO7VBr1p0hlQRkXQcCX3w55k'],True,False
+Vancouver_26,Vancouver,Moberly Park,3.6072269694436567,ChIJ7Rw__kV0hlQRQ_CXlmJWnFU,manual,Old code is for SW Diamond only but has more reviews,['ChIJ7Rw__kV0hlQRQ_CXlmJWnFU'],True,False
+Vancouver_27,Vancouver,Fraserview Park,1.274209015596828,ChIJp46ViGt1hlQRr2L0RXVYFoc,exact,,['ChIJp46ViGt1hlQRr2L0RXVYFoc'],True,False
+Vancouver_28,Vancouver,Ross Park,1.5130434704659337,ChIJX_EtwUd0hlQRSqoCuc14Pjs,exact,,['ChIJX_EtwUd0hlQRSqoCuc14Pjs'],True,False
+Vancouver_29,Vancouver,Sunset Park,7.131510010227392,ChIJj76x_Wl0hlQRo_4SU8yo40k,exact,,['ChIJj76x_Wl0hlQRo_4SU8yo40k'],True,False
+Vancouver_30,Vancouver,Gordon Park,6.899491750809645,ChIJ____Ezt0hlQRbH4nQIeSKys,exact,,['ChIJ____Ezt0hlQRbH4nQIeSKys'],True,False
+Vancouver_31,Vancouver,MacDonald Park,1.0552802047300989,ChIJMdSO6Wx0hlQRZVtjAbrtrW8,exact,,['ChIJMdSO6Wx0hlQRZVtjAbrtrW8'],True,False
+Vancouver_32,Vancouver,Tecumseh Park,2.0973505400643364,ChIJj9M8XCJ0hlQRPKFMohArkMo,exact,,['ChIJj9M8XCJ0hlQRPKFMohArkMo'],True,False
+Vancouver_33,Vancouver,Memorial South Park,13.785598534037284,ChIJ_V-LvhZ0hlQRPyVZcd83YiY,exact,,['ChIJ_V-LvhZ0hlQRPyVZcd83YiY'],True,False
+Vancouver_34,Vancouver,Jones Park,1.42758141871929,ChIJDa_CRR50hlQR6O1HYuG72ys,exact,,['ChIJDa_CRR50hlQR6O1HYuG72ys'],True,False
+Vancouver_35,Vancouver,Champlain Heights Park,7.865381544147954,ChIJP8TmK392hlQRs8kUSp-kvQI,exact,,['ChIJP8TmK392hlQRs8kUSp-kvQI'],True,False
+Vancouver_36,Vancouver,Rosemont Park,1.3637005963012985,ChIJK2UkddV1hlQRTBAqFsTxlhg,exact,,['ChIJK2UkddV1hlQRTBAqFsTxlhg'],True,False
+Vancouver_37,Vancouver,Humm Park,0.4721341779626462,ChIJq6rqyDF0hlQRXLjveZ83HR8,exact,,['ChIJq6rqyDF0hlQRXLjveZ83HR8'],True,False
+Vancouver_38,Vancouver,Captain Cook Park,5.502350591445502,ChIJY-gCRX52hlQRZGZEgqY7bQU,exact,,['ChIJY-gCRX52hlQRZGZEgqY7bQU'],True,False
+Vancouver_39,Vancouver,Killarney Park,13.398396050141994,ChIJL9zIRYN2hlQRS0ojoIdUiPE,exact,,['ChIJL9zIRYN2hlQRS0ojoIdUiPE'],True,False
+Vancouver_40,Vancouver,Nanaimo Park,2.920107048354131,ChIJ____Gyd0hlQRiDN-vHOS1bE,exact,wrong ID,['ChIJ____Gyd0hlQRiDN-vHOS1bE'],False,True
+Vancouver_41,Vancouver,Earles Park,1.5884013920979632,ChIJcU6_Epx2hlQRNvEPUWuryHI,exact,,['ChIJcU6_Epx2hlQRNvEPUWuryHI'],True,False
+Vancouver_42,Vancouver,Gaston Park,1.5072425630239386,ChIJGxWYt5N2hlQRpSVP-1KR7mM,exact,,['ChIJGxWYt5N2hlQRpSVP-1KR7mM'],True,False
+Vancouver_43,Vancouver,Melbourne Park,0.4896656403396807,ChIJG_DeAJN2hlQRchN6SnOa_Ok,exact,,['ChIJG_DeAJN2hlQRchN6SnOa_Ok'],True,False
+Vancouver_44,Vancouver,Cartier Park,0.3665449791075457,ChIJN2vpOgx0hlQReb3pmmh_wZI,exact,,['ChIJN2vpOgx0hlQReb3pmmh_wZI'],True,False
+Vancouver_45,Vancouver,Kensington Park,5.768300829266355,ChIJO8AziRx0hlQRVI1T6sf_Gdo,exact,,['ChIJO8AziRx0hlQRVI1T6sf_Gdo'],True,False
+Vancouver_46,Vancouver,Grays Park,1.6172951156451676,ChIJ0Y_5UwR0hlQR-iOTsGZ7xEw,exact,,['ChIJ0Y_5UwR0hlQR-iOTsGZ7xEw'],True,False
+Vancouver_47,Vancouver,Riley Park,2.705905344236207,ChIJk2TkDgp0hlQRkWrt4bl_2QM,exact,,['ChIJk2TkDgp0hlQRkWrt4bl_2QM'],True,False
+Vancouver_48,Vancouver,Hillcrest Park,7.533767664570319,ChIJy1jYS_RzhlQRAGB4_a8DoeI,exact,,['ChIJy1jYS_RzhlQRAGB4_a8DoeI'],True,False
+Vancouver_49,Vancouver,Kingcrest Park,2.4760567998351717,ChIJhShFK6p2hlQRScal2yKlk_Y,exact,,['ChIJhShFK6p2hlQRScal2yKlk_Y'],True,False
+Vancouver_50,Vancouver,Brewers Park,1.3867419304657047,ChIJZyqg6a52hlQRP-UiMhm_Sdw,exact,,['ChIJZyqg6a52hlQRP-UiMhm_Sdw'],True,False
+Vancouver_51,Vancouver,Glen Park,1.094707183737018,ChIJryDxBQB0hlQRbtirTQEAV5Y,exact,,['ChIJryDxBQB0hlQRbtirTQEAV5Y'],True,False
+Vancouver_52,Vancouver,Prince Edward Park,1.217281654082649,ChIJm9c-2_tzhlQRCZ0h-hxuSaw,exact,,['ChIJm9c-2_tzhlQRCZ0h-hxuSaw'],True,False
+Vancouver_53,Vancouver,Norquay Park,2.2711646173653475,ChIJdWKlgZh2hlQRzqmlKiCHq5w,exact,,['ChIJdWKlgZh2hlQRzqmlKiCHq5w'],True,False
+Vancouver_54,Vancouver,Collingwood Park,1.2710970318952042,ChIJQWLyspZ2hlQRcqZoordgcDc,exact,,['ChIJQWLyspZ2hlQRcqZoordgcDc'],True,False
+Vancouver_55,Vancouver,Carleton Park,0.6846958778105309,ChIJqTIU0Op2hlQRnLzWdxS4vXg,exact,,['ChIJqTIU0Op2hlQRnLzWdxS4vXg'],True,False
+Vancouver_56,Vancouver,Slocan Park,4.215052562860889,ChIJq74VcLx2hlQRqTLGA5zPWJw,exact,,['ChIJq74VcLx2hlQRqTLGA5zPWJw'],True,False
+Vancouver_57,Vancouver,General Brock Park,2.163500758658856,ChIJM0glEqV2hlQRKWLMXS0IhBQ,exact,,['ChIJM0glEqV2hlQRKWLMXS0IhBQ'],True,False
+Vancouver_58,Vancouver,Cariboo Park,0.7686569135310117,ChIJ7U-FfOp2hlQRNtM0uW9ApMc,exact,,['ChIJ7U-FfOp2hlQRNtM0uW9ApMc'],True,False
+Vancouver_59,Vancouver,Renfrew Ravine Park,6.142911707986188,ChIJJc32Trl2hlQR8l9XDVPjlFM,exact,,['ChIJJc32Trl2hlQR8l9XDVPjlFM'],True,False
+Vancouver_60,Vancouver,Renfrew Community Park,5.015662018149384,ChIJGxBSE8h2hlQREGZuQbBmLk4,exact,,['ChIJGxBSE8h2hlQREGZuQbBmLk4'],True,False
+Vancouver_61,Vancouver,John Hendry (Trout Lake) Park,27.39301499480162,ChIJNTdgR7N2hlQRsGx3wkOQ0sk,exact,,['ChIJNTdgR7N2hlQRsGx3wkOQ0sk'],True,False
+Vancouver_62,Vancouver,Beaconsfield Park,4.445567960476784,ChIJBzAe6bV2hlQRzPY-vJUxr-s,exact,,['ChIJBzAe6bV2hlQRzPY-vJUxr-s'],True,False
+Vancouver_63,Vancouver,Falaise Park,7.589311685737394,ChIJmWmNzdp2hlQRWjnSYGKO9j8,exact,,['ChIJmWmNzdp2hlQRWjnSYGKO9j8'],True,False
+Vancouver_64,Vancouver,Kaslo Park,0.4472390009223489,ChIJfecbAzNxhlQRuPoXxBEQCio,exact,,['ChIJfecbAzNxhlQRuPoXxBEQCio'],True,False
+Vancouver_65,Vancouver,Sunrise Park,3.18610429517952,ChIJM2LXoixxhlQR6cOFWdWtq4w,exact,,['ChIJM2LXoixxhlQR6cOFWdWtq4w'],True,False
+Vancouver_66,Vancouver,Garden Park,0.9699779331201226,ChIJZ13eaDdxhlQR4XCkXOKSOAU,exact,,['ChIJZ13eaDdxhlQR4XCkXOKSOAU'],True,False
+Vancouver_67,Vancouver,Thunderbird Park,0.8950338277748151,ChIJdY0tlipxhlQRGfacJ8at8O4,exact,,['ChIJdY0tlipxhlQRGfacJ8at8O4'],True,False
+Vancouver_68,Vancouver,Clinton Park,3.0522401919037216,ChIJu9PyFjBxhlQRcu77PZFWKM0,exact,,['ChIJu9PyFjBxhlQRcu77PZFWKM0'],True,False
+Vancouver_69,Vancouver,Rupert Park,11.837228233496882,ChIJVVQ1MipxhlQRJzWpvSkLUvs,exact,,['ChIJVVQ1MipxhlQRJzWpvSkLUvs'],True,False
+Vancouver_70,Vancouver,Charles Park,1.5422343147649853,ChIJyRYm0NVwhlQRhx_safq7qa8,exact,,['ChIJyRYm0NVwhlQRhx_safq7qa8'],True,False
+Vancouver_71,Vancouver,Templeton Park,1.9329342746641145,ChIJKcr50CJxhlQRAfbaI6BCHD4,exact,,['ChIJKcr50CJxhlQRAfbaI6BCHD4'],True,False
+Vancouver_72,Vancouver,Hastings Community Park,4.2008387179504165,ChIJ7a4QtdhwhlQRJG5RiFTWPe4,exact,,['ChIJ7a4QtdhwhlQRJG5RiFTWPe4'],True,False
+Vancouver_73,Vancouver,Victoria Park,0.8905987372733684,ChIJFZRR0DhxhlQRx0NrqkpG4x4,exact,,['ChIJFZRR0DhxhlQRx0NrqkpG4x4'],True,False
+Vancouver_74,Vancouver,Creekside Park,2.542944538408232,ChIJdT38dmRxhlQRq93GlaDNzn4,exact,,['ChIJdT38dmRxhlQRq93GlaDNzn4'],True,False
+Vancouver_75,Vancouver,Mosaic Creek Park,0.1131386121750755,ChIJAStCZUBxhlQRNnG7eEcbtxw,exact,,['ChIJAStCZUBxhlQRNnG7eEcbtxw'],True,False
+Vancouver_76,Vancouver,Thornton Park,1.4980376266211524,ChIJDyI5MmRxhlQRgNoRd-LruNU,exact,,['ChIJDyI5MmRxhlQRgNoRd-LruNU'],True,False
+Vancouver_77,Vancouver,Grandview Park,0.8935237578660881,ChIJlRlWCz9xhlQREiA2lK11iBA,exact,,['ChIJlRlWCz9xhlQREiA2lK11iBA'],True,False
+Vancouver_78,Vancouver,Trillium Park,2.983335770231069,ChIJqe3omWVxhlQRnQQZik9OmLk,exact,,['ChIJqe3omWVxhlQRnQQZik9OmLk'],True,False
+Vancouver_79,Vancouver,Strathcona Park,10.101651413974784,ChIJSyp71WtxhlQReZtp3mzmPnY,exact,,['ChIJSyp71WtxhlQReZtp3mzmPnY'],True,False
+Vancouver_80,Vancouver,Strathcona Linear Park,0.5047844091443482,ChIJGc_YA2xxhlQRYCN8Qrra0a4,exact,,['ChIJGc_YA2xxhlQRYCN8Qrra0a4'],True,False
+Vancouver_81,Vancouver,Salsbury Park,0.2409914895208215,ChIJhQHU_z1xhlQRMzIBq7vJ02A,exact,,['ChIJhQHU_z1xhlQRMzIBq7vJ02A'],True,False
+Burnaby_82,Burnaby,WILLINGDON HEIGHTS PARK,5.784743445779543,ChIJk3MmTC13hlQRpBc5ngzc9rI,exact,,['ChIJk3MmTC13hlQRpBc5ngzc9rI'],False,True
+Vancouver_83,Vancouver,Adanac Park,4.183695111902693,ChIJc-9iJdFwhlQRLBxxhG8Aos0,exact,,['ChIJc-9iJdFwhlQRLBxxhG8Aos0'],True,False
+Burnaby_84,Burnaby,WEST-SELLS PARK,0.8960379531620521,ChIJr_LGGFtxhlQRC5VWE8jAYHA,exact,,['ChIJr_LGGFtxhlQRC5VWE8jAYHA'],False,True
+Vancouver_85,Vancouver,Fraser River Trail Park,0.3998048901977025,ChIJkZyYPuh0hlQR-O6-mDuHWKY,uncertain,"Used ""hudson gateway""",['ChIJkZyYPuh0hlQR-O6-mDuHWKY'],True,False
+Vancouver_86,Vancouver,Park Site On Shaughnessy Street,0.5625382674414603,ChIJATo6iOV0hlQRFQbsRk6mgH0,fuzzy,,['ChIJATo6iOV0hlQRFQbsRk6mgH0'],True,False
+Vancouver_87,Vancouver,Marpole Park,0.2696471659896872,ChIJaUl9s-t0hlQRgz7XB6izdek,exact,,['ChIJaUl9s-t0hlQRgz7XB6izdek'],True,False
+Vancouver_88,Vancouver,Ebisu Park,0.4209045465718337,ChIJKRZjqO50hlQRFUt8m76rzKw,exact,,['ChIJKRZjqO50hlQRFUt8m76rzKw'],True,False
+Vancouver_89,Vancouver,William Mackie Park,0.4088436410218878,ChIJt8HMwOp0hlQRoABp_Ffp65Q,exact,,['ChIJt8HMwOp0hlQRoABp_Ffp65Q'],True,False
+Vancouver_90,Vancouver,Eburne Park,0.9008658787533704,ChIJi1Mbee50hlQRKK0mG1GDtUc,exact,,['ChIJi1Mbee50hlQRKK0mG1GDtUc'],True,False
+Vancouver_91,Vancouver,Ash Park,0.5135351908077846,ChIJmfKAD_R0hlQR2etVxiSVvu8,exact,,['ChIJmfKAD_R0hlQR2etVxiSVvu8'],True,False
+Vancouver_92,Vancouver,Shannon Park,0.943705706788886,ChIJK86qDpF0hlQRY2FkPtkYryw,exact,,['ChIJK86qDpF0hlQRY2FkPtkYryw'],True,False
+Vancouver_93,Vancouver,Oak Park,5.266789260162897,ChIJM_hBYox0hlQRcujRUfx1r24,exact,,['ChIJM_hBYox0hlQRcujRUfx1r24'],True,False
+Vancouver_94,Vancouver,Winona Park,5.32670002426377,ChIJC5SWvl90hlQRB89ZpxoUHI4,exact,,['ChIJC5SWvl90hlQRB89ZpxoUHI4'],True,False
+Vancouver_95,Vancouver,Fraser River Park,9.070290784799784,ChIJi06rTb50hlQRBFFBzgkGIBM,exact,,['ChIJi06rTb50hlQRBFFBzgkGIBM'],True,False
+Vancouver_96,Vancouver,Riverview Park,2.3844258541140406,ChIJLWJQgpZ0hlQR7ZOtwMe5urQ,exact,,['ChIJLWJQgpZ0hlQR7ZOtwMe5urQ'],True,False
+Vancouver_97,Vancouver,Arbutus Park,0.7399464288958901,ChIJz4_4Rph0hlQR-dUPngR--es,exact,,['ChIJz4_4Rph0hlQR-dUPngR--es'],True,False
+Vancouver_98,Vancouver,Deering Island Park,0.6383976311579238,ChIJ2YWjyVdzhlQRbrb5QTvwKQs,exact,,['ChIJ2YWjyVdzhlQRbrb5QTvwKQs'],True,False
+Vancouver_99,Vancouver,Maple Grove Park,4.208258995151404,ChIJ8aj4P550hlQRjTZU5Nstqok,exact,,['ChIJ8aj4P550hlQRjTZU5Nstqok'],True,False
+Vancouver_100,Vancouver,McCleery Park,0.2512430424817359,ChIJK9gkC2FzhlQRXlcBrT9bETA,exact,,['ChIJK9gkC2FzhlQRXlcBrT9bETA'],True,False
+Vancouver_101,Vancouver,Musqueam Park,23.765774741392363,ChIJF0eHNERzhlQRvbsIL32Zi6I,exact,,['ChIJF0eHNERzhlQRvbsIL32Zi6I'],True,False
+Vancouver_102,Vancouver,Malkin Park,2.4284729881443776,ChIJz07OE2hzhlQRIlnM7UC9NLg,exact,,['ChIJz07OE2hzhlQRIlnM7UC9NLg'],True,False
+Vancouver_103,Vancouver,Kerrisdale Centennial Park,1.5300032464374087,ChIJMbvsBntzhlQRBbPTAp4qVpY,exact,,['ChIJMbvsBntzhlQRBbPTAp4qVpY'],True,False
+Vancouver_104,Vancouver,Cambie Park,0.9349552736341832,ChIJp0x5YWF0hlQRYMKUL3U2BcE,exact,,['ChIJp0x5YWF0hlQRYMKUL3U2BcE'],True,False
+Vancouver_105,Vancouver,Langara Park,1.2144211866921284,ChIJZzh7dhB1hlQRSlV-04fDXD0,fuzzy,Unclear if includes golf course and perimeter trail,['ChIJZzh7dhB1hlQRSlV-04fDXD0'],False,True
+Vancouver_106,Vancouver,Tisdall Park,5.03617000240216,ChIJG6h0OXt0hlQRY4B37Wd5hPs,exact,,['ChIJG6h0OXt0hlQRY4B37Wd5hPs'],True,False
+Vancouver_107,Vancouver,Montgomery Park,4.029881754480023,ChIJg7fz5n50hlQRo9GXpVhSDlM,exact,,['ChIJg7fz5n50hlQRo9GXpVhSDlM'],True,False
+Vancouver_108,Vancouver,Columbia Park,2.7891455857579426,ChIJM302BHF0hlQRqFOUt6e8n90,exact,,['ChIJM302BHF0hlQRqFOUt6e8n90'],True,False
+Vancouver_109,Vancouver,Oak Meadows Park,4.739711729851576,ChIJafAXZYhzhlQRZ1X6Zx94FeU,exact,,['ChIJafAXZYhzhlQRZ1X6Zx94FeU'],True,False
+Vancouver_110,Vancouver,Vandusen Botanical Garden,22.36141285031952,ChIJwW3HeIZzhlQRVxJgWI8VjAg,manual,,['ChIJwW3HeIZzhlQRVxJgWI8VjAg'],False,True
+Vancouver_111,Vancouver,Queen Elizabeth Park,53.28454134129558,ChIJIcZrTvVzhlQRiKTnD03vt7Q,manual,,['ChIJIcZrTvVzhlQRiKTnD03vt7Q'],False,True
+Vancouver_112,Vancouver,Devonshire Park,1.5286016804984024,ChIJ4eZqHpBzhlQRbF5hkWtQPN8,exact,,['ChIJ4eZqHpBzhlQRbF5hkWtQPN8'],True,False
+Vancouver_113,Vancouver,Elm Park,1.495538521680449,ChIJk1uxP2VzhlQRi5nrQ102bFA,exact,,['ChIJk1uxP2VzhlQRi5nrQ102bFA'],True,False
+Vancouver_114,Vancouver,Kerrisdale Park,2.9972151268110285,ChIJuZnNIHpzhlQRH-rkHfIn4bI,exact,,['ChIJuZnNIHpzhlQRH-rkHfIn4bI'],True,False
+Vancouver_115,Vancouver,Ravine Park,0.9201103401666912,ChIJ8YDE_HZzhlQRHs20Hhi1pyk,exact,,['ChIJ8YDE_HZzhlQRHs20Hhi1pyk'],True,False
+Vancouver_116,Vancouver,Memorial West Park,7.511579628139858,ChIJy6XHNhRzhlQRgMzwOxCqpZ0,exact,,['ChIJy6XHNhRzhlQRgMzwOxCqpZ0'],True,False
+Vancouver_117,Vancouver,Quilchena Park,7.692325821772762,ChIJQR19tJ1zhlQRHjXiVUw7YjQ,exact,,['ChIJQR19tJ1zhlQRHjXiVUw7YjQ'],True,False
+Vancouver_118,Vancouver,Prince Of Wales Park,2.8943266649729624,ChIJy5zamnVzhlQROs6bOMWf3m4,exact,,['ChIJy5zamnVzhlQROs6bOMWf3m4'],True,False
+Vancouver_119,Vancouver,Park Site On Trafalgar Street,0.1364974351413605,ChIJ3StweQBzhlQROdIhlxaHYNU,manual,,['ChIJ3StweQBzhlQROdIhlxaHYNU'],False,True
+Vancouver_120,Vancouver,Balaclava Park,4.898701529605987,ChIJXfWhew1zhlQRxF2EcUJj18U,exact,,['ChIJXfWhew1zhlQRxF2EcUJj18U'],True,False
+Vancouver_121,Vancouver,Chaldecott Park,3.4570534339846892,ChIJ0f6r_RlzhlQRG3hs6hOQHDc,exact,,['ChIJ0f6r_RlzhlQRG3hs6hOQHDc'],True,False
+Vancouver_122,Vancouver,Arbutus Village Park,1.4122582984871996,ChIJNa3NzqFzhlQRKYEj2VkGFK0,exact,,['ChIJNa3NzqFzhlQRKYEj2VkGFK0'],True,False
+Vancouver_123,Vancouver,Trafalgar Park,4.864674354124592,ChIJFZtqm6BzhlQRViBt0mI2ZIU,exact,,['ChIJFZtqm6BzhlQRViBt0mI2ZIU'],True,False
+Vancouver_124,Vancouver,Valdez Park,0.7689368807578044,ChIJ1XTxNQ9zhlQRC65vCiN3u-E,exact,,['ChIJ1XTxNQ9zhlQRC65vCiN3u-E'],True,False
+Vancouver_125,Vancouver,Angus Park,0.899249048606294,ChIJOTyt_ZdzhlQRszXvVBYi0ws,exact,,['ChIJOTyt_ZdzhlQRszXvVBYi0ws'],True,False
+Vancouver_126,Vancouver,Carnarvon Park,4.243831294285206,ChIJU_7O9QdzhlQRT1nFVPrl2yE,exact,,['ChIJU_7O9QdzhlQRT1nFVPrl2yE'],True,False
+Vancouver_127,Vancouver,Quadra West Park,0.1421102535413312,ChIJeZSkvAZzhlQRQdKZJ08SxVU,exact,,['ChIJeZSkvAZzhlQRQdKZJ08SxVU'],True,False
+MetroVancouver_128,MetroVancouver,Pacific Spirit Regional Park,511.01317130433546,ChIJEaF3zSVzhlQRoHELsXvwmDM,fuzzy,Could also include Wreck Beach: ChIJUzqZj0oNhlQRSzlBeYd5v-0,['ChIJEaF3zSVzhlQRoHELsXvwmDM'],False,True
+Vancouver_129,Vancouver,Granville Park,1.967067406206696,ChIJcbmkHLxzhlQRkMlWXjPgShU,exact,,['ChIJcbmkHLxzhlQRkMlWXjPgShU'],True,False
+Vancouver_130,Vancouver,Almond Park,1.614077026317408,ChIJzy68lgFzhlQR3bAMfmlJakQ,exact,,['ChIJzy68lgFzhlQR3bAMfmlJakQ'],True,False
+Vancouver_131,Vancouver,Connaught Park,5.998422871135608,ChIJwwg2M65zhlQR4r-M83JybOI,exact,,['ChIJwwg2M65zhlQR4r-M83JybOI'],True,False
+Vancouver_132,Vancouver,Arbutus Greenway Park,0.6892910731915232,ChIJF391QrBzhlQRw86A7fL1egg,exact,,['ChIJF391QrBzhlQRw86A7fL1egg'],True,False
+Vancouver_133,Vancouver,Braemar Park,1.2599339038148545,ChIJr5Ykeo1zhlQRxTFCPQi4ndQ,exact,,['ChIJr5Ykeo1zhlQRxTFCPQi4ndQ'],True,False
+Vancouver_134,Vancouver,Douglas Park,5.335434689248188,ChIJAUw1JNRzhlQRCnHVzI24sCs,exact,,['ChIJAUw1JNRzhlQRCnHVzI24sCs'],True,False
+Vancouver_135,Vancouver,Heather Park,0.9786709555745248,ChIJmUG1iutzhlQRMbhW_oYYz6s,exact,,['ChIJmUG1iutzhlQRMbhW_oYYz6s'],True,False
+Vancouver_136,Vancouver,Shaughnessy Park,1.4511219160960305,ChIJSbuugZVzhlQRTdS00C0zXyY,exact,,['ChIJSbuugZVzhlQRTdS00C0zXyY'],True,False
+Vancouver_137,Vancouver,Lilian To,0.1416529125979901,ChIJ5RWQau9zhlQR7QbpfAPnPME,manual,,['ChIJ5RWQau9zhlQR7QbpfAPnPME'],True,False
+Vancouver_138,Vancouver,Willow Park,0.0714570633575584,ChIJI6DcWsNzhlQRkRpRrXP9q0w,manual,,['ChIJI6DcWsNzhlQRkRpRrXP9q0w'],True,False
+Vancouver_139,Vancouver,Choklit Park,0.0673899881874338,ChIJmYd6Q8RzhlQRnQcUS9mQFVo,manual,,['ChIJmYd6Q8RzhlQRnQcUS9mQFVo'],True,False
+Vancouver_140,Vancouver,Laurel Landbridge Park,0.154060485687299,ChIJjZEhpMRzhlQRXE_k76Ovthk,exact,,['ChIJjZEhpMRzhlQRXE_k76Ovthk'],True,False
+Vancouver_141,Vancouver,Granville Loop Park,1.0576262491005026,ChIJ47iOlshzhlQRTY5NyGaKwuU,exact,,['ChIJ47iOlshzhlQRTY5NyGaKwuU'],True,False
+Vancouver_142,Vancouver,Charleson Park,7.24506094998271,ChIJpcthL9tzhlQRctQyvr0X2MI,exact,,['ChIJpcthL9tzhlQRctQyvr0X2MI'],True,False
+Vancouver_143,Vancouver,Grimmett Park,0.2423807022478004,ChIJIbUdIftzhlQR3FxYHnV9bFA,exact,,['ChIJIbUdIftzhlQR3FxYHnV9bFA'],False,True
+Vancouver_144,Vancouver,Sun Hop Park,0.1613126394672298,ChIJPSghNvtzhlQRiFdqmVl152A,manual,,['ChIJPSghNvtzhlQRiFdqmVl152A'],False,True
+Vancouver_145,Vancouver,Sunnyside Park,0.971854362038692,ChIJlTfKFFRxhlQRUctT1m7IU8c,exact,,['ChIJlTfKFFRxhlQRUctT1m7IU8c'],True,False
+Vancouver_146,Vancouver,Mount Pleasant Park,1.118571507241686,ChIJ2-nGU-RzhlQRg10wKBoIhv4,exact,,['ChIJ2-nGU-RzhlQRg10wKBoIhv4'],True,False
+Vancouver_147,Vancouver,Tea Swamp Park,0.2633232881386645,ChIJxxdSOONzhlQRSddacN9azVQ,exact,,['ChIJxxdSOONzhlQRSddacN9azVQ'],True,False
+Vancouver_148,Vancouver,Clark Park,4.298638142764009,ChIJJ_kBcVJxhlQRiqlikNPSCLY,exact,,['ChIJJ_kBcVJxhlQRiqlikNPSCLY'],True,False
+Vancouver_149,Vancouver,Robson Park,1.5652428799599776,ChIJ4w9s-VdxhlQRmt-tSScFR8I,exact,,['ChIJ4w9s-VdxhlQRmt-tSScFR8I'],True,False
+Vancouver_150,Vancouver,Major Matthews Park,0.0743914382005765,ChIJ2Zs7K-FzhlQRUrWRcS8n4jE,manual,,['ChIJ2Zs7K-FzhlQRUrWRcS8n4jE'],True,False
+Vancouver_151,Vancouver,Cedar Cottage Park,0.4728786658262306,ChIJtRQtKlBxhlQRaIjzYLWTH8c,exact,,['ChIJtRQtKlBxhlQRaIjzYLWTH8c'],True,False
+Vancouver_152,Vancouver,Rosemary Brown Park,0.4950770732286146,ChIJS5wbJLBzhlQRoCRPmPuGU8Y,exact,,['ChIJS5wbJLBzhlQRoCRPmPuGU8Y'],True,False
+Vancouver_153,Vancouver,West Point Grey Park,3.752669690812062,ChIJF3ZzyvpyhlQR2PRpa6WD4yw,exact,,['ChIJF3ZzyvpyhlQR2PRpa6WD4yw'],True,False
+Vancouver_154,Vancouver,Delamont Park,0.3333201169663353,ChIJz8ibx7ZzhlQRfNxBURpAlo0,exact,,['ChIJz8ibx7ZzhlQRfNxBURpAlo0'],True,False
+Vancouver_155,Vancouver,6th and Fir,0.1344785970347771,ChIJQ1sOFchzhlQRoXMYDrzBCi8,manual,,['ChIJQ1sOFchzhlQRoXMYDrzBCi8'],True,False
+Vancouver_156,Vancouver,5th and Pine,0.1115163466708633,ChIJ__-vMMhzhlQRvgmDj4xwh40,manual,,['ChIJ__-vMMhzhlQRvgmDj4xwh40'],True,False
+Vancouver_157,Vancouver,McBride Park,1.7139528153459287,ChIJqYcdRFRyhlQRaECLerpvnGU,exact,,['ChIJqYcdRFRyhlQRaECLerpvnGU'],True,False
+Vancouver_158,Vancouver,Tatlow Park,1.403307997861267,ChIJj9LmgVJyhlQRMSv-tmobp8U,exact,,['ChIJj9LmgVJyhlQRMSv-tmobp8U'],True,False
+Vancouver_159,Vancouver,Westmount Park,0.3970831302557805,ChIJ_8GQ6V1zhlQRVtXzc6MCZVg,exact,Wrong ID,['ChIJ_8GQ6V1zhlQRVtXzc6MCZVg'],False,True
+Vancouver_160,Vancouver,Park Site on Point Grey at šxʷməθkʷəy̓əmasəm (Musq,0.213704688360158,ChIJd7CrglFyhlQRhCfsNwzHzYE,manual,,['ChIJd7CrglFyhlQRhCfsNwzHzYE'],True,False
+Vancouver_161,Vancouver,Volunteer Park,0.7255679853061457,ChIJnfJjlE1yhlQR6fGIpVjE_9E,exact,,['ChIJnfJjlE1yhlQR6fGIpVjE_9E'],True,False
+Vancouver_162,Vancouver,China Creek South Park,1.6561738194258506,ChIJ5XTCEFBxhlQRSX_XuEGkLJA,exact,,['ChIJ5XTCEFBxhlQRSX_XuEGkLJA'],True,False
+Vancouver_163,Vancouver,W.C. Shelly Park,0.4479043144693012,ChIJN7q5Ek9xhlQRnuYOz9pJpoM,exact,,['ChIJN7q5Ek9xhlQRnuYOz9pJpoM'],True,False
+Vancouver_164,Vancouver,Jonathan Rogers Park,1.4034402734679432,ChIJuxe5nuBzhlQRGzxeBtLX_90,exact,,['ChIJuxe5nuBzhlQRGzxeBtLX_90'],True,False
+Vancouver_165,Vancouver,Guelph Park,1.044701379411163,ChIJ4bD6IF9xhlQRslSTYK4lOfM,exact,,['ChIJ4bD6IF9xhlQRslSTYK4lOfM'],True,False
+Vancouver_166,Vancouver,Sahalli Park,0.5471233861074597,ChIJnUSZ3VtxhlQRHp5L-dYmDbA,exact,,['ChIJnUSZ3VtxhlQRHp5L-dYmDbA'],True,False
+Vancouver_167,Vancouver,China Creek North Park,3.1742196469464954,ChIJP2cAOltxhlQROoXZvfN2rdY,exact,,['ChIJP2cAOltxhlQROoXZvfN2rdY'],True,False
+Vancouver_168,Vancouver,McSpadden Park,1.6291630179029877,ChIJ2cKodkhxhlQRF9dd0FsDc14,exact,,['ChIJ2cKodkhxhlQRF9dd0FsDc14'],True,False
+Vancouver_169,Vancouver,Alice Townley Park,0.2244104956839721,ChIJM4NmxEZxhlQRAM7rBUX3uN4,exact,,['ChIJM4NmxEZxhlQRAM7rBUX3uN4'],True,False
+Vancouver_170,Vancouver,East Park,0.5806673336350324,ChIJNf8SCQ9xhlQR0XX0ndH7c-U,exact,,['ChIJNf8SCQ9xhlQR0XX0ndH7c-U'],True,False
+Vancouver_171,Vancouver,Sutcliffe Park,2.51721060583821,ChIJi8uFFc9zhlQRsj44EqhKgzA,exact,,['ChIJi8uFFc9zhlQRsj44EqhKgzA'],True,False
+Vancouver_172,Vancouver,Granville Island Water Park,0.2645161512827719,ChIJ38kXhc1zhlQRSwgjFzVBDgE,exact,,['ChIJ38kXhc1zhlQRSwgjFzVBDgE'],True,False
+Vancouver_173,Vancouver,Park Site On South East False Creek (Hinge Park),1.3313305859339042,ChIJMzf4dmJxhlQRWGgp8cpI0eU,exact,,['ChIJMzf4dmJxhlQRWGgp8cpI0eU'],True,False
+Vancouver_174,Vancouver,David Lam Park,3.5519070001536237,ChIJxe0X69BzhlQRN8arE-4IpMY,exact,,['ChIJxe0X69BzhlQRN8arE-4IpMY'],True,False
+Vancouver_175,Vancouver,George Wainborn Park,2.3589321714816185,ChIJyc3aydFzhlQR43lpkTY-G0c,exact,,['ChIJyc3aydFzhlQR43lpkTY-G0c'],True,False
+Vancouver_176,Vancouver,Habitat Island Park,0.6028334089508882,ChIJrWwEf2JxhlQRKMuYEPVuOPU,exact,,['ChIJrWwEf2JxhlQRKMuYEPVuOPU'],True,False
+Vancouver_177,Vancouver,Coopers' Park,1.851835196804662,ChIJMVTzBthzhlQRW6T6LQaOxoU,exact,,['ChIJMVTzBthzhlQRW6T6LQaOxoU'],True,False
+Vancouver_178,Vancouver,May & Lorne Brown Park,0.2512475719142125,ChIJy45ZONJzhlQR8LQwVz87pzA,exact,,['ChIJy45ZONJzhlQR8LQwVz87pzA'],True,False
+Vancouver_179,Vancouver,Jean Beaty Park,0.126008566915336,ChIJnRglPVFyhlQR03Sua9dIDi0,exact,,['ChIJnRglPVFyhlQR03Sua9dIDi0'],True,False
+Vancouver_180,Vancouver,Jericho Beach Park,48.235374409690415,"ChIJ5xH-_PZyhlQR2oyzoLe8M-c, ChIJBdOUdVhyhlQRf5X1qM6aus8",exact,,"['ChIJ5xH-_PZyhlQR2oyzoLe8M-c', 'ChIJBdOUdVhyhlQRf5X1qM6aus8']",True,False
+Vancouver_181,Vancouver,Seaforth Peace Park,0.792671767245045,ChIJJ0-wUspzhlQRKt_ZlwgVYYs,exact,,['ChIJJ0-wUspzhlQRKt_ZlwgVYYs'],True,False
+Vancouver_182,Vancouver,Margaret Pigott Park,0.381529476994867,ChIJQcEWtE1yhlQRq5EvZuP3fYM,exact,,['ChIJQcEWtE1yhlQRq5EvZuP3fYM'],True,False
+Vancouver_183,Vancouver,Hastings Mill Park,1.2353512248255365,ChIJBdvqe1dyhlQR7Nf9Nd_YHIA,exact,,['ChIJBdvqe1dyhlQR7Nf9Nd_YHIA'],True,False
+Vancouver_184,Vancouver,Park Site on Point Grey at Stephens,0.2290353942419839,ChIJBR-XSExyhlQRVaU4Z8qga0I,fuzzy,,['ChIJBR-XSExyhlQRVaU4Z8qga0I'],True,False
+Vancouver_185,Vancouver,Locarno Beach Park,14.73526886866686,"ChIJwzH1iPNyhlQRnNtrx--1dRo, ChIJU85SfvNyhlQROqo2GnhKkPY",exact,,"['ChIJwzH1iPNyhlQRnNtrx--1dRo', 'ChIJU85SfvNyhlQROqo2GnhKkPY']",True,False
+Vancouver_186,Vancouver,Park Site on Point Grey at Trafalgar,0.2905483362687796,ChIJqeRyDUxyhlQRhqdvgElWoRo,manual,As 'Trafalgar Triangle Park Site',['ChIJqeRyDUxyhlQRhqdvgElWoRo'],True,False
+Vancouver_187,Vancouver,Kitsilano Beach Park,13.612187785693148,"ChIJnVFsezVyhlQRf5O-Pe5uQ04, ChIJHUYfoDVyhlQRrGFzpe5fhaQ",exact,,"['ChIJnVFsezVyhlQRf5O-Pe5uQ04', 'ChIJHUYfoDVyhlQRrGFzpe5fhaQ']",True,False
+Vancouver_188,Vancouver,Emery Barnes Park,0.897458887204571,ChIJHTh_ntZzhlQRfufbHHTUOrY,exact,,['ChIJHTh_ntZzhlQRfufbHHTUOrY'],True,False
+Vancouver_189,Vancouver,Yaletown Park,0.1393031197776503,ChIJ2UOPGdZzhlQRwvt3gDG7RIY,manual,,['ChIJ2UOPGdZzhlQRwvt3gDG7RIY'],False,True
+Vancouver_190,Vancouver,Sunset Beach Park,3.6447666940059658,"ChIJAWo0tC1yhlQRAL6Iz7Cs6G4, ChIJ0UCTbi1yhlQRQCKD7zPvHBk",manual,"Adding ""Sunset Beach"" to be consistent","['ChIJAWo0tC1yhlQRAL6Iz7Cs6G4', 'ChIJ0UCTbi1yhlQRQCKD7zPvHBk']",True,False
+Vancouver_191,Vancouver,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow),0.306310884221517,ChIJ91Xo0aRxhlQRRaOE88piwQ4,manual,,['ChIJ91Xo0aRxhlQRRaOE88piwQ4'],True,False
+Vancouver_192,Vancouver,Victory Square,0.3898039934295843,ChIJgRB-c3lxhlQRxAU0p5Nk128,manual,,['ChIJgRB-c3lxhlQRxAU0p5Nk128'],False,True
+Vancouver_193,Vancouver,Nelson Park,1.166710290358019,ChIJp6Yu-ipyhlQRTLUcQSOMft8,exact,,['ChIJp6Yu-ipyhlQRTLUcQSOMft8'],True,False
+Vancouver_194,Vancouver,Cathedral Square,0.2677035275192906,ChIJz2Z0KHlxhlQRLtddSsnlI6U,manual,,['ChIJz2Z0KHlxhlQRLtddSsnlI6U'],False,True
+Vancouver_195,Vancouver,Art Phillips Park,0.1030255958250049,ChIJuSjYgoFxhlQRkNmzBbPyqU4,manual,,['ChIJuSjYgoFxhlQRkNmzBbPyqU4'],False,True
+Vancouver_196,Vancouver,Barclay Heritage Square,0.6330556629877405,ChIJuRmp2ylyhlQRRRIBDobG380,manual,,['ChIJuRmp2ylyhlQRRRIBDobG380'],True,False
+Vancouver_197,Vancouver,Portal Park,0.1014385954364399,ChIJK5QMvYNxhlQRDW_gXLRmz9I,manual,,['ChIJK5QMvYNxhlQRDW_gXLRmz9I'],False,True
+Vancouver_198,Vancouver,Coal Harbour Park,0.954766910002646,ChIJta9pnIZxhlQRjOVLcnemBFE,exact,,['ChIJta9pnIZxhlQRjOVLcnemBFE'],True,False
+Vancouver_199,Vancouver,Harbour Green Park,3.202602245264767,ChIJQwI_Q4RxhlQRJ-IPbxaY9Os,exact,,['ChIJQwI_Q4RxhlQRJ-IPbxaY9Os'],True,False
+Vancouver_200,Vancouver,Cardero Park,0.3262679306708125,ChIJu1Lnq6lxhlQR6pcX6rbjjts,fuzzy,,['ChIJu1Lnq6lxhlQR6pcX6rbjjts'],True,False
+Vancouver_201,Vancouver,Marina Square,0.631900993408958,ChIJO-T6lIhxhlQRCWwZrAhZ7vA,manual,,['ChIJO-T6lIhxhlQRCWwZrAhZ7vA'],True,False
+Vancouver_202,Vancouver,Devonian Harbour Park,4.089583478244414,ChIJicVMCYlxhlQRLly-YmGOfu4,exact,,['ChIJicVMCYlxhlQRLly-YmGOfu4'],True,False
+Vancouver_203,Vancouver,Spanish Banks Beach Park,14.526058613801348,"ChIJLQnMgZJyhlQRnRaqpqnAhgg, ChIJXRC8b41yhlQRLSiIqsnw5m0",manual,Could consider adding Spanish Banks Off Leash Dog Area to include west portion -ChIJIxV11ZZyhlQR6lOWn2aTIlQ,"['ChIJLQnMgZJyhlQRnRaqpqnAhgg', 'ChIJXRC8b41yhlQRLSiIqsnw5m0']",True,False
+Vancouver_204,Vancouver,Vanier Park,21.346225485185112,ChIJcUir1MxzhlQRBUXcDCRBgoI,manual,,['ChIJcUir1MxzhlQRBUXcDCRBgoI'],False,True
+Vancouver_205,Vancouver,Hadden Park,2.965751524179684,ChIJk9VbpjVyhlQRoPnK3Fg0pTg,exact,,['ChIJk9VbpjVyhlQRoPnK3Fg0pTg'],True,False
+Vancouver_206,Vancouver,English Bay Beach Park,9.979982869834672,"ChIJ7WHSBi9yhlQRdLXmpczA6wo, ChIJ86zkaC9yhlQR4GhBA8iTiy4",exact,,"['ChIJ7WHSBi9yhlQRdLXmpczA6wo', 'ChIJ86zkaC9yhlQR4GhBA8iTiy4']",True,False
+Vancouver_207,Vancouver,Alexandra Park,0.548802922190075,ChIJrzzU_y5yhlQR3gtnchw_YCI,exact,,['ChIJrzzU_y5yhlQR3gtnchw_YCI'],True,False
+Vancouver_208,Vancouver,Morton Park,0.2199306808341635,ChIJ__wzVS9yhlQRXRtamFaDvyY,exact,,['ChIJ__wzVS9yhlQRXRtamFaDvyY'],True,False
+Vancouver_209,Vancouver,Stanley Park,418.38437933456487,ChIJo-QmrYxxhlQRFuIJtJ1jSjY,manual,,['ChIJo-QmrYxxhlQRFuIJtJ1jSjY'],False,True
+Vancouver_210,Vancouver,Pandora Park,1.6683105971273458,ChIJEWq_7hhxhlQR_k-jUi4iX1I,exact,,['ChIJEWq_7hhxhlQR_k-jUi4iX1I'],True,False
+Vancouver_211,Vancouver,Hastings Park - Sanctuary,4.2470978909020465,ChIJM8cCYt9whlQRY02U31n5pbs,manual,,['ChIJM8cCYt9whlQRY02U31n5pbs'],False,True
+Vancouver_212,Vancouver,Hastings Park - Italian Garden,1.9651454437424531,ChIJoQ4kvd9whlQRmGkWeuxCzpI,manual,,['ChIJoQ4kvd9whlQRmGkWeuxCzpI'],False,True
+Vancouver_213,Vancouver,Oxford Park,0.2486126935348659,ChIJTRl33BtxhlQRM2vJsGWhUj8,exact,,['ChIJTRl33BtxhlQRM2vJsGWhUj8'],True,False
+Vancouver_214,Vancouver,Callister Park,1.4504921317926012,ChIJJZf3XeBwhlQR85cMSoejEXw,exact,,['ChIJJZf3XeBwhlQR85cMSoejEXw'],True,False
+Vancouver_215,Vancouver,Creekway Park,1.3502920753244865,ChIJDX5iWN1whlQRwiiUycZhmuw,exact,,['ChIJDX5iWN1whlQRwiiUycZhmuw'],True,False
+Vancouver_216,Vancouver,McGill Park,0.2572962537581882,ChIJuRwPsR1xhlQRlVZ7Wa4LGok,exact,,['ChIJuRwPsR1xhlQRlVZ7Wa4LGok'],True,False
+Vancouver_217,Vancouver,Park Site On Trinity Street,0.1595459057514895,ChIJe9a54hxxhlQRdnmu96eNPx4,fuzzy,,['ChIJe9a54hxxhlQRdnmu96eNPx4'],True,False
+Burnaby_218,Burnaby,BURNABY HEIGHTS PARK,4.051521065218757,ChIJUVM6OsFwhlQRocviQfwQBYo,exact,,['ChIJUVM6OsFwhlQRocviQfwQBYo'],False,True
+Burnaby_219,Burnaby,MCGILL PARK,1.4353769088722992,ChIJT67BwrhwhlQRoUW5PEDaZzE,exact,,['ChIJT67BwrhwhlQRoUW5PEDaZzE'],False,True
+Vancouver_220,Vancouver,Bates Park,0.3386401141138044,ChIJn6ZWa8JwhlQR9bGRxUHxkfE,exact,,['ChIJn6ZWa8JwhlQR9bGRxUHxkfE'],True,False
+Burnaby_221,Burnaby,SECOND NARROWS PARK,11.358624305016896,ChIJIZKsD8BwhlQRAMHnVzVhUWk,uncertain,Named Montrose Park,['ChIJIZKsD8BwhlQRAMHnVzVhUWk'],False,True
+Vancouver_222,Vancouver,Andy Livingstone Park,4.219575261419402,ChIJFRGrHHtxhlQRAZVZlqaROSw,exact,,['ChIJFRGrHHtxhlQRAZVZlqaROSw'],True,False
+Vancouver_223,Vancouver,Maclean Park,1.2110010504776327,ChIJbyrrMGxxhlQRY5TfOsP4DfI,exact,,['ChIJbyrrMGxxhlQRY5TfOsP4DfI'],True,False
+Vancouver_224,Vancouver,Woodland Park,1.5846728154033367,ChIJjyFfrRVxhlQRAM9mIepSnEo,exact,,['ChIJjyFfrRVxhlQRAM9mIepSnEo'],True,False
+Vancouver_225,Vancouver,Sun Yat-sen Gardens Park,0.8142249842000292,ChIJr31-jxtxhlQREFvHCIcvI48,fuzzy,,['ChIJr31-jxtxhlQREFvHCIcvI48'],True,False
+Vancouver_226,Vancouver,Oppenheimer Park,0.9798935452658916,ChIJF0sFL3JxhlQRkjUfpiWMnXo,exact,,['ChIJF0sFL3JxhlQRkjUfpiWMnXo'],True,False
+Vancouver_227,Vancouver,CRAB Park at Portside,3.303804497871211,ChIJj3G_rkdxhlQRwXb7n3u0aG8,exact,,['ChIJj3G_rkdxhlQRwXb7n3u0aG8'],True,False
+Vancouver_228,Vancouver,Cambridge Park,0.235167514472728,ChIJx7px5sJxhlQR3z59zzUHUrI,exact,,['ChIJx7px5sJxhlQR3z59zzUHUrI'],False,True
+Vancouver_229,Vancouver,New Brighton Park,10.63416671398354,ChIJYTzEQeZwhlQRvYumbduROOs,exact,,['ChIJYTzEQeZwhlQRvYumbduROOs'],True,False
+Vancouver_230,Vancouver,Street End - Wall St @ Nanaimo,0.0635514701101393,ChIJV6yYZh1xhlQRJb41JgTpR54,manual,,['ChIJV6yYZh1xhlQRJb41JgTpR54'],True,False
+Vancouver_231,Vancouver,Burrard View Park,2.7687208169064066,ChIJJdYerONwhlQRjHzqGcMZNHo,exact,,['ChIJJdYerONwhlQRjHzqGcMZNHo'],True,False
+Vancouver_232,Vancouver,Street End - Wall St @ Kamloops,0.1347307818652414,ChIJ0Ry2keJwhlQRx1QZL7yHxGg,manual,,['ChIJ0Ry2keJwhlQRx1QZL7yHxGg'],True,False
+Vancouver_233,Vancouver,Street End - Wall St @ Penticton,0.1051722128786098,ChIJCSGA_eJwhlQRJo-DM9T0oVw,manual,,['ChIJCSGA_eJwhlQRJo-DM9T0oVw'],True,False
+Vancouver_234,Vancouver,Dusty Greenwell Park,0.5327570996247257,ChIJh6pVh-NwhlQR5Q9CISVPPm8,exact,,['ChIJh6pVh-NwhlQR5Q9CISVPPm8'],True,False
+Vancouver_235,Vancouver,Street End - Wall St @ Slocan,0.1172010408711535,ChIJXayKduNwhlQRCIpah-P90nQ,manual,,['ChIJXayKduNwhlQRCIpah-P90nQ'],True,False

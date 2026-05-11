@@ -15,11 +15,12 @@ Inputs:
 Outputs:
     - outputs/figures/entrance_review/{park_id}_{park_name}.png
 """
-
+# %%
 import os
 import geopandas as gpd
 import matplotlib.pyplot as plt
-
+import os
+os.chdir('/Users/keunpark/Documents/GitHub/park-performance-framework')
 # -- Paths ---------------------------------------------------------------------
 
 PARKS_PATH    = 'data/parks/processed/vancouver_parks_merged.shp'
@@ -109,3 +110,6 @@ for park_id in flagged_ids:
     plt.close()
 
 print(f"\nDone. {len(flagged_ids)} maps saved to {FIG_DIR}/")
+
+
+

@@ -4,7 +4,7 @@
 #
 # Inputs:
 #   - data/processed/vancouver_da_divergence.gpkg
-#   - census_CANUE_DA_nearVan.csv (from social sentiment project)
+#   - data/census/raw/census_CANUE_DA_nearVan.csv
 #
 # Output:
 #   - data/processed/vancouver_da_equity.csv
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 DIV_PATH    = "data/processed/vancouver_da_divergence.gpkg"
-CENSUS_PATH = "/Users/keunpark/SynologyDrive/Research projects/park vitality and monitoring/social potentials/R/social_sentiment/census_CANUE_DA_nearVan.csv"
+CENSUS_PATH = "data/census/raw/census_CANUE_DA_nearVan.csv"
 OUT_DIR     = "data/processed"
 FIG_DIR     = "outputs/figures"
 
@@ -71,7 +71,13 @@ da_census["pct_age_65plus"] = (
     da_census["age_65plus"] / da_census["pop_total"] * 100
 ).round(1)
 
-equity_cols = ["DAUID", "medhhinc", "pct_visible_minority", "pct_age_65plus", "pop_total"]
+equity_cols = [
+    "DAUID", "medhhinc", "pct_visible_minority", "pct_age_65plus", "pop_total",
+    "inc_LIM_AT", "inc_totalpop",
+    "immigrant_immigrant", "immigrant_totalpop",
+    "education_bachelor_plus", "education_totalpop",
+    "ale16_08",
+]
 da_eq = da_div.merge(da_census[equity_cols], on="DAUID", how="left")
 
 print(f"DAs with equity data: {da_eq['medhhinc'].notna().sum()} / {len(da_eq)}")
@@ -101,18 +107,13 @@ da_eq["vm_stratum"] = pd.cut(
     labels=["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]
 )
 
-da_eq["age_stratum"] = pd.cut(
-    da_eq["pct_age_65plus"],
-    bins=[0, 10, 20, 100],
-    labels=["Younger (<10%)", "Middle age", "Older (>20%)"]
-)
+
 
 print("\nIncome stratum counts:")
 print(da_eq["inc_stratum"].value_counts())
 print("\nVisible minority stratum counts:")
 print(da_eq["vm_stratum"].value_counts())
-print("\nAge stratum counts:")
-print(da_eq["age_stratum"].value_counts())
+
 
 
 # %% 4. EQUITY CROSSTABS
@@ -120,7 +121,6 @@ print(da_eq["age_stratum"].value_counts())
 for stratum_col, label in [
     ("inc_stratum", "Income"),
     ("vm_stratum", "Visible Minority"),
-    ("age_stratum", "Age Composition"),
 ]:
     print(f"\n{'='*50}")
     print(f"Divergence by {label}:")
@@ -134,7 +134,7 @@ for stratum_col, label in [
 
 # %% 5. EQUITY VISUALIZATION
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
 
 colours_2x2 = {
     "HH": "#2c7bb6",
@@ -144,9 +144,14 @@ colours_2x2 = {
 }
 
 strata = [
-    ("inc_stratum",  "Income Stratum",          ["Low income", "Middle income", "High income"]),
-    ("vm_stratum",   "Visible Minority (%)",     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
-    ("age_stratum",  "Age Composition (65+%)",   ["Younger (<10%)", "Middle age", "Older (>20%)"]),
+    ("inc_stratum", "Income",
+     ["Low income", "Middle income", "High income"]),
+
+    ("limat_stratum", "Low Income (LIM-AT %)",
+     ["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]),
+
+    ("edu_stratum", "Education (Bachelor+ %)",
+     ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
 ]
 
 for ax, (col, title, order) in zip(axes, strata):
@@ -174,19 +179,143 @@ for ax, (col, title, order) in zip(axes, strata):
     ax.set_ylim(0, 100)
 
 # Shared legend
-patches = [mpatches.Patch(color=c, label=q) for q, c in colours_2x2.items()]
+legend_labels = {
+    "HH": "High supply / high experience",
+    "HL": "High supply / low experience",
+    "LH": "Low supply / high experience",
+    "LL": "Low supply / low experience",
+}
+
+patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q]) for q in ["HH", "HL", "LH", "LL"]]
 fig.legend(handles=patches, loc="lower center", ncol=4,
            fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
 
+
 plt.suptitle(
-    "Supply–Experience Divergence by Neighbourhood Demographics — Vancouver",
+    "Supply–Experience Divergence by Socioeconomic Indicators — Vancouver",
     fontsize=12, y=1.02
 )
 plt.tight_layout()
-plt.savefig(f"{FIG_DIR}/vancouver_equity_stacked_bar.png",
+plt.savefig(f"{FIG_DIR}/vancouver_equity_socioeconomic.png",
             dpi=150, bbox_inches="tight")
 plt.close()
 print("Saved equity chart.")
 # %%
 
+# %% 6. ADDITIONAL SES VARIABLES
+
+# Compute derived variables
+da_eq["pct_LIM_AT"] = (
+    da_eq["inc_LIM_AT"] / da_eq["inc_totalpop"] * 100
+).round(1)
+da_eq["pct_immigrant"] = (
+    da_eq["immigrant_immigrant"] / da_eq["immigrant_totalpop"] * 100
+).round(1)
+da_eq["pct_bachelor_plus"] = (
+    da_eq["education_bachelor_plus"] / da_eq["education_totalpop"] * 100
+).round(1)
+
+
+# Define strata
+da_eq["limat_stratum"] = pd.cut(
+    da_eq["pct_LIM_AT"],
+    bins=[0, 20, 35, 100],
+    labels=["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]
+)
+da_eq["immigrant_stratum"] = pd.cut(
+    da_eq["pct_immigrant"],
+    bins=[0, 30, 50, 100],
+    labels=["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]
+)
+da_eq["edu_stratum"] = pd.cut(
+    da_eq["pct_bachelor_plus"],
+    bins=[0, 30, 50, 100],
+    labels=["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]
+)
+da_eq["ale_stratum"] = pd.qcut(
+    da_eq["ale16_08"],
+    q=3,
+    labels=["Low ALE", "Mid ALE", "High ALE"]
+)
+
+print("LIM-AT stratum counts:")
+print(da_eq["limat_stratum"].value_counts())
+print("\nImmigrant stratum counts:")
+print(da_eq["immigrant_stratum"].value_counts())
+print("\nEducation stratum counts:")
+print(da_eq["edu_stratum"].value_counts())
+print("\nALE stratum counts:")
+print(da_eq["ale_stratum"].value_counts())
+
+# Crosstabs
+for stratum_col, label in [
+    ("limat_stratum",     "Low Income (LIM-AT)"),
+    ("edu_stratum",       "Education (Bachelor+)"),
+    ("immigrant_stratum", "Immigrant Share"),
+    ("ale_stratum",       "Active Living Environment"),
+]:
+    print(f"\n{'='*50}")
+    print(f"Divergence by {label}:")
+    ct = pd.crosstab(
+        da_eq[stratum_col],
+        da_eq["divergence_2x2"],
+        normalize="index"
+    ).round(3) * 100
+    print(ct.to_string())
+
+# Chart
+fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
+
+strata2 = [
+    ("vm_stratum", "Visible Minority (%)",
+     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
+
+    ("immigrant_stratum", "Immigrant Share (%)",
+     ["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]),
+
+    ("ale_stratum", "Active Living Environment",
+     ["Low ALE", "Mid ALE", "High ALE"]),
+]
+
+for ax, (col, title, order) in zip(axes, strata2):
+    ct = pd.crosstab(
+        da_eq[col],
+        da_eq["divergence_2x2"],
+        normalize="index"
+    ) * 100
+    ct = ct.reindex(index=order, columns=["HH", "HL", "LH", "LL"])
+
+    bottom = np.zeros(len(ct))
+    for quad in ["HH", "HL", "LH", "LL"]:
+        if quad in ct.columns:
+            vals = ct[quad].fillna(0).values
+            ax.bar(range(len(ct)), vals, bottom=bottom,
+                   color=colours_2x2[quad], label=quad, width=0.6)
+            bottom += vals
+
+    ax.set_xticks(range(len(ct)))
+    ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
+    ax.set_ylabel("% of DAs")
+    ax.set_title(title)
+    ax.set_ylim(0, 100)
+
+legend_labels = {
+    "HH": "High supply / high experience",
+    "HL": "High supply / low experience",
+    "LH": "Low supply / high experience",
+    "LL": "Low supply / low experience",
+}
+patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q]) for q in ["HH", "HL", "LH", "LL"]]
+fig.legend(handles=patches, loc="lower center", ncol=4,
+           fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
+
+plt.suptitle(
+    "Supply–Experience Divergence by Demographic and Built Environment Indicators — Vancouver",
+    fontsize=12, y=1.02
+)
+plt.tight_layout()
+plt.savefig(f"{FIG_DIR}/vancouver_equity_demographic_builtenv.png",
+            dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved SES equity chart.")
 # %%
