@@ -28,11 +28,13 @@ OUT_DIR     = "data/processed"
 FIG_DIR     = "outputs/figures"
 
 colours_2x2 = {
-    "HH": "#2c7bb6",
-    "HL": "#d7191c",
-    "LH": "#abd9e9",
-    "LL": "#fdae61",
+    "HH": "#01665e",   # dark teal
+    "LH":  "#80cdc1",   # light teal
+    "HL":  "#8c510a",   # dark brown
+    "LL":   "#dfc27d",   # light brown
+    "No data":                           "#cccccc",
 }
+
 legend_labels = {
     "HH": "High supply / high experience",
     "HL": "High supply / low experience",
@@ -178,7 +180,7 @@ for col, label in [
     ("inc_stratum",       "Income"),
     ("vm_stratum",        "Visible Minority"),
     ("age_stratum",       "Age (65+)"),
-    ("limat_stratum",     "LIM-AT"),
+    ("limat_stratum",     "Low-income prevalence (%)"),
     ("immigrant_stratum", "Immigrant Share"),
     ("edu_stratum",       "Education"),
     ("ale_stratum",       "ALE"),
@@ -196,7 +198,7 @@ for stratum_col, label in [
     ("inc_stratum",       "Income"),
     ("vm_stratum",        "Visible Minority"),
     ("age_stratum",       "Age (65+)"),
-    ("limat_stratum",     "Low Income (LIM-AT)"),
+    ("limat_stratum",     "Low-income prevalence (%)"),
     ("immigrant_stratum", "Immigrant Share"),
     ("edu_stratum",       "Education (Bachelor+)"),
     ("ale_stratum",       "Active Living Environment"),
@@ -211,7 +213,183 @@ for stratum_col, label in [
     print(ct.to_string())
 
 
-# %% 6. FIGURE A: SOCIOECONOMIC INDICATORS
+
+# %% chi-square + Cramér's V
+import numpy as np
+from scipy.stats import chi2_contingency
+
+def cramers_v(ct):
+    chi2 = chi2_contingency(ct)[0]
+    n = ct.sum().sum()
+    k = min(ct.shape) - 1
+    return np.sqrt(chi2 / (n * k))
+
+print("\n--- Chi-square + Cramér's V ---")
+for stratum_col, label in [
+    ("inc_stratum",       "Income"),
+    ("vm_stratum",        "Visible Minority"),
+    ("age_stratum",       "Age (65+)"),
+    ("limat_stratum",     "Low Income\n(LIM-AT %)"),
+    ("immigrant_stratum", "Immigrant Share"),
+    ("edu_stratum",       "Education (Bachelor+)"),
+    ("ale_stratum",       "Active Living Environment"),
+]:
+    ct = pd.crosstab(da_eq[stratum_col], da_eq["divergence_2x2"])
+    chi2, p, dof, _ = chi2_contingency(ct)
+    v = cramers_v(ct)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+    print(f"{label:35s} χ²={chi2:.1f}, df={dof}, p={p:.4f} {sig}, V={v:.3f}")
+
+
+
+# %% 8. FIGURE A: STACKED BAR (2-row grid, 3+2)
+strata_main = [
+    ("limat_stratum",  "Low Income (LIM-AT %)",
+     ["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]),
+    ("edu_stratum",    "Education (Bachelor+)",
+     ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
+    ("age_stratum",    "Age (65+)",
+     ["Young (<10% 65+)", "Mid age (10-20% 65+)", "Older (>20% 65+)"]),
+    ("vm_stratum",     "Visible Minority",
+     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
+    ("ale_stratum",    "Active Living Environment",
+     ["Low ALE", "Mid ALE", "High ALE"]),
+]
+colours_divergence = {
+    "HH": "#01665e",
+    "LH": "#80cdc1",
+    "HL": "#dfc27d",
+    "LL": "#8c510a",
+}
+
+legend_labels_div = {
+    "HH": "High supply / high experience",
+    "LH": "Low supply / high experience",
+    "HL": "High supply / low experience",
+    "LL": "Low supply / low experience",
+}
+
+fig, axes = plt.subplots(3, 2, figsize=(12, 14))
+axes = axes.flatten()
+
+for idx, (ax, (col, title, order)) in enumerate(zip(axes, strata_main)):
+    ct_raw = pd.crosstab(da_eq[col], da_eq["divergence_2x2"])
+    chi2, p, dof, _ = chi2_contingency(ct_raw)
+    v = cramers_v(ct_raw)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+
+    ct = pd.crosstab(
+        da_eq[col], da_eq["divergence_2x2"], normalize="index"
+    ) * 100
+    ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
+
+    bottom = np.zeros(len(ct))
+    for quad in ["HH", "LH", "HL", "LL"]:
+        if quad in ct.columns:
+            vals = ct[quad].fillna(0).values
+            ax.bar(range(len(ct)), vals, bottom=bottom,
+                   color=colours_divergence[quad], width=0.6)
+            for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
+                if v_val > 6:
+                    ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
+                            ha="center", va="center", fontsize=8,
+                            color="white" if quad in ["HH", "LL"] else "black")
+            bottom += vals
+
+    ax.set_xticks(range(len(ct)))
+    ax.set_xticklabels(order, rotation=20, ha="right", fontsize=10)
+    ax.set_ylabel("% of DAs", fontsize=10)
+    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
+    ax.set_ylim(0, 100)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+# Hide 6th panel and use it for legend
+axes[5].set_visible(False)
+
+# Place legend in the 6th panel position
+legend_ax = fig.add_subplot(3, 2, 6)
+legend_ax.set_visible(False)
+
+patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
+           for q in ["HH", "LH", "HL", "LL"]]
+
+fig.legend(
+    handles=patches,
+    loc="center",
+    bbox_to_anchor=(0.75, 0.17),  # right column, bottom row position
+    fontsize=10,
+    framealpha=0.9,
+    title="Divergence type",
+    title_fontsize=10,
+)
+
+plt.tight_layout(rect=[0, 0.06, 1, 1])
+plt.savefig(f"{FIG_DIR}/vancouver_equity_stacked_bar.png",
+            dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: vancouver_equity_stacked_bar.png")
+
+
+# %% 9. FIGURE B: HEATMAP (SES variables as rows, divergence types as columns)
+quad_order  = ["HH", "LH", "HL", "LL"]
+quad_labels = [
+    "HH\nHigh supply\nHigh exp",
+    "LH\nLow supply\nHigh exp",
+    "HL\nHigh supply\nLow exp",
+    "LL\nLow supply\nLow exp",
+]
+
+heatmap_strata = [
+    ("limat_stratum",  "Low Income (LIM-AT %)",              "High poverty (>35%)"),
+    ("edu_stratum",    "Education (Bach.+)",   "High education (>50%)"),
+    ("age_stratum",    "Age (65+)",            "Older (>20% 65+)"),
+    ("vm_stratum",     "Visible Minority",     "High VM (>50%)"),
+    ("ale_stratum",    "Active Living Env.",   "High ALE"),
+]
+
+heatmap_data = []
+row_labels   = []
+
+for col, label, high_stratum in heatmap_strata:
+    subset = da_eq[da_eq[col] == high_stratum]
+    ct     = subset["divergence_2x2"].value_counts(normalize=True) * 100
+    row    = [ct.get(q, 0) for q in quad_order]
+    heatmap_data.append(row)
+    row_labels.append(f"{label}\n({high_stratum.split('(')[0].strip()})")
+
+heatmap_arr = np.array(heatmap_data)  # rows=SES, cols=quadrants
+
+fig, ax = plt.subplots(figsize=(8, 5))
+im = ax.imshow(heatmap_arr, cmap="YlOrRd", aspect="auto", vmin=0, vmax=55)
+
+for i in range(len(heatmap_strata)):
+    for j in range(len(quad_order)):
+        val = heatmap_arr[i, j]
+        text_colour = "white" if val > 38 else "black"
+        ax.text(j, i, f"{val:.1f}%", ha="center", va="center",
+                fontsize=10, color=text_colour, fontweight="bold")
+
+ax.set_xticks(range(len(quad_order)))
+ax.set_xticklabels(quad_labels, fontsize=9)
+ax.set_yticks(range(len(heatmap_strata)))
+ax.set_yticklabels(row_labels, fontsize=9)
+ax.set_title(
+    "% of High-Stratum DAs in Each Divergence Type — Vancouver",
+    fontsize=11, pad=12
+)
+
+plt.colorbar(im, ax=ax, shrink=0.7, label="% of DAs")
+plt.tight_layout()
+plt.savefig(f"{FIG_DIR}/vancouver_equity_heatmap.png",
+            dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: vancouver_equity_heatmap.png")
+
+
+
+# %% EXTRA: EQUITY CROSSTABS (binary supply/experience)
+# 6. FIGURE A: SOCIOECONOMIC INDICATORS
 # Income, LIM-AT, Education
 fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
 
@@ -230,10 +408,10 @@ for ax, (col, title, order) in zip(axes, strata_a):
         da_eq["divergence_2x2"],
         normalize="index"
     ) * 100
-    ct = ct.reindex(index=order, columns=["HH", "HL", "LH", "LL"])
+    ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
 
     bottom = np.zeros(len(ct))
-    for quad in ["HH", "HL", "LH", "LL"]:
+    for quad in ["HH", "LH", "HL", "LL"]:
         if quad in ct.columns:
             vals = ct[quad].fillna(0).values
             ax.bar(range(len(ct)), vals, bottom=bottom,
@@ -247,7 +425,7 @@ for ax, (col, title, order) in zip(axes, strata_a):
     ax.set_ylim(0, 100)
 
 patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q])
-           for q in ["HH", "HL", "LH", "LL"]]
+           for q in ["HH", "LH", "HL", "LL"]]
 fig.legend(handles=patches, loc="lower center", ncol=4,
            fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
 plt.suptitle(
@@ -282,10 +460,10 @@ for ax, (col, title, order) in zip(axes, strata_b):
         da_eq["divergence_2x2"],
         normalize="index"
     ) * 100
-    ct = ct.reindex(index=order, columns=["HH", "HL", "LH", "LL"])
+    ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
 
     bottom = np.zeros(len(ct))
-    for quad in ["HH", "HL", "LH", "LL"]:
+    for quad in ["HH", "LH", "HL", "LL"]:
         if quad in ct.columns:
             vals = ct[quad].fillna(0).values
             ax.bar(range(len(ct)), vals, bottom=bottom,

@@ -1,0 +1,12 @@
+Category,r,p,sig
+Beach/waterfront,0.434,0.0,***
+Trails,0.315,0.0,***
+Seating & shelter,0.239,0.0005,***
+Water play,0.216,0.0017,**
+Picnic area,0.208,0.0026,**
+Washroom,0.188,0.0066,**
+Dog off-leash,0.157,0.0237,*
+Playground,0.085,0.2212,ns
+Courts,0.021,0.762,ns
+Sports fields,-0.031,0.6543,ns
+Community garden,-0.07,0.3127,ns

@@ -1,0 +1,26 @@
+Dimension,Indicator,Value
+Supply,(1) Park Coverage,
+,Mean park coverage (%),71.2
+,Full coverage (100%) (% of DAs),51.5
+,No coverage (0%) (% of DAs),13.0
+,(2) Accessible park area,
+,"Mean park area (ha per 1,000)",10.2
+,"Median park area (ha per 1,000)",4.9
+,"Supply typology (high coverage ≥80%, high area ≥ median)",
+,"HH: broad coverage, high area (% DAs)",34.4
+,"HL: broad coverage, low area (% DAs)",23.4
+,"LH: limited coverage, high area (% DAs)",15.6
+,"LL: limited coverage, low area (% DAs)",26.6
+Experience,"(1) Digital salience (Google reviews per 1,000 residents)",
+,Salience: Mean (SD),3018 (14374)
+,Salience: Median,748
+,(2) Expressed satisfaction,
+,DAs with sentiment data: n (%),836 (82.3%)
+,Mean qualifying parks per DA,1.5
+,Sentiment score: Mean (SD),0.70 (0.09)
+,Sentiment score: Median,0.71
+,Star rating: Mean (SD),4.34 (0.17)
+,Star rating: Median,4.35
+Usability,(3) Perceived usability,
+,Amenity type count: Mean (SD),4.5 (2.5)
+,Amenity type count: Median,5.0

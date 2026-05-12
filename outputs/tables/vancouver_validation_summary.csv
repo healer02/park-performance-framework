@@ -1,0 +1,7 @@
+Level,Metric,Value,p
+Park,Pearson r,0.787,0.0
+Park,Spearman r,0.775,0.0
+DA,Pearson r,0.789,0.0
+DA,Spearman r,0.79,0.0
+DA,Quadrant agreement (%),81.7,
+DA,Cohen's kappa,0.634,

@@ -266,10 +266,10 @@ da_div["divergence_2x2"] = [
 ]
 
 colours_2x2 = {
-    "HH — High supply, high experience": "#2c7bb6",
-    "HL — High supply, low experience":  "#d7191c",
-    "LH — Low supply, high experience":  "#abd9e9",
-    "LL — Low supply, low experience":   "#fdae61",
+    "HH — High supply, high experience": "#01665e",   # dark teal
+    "LH — Low supply, high experience":  "#80cdc1",   # light teal
+    "HL — High supply, low experience":  "#8c510a",   # dark brown
+    "LL — Low supply, low experience":   "#dfc27d",   # light brown
     "No data":                           "#cccccc",
 }
 
@@ -285,16 +285,60 @@ for dtype, colour in colours_2x2.items():
 parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.8, zorder=2)
 
 legend_labels = {
-    "HH": "High supply / high experience",
-    "HL": "High supply / low experience",
-    "LH": "Low supply / high experience",
-    "LL": "Low supply / low experience",
+    "HH": "High supply, high experience",
+    "HL": "High supply, low experience",
+    "LH": "Low supply, high experience",
+    "LL": "Low supply, low experience",
 }
+# Add count annotations to legend
 patches = [
-    mpatches.Patch(color=colours_2x2[f"{q} — {legend_labels[q]}"], label=f"{q} — {legend_labels[q]}")
-    for q in ["HH", "HL", "LH", "LL"]
+    mpatches.Patch(color=colours_2x2["HH — High supply, high experience"],
+                   label=f"HH — High supply, high experience (n={counts_2x2.get('HH — High supply, high experience', 0)})"),
+    mpatches.Patch(color=colours_2x2["HL — High supply, low experience"],
+                   label=f"HL — High supply, low experience (n={counts_2x2.get('HL — High supply, low experience', 0)})"),
+    mpatches.Patch(color=colours_2x2["LH — Low supply, high experience"],
+                   label=f"LH — Low supply, high experience (n={counts_2x2.get('LH — Low supply, high experience', 0)})"),
+    mpatches.Patch(color=colours_2x2["LL — Low supply, low experience"],
+                   label=f"LL — Low supply, low experience (n={counts_2x2.get('LL — Low supply, low experience', 0)})"),
 ]
-ax.legend(handles=patches, loc="lower left", fontsize=9, framealpha=0.9)
+
+# Add 2x2 matrix inset
+ax_inset = fig.add_axes([0.02, 0.02, 0.18, 0.18])  # [left, bottom, width, height]
+matrix_data = np.array([
+    [counts_2x2.get("LH — Low supply, high experience", 0),
+     counts_2x2.get("HH — High supply, high experience", 0)],
+    [counts_2x2.get("LL — Low supply, low experience", 0),
+     counts_2x2.get("HL — High supply, low experience", 0)],
+])
+matrix_colours = np.array([
+    ["#80cdc1", "#01665e"],  # high exp: LH=light teal, HH=dark teal
+    ["#dfc27d", "#8c510a"],  # low exp: LL=light brown, HL=dark brown
+])
+for i in range(2):
+    for j in range(2):
+        ax_inset.add_patch(plt.Rectangle(
+            (j, 1-i), 1, 1,
+            color=matrix_colours[i, j], ec="white", lw=1.5
+        ))
+        ax_inset.text(
+            j + 0.5, 1.5 - i,
+            str(matrix_data[i, j]),
+            ha="center", va="center",
+            fontsize=9, fontweight="bold", color="white"
+        )
+
+ax_inset.set_xlim(0, 2)
+ax_inset.set_ylim(0, 2)
+ax_inset.set_xticks([0.5, 1.5])
+ax_inset.set_xticklabels(["Low supply", "High supply"], fontsize=7)
+ax_inset.set_yticks([0.5, 1.5])
+ax_inset.set_yticklabels(["Low exp", "High exp"], fontsize=7)
+ax_inset.tick_params(length=0)
+ax_inset.set_title("n by quadrant", fontsize=7, pad=3)
+for spine in ax_inset.spines.values():
+    spine.set_visible(False)
+    
+
 ax.set_title(
     "Supply–Experience Divergence — Vancouver DAs\n"
     f"Supply: HH only (reachability ≥ {REACH_THRESH} & quantity ≥ {qty_med:.0f} ha/1,000) | "
@@ -394,3 +438,4 @@ total   = da_div_s["divergence_type"].notna().sum()
 print(f"\nSensitivity — DAs changing quadrant (weighted vs unweighted): {changed} / {total} ({100*changed/total:.1f}%)")
 print(f"Primary sentiment median:  {sentiment_med:.3f}")
 print(f"Weighted sentiment median: {weighted_med:.3f}")
+# %%

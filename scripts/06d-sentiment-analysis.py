@@ -85,6 +85,7 @@ print(f"CUDA available: {torch.cuda.is_available()}")
 print(f"MPS available: {torch.backends.mps.is_available()}")
 
 # %% 4. LOAD ROBERTA SENTIMENT MODEL
+## will take a few miutes (up to 10?) on first run 
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
@@ -112,6 +113,7 @@ print(f"Model loaded. Device: {device}")
 
 
 # %% 5. RUN SENTIMENT SCORING
+# will take ~20-30 minutes depending on hardware -- runs in batches with progress bar
 # Score = P(positive) - P(negative), range -1 to +1
 texts      = text_reviews['Review'].fillna("").tolist()
 batch_size = 32
