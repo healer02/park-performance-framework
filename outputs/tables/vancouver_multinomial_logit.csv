@@ -1,0 +1,16 @@
+Outcome (vs HH),Predictor,OR,95% CI,p,sig
+LH,Visible minority (%),1.13,"[0.86, 1.49]",0.37,ns
+LH,Age 65+ (%),0.82,"[0.67, 1.01]",0.06,ns
+LH,LIM-AT (%),1.24,"[0.97, 1.58]",0.08,ns
+LH,Education (Bach+%),0.91,"[0.70, 1.18]",0.48,ns
+LH,Active living env.,1.44,"[1.17, 1.78]",0.00,***
+HL,Visible minority (%),0.84,"[0.63, 1.13]",0.25,ns
+HL,Age 65+ (%),1.05,"[0.87, 1.28]",0.60,ns
+HL,LIM-AT (%),1.27,"[0.99, 1.62]",0.06,ns
+HL,Education (Bach+%),0.8,"[0.61, 1.06]",0.12,ns
+HL,Active living env.,0.9,"[0.69, 1.17]",0.42,ns
+LL,Visible minority (%),0.94,"[0.73, 1.22]",0.65,ns
+LL,Age 65+ (%),0.77,"[0.64, 0.94]",0.01,**
+LL,LIM-AT (%),1.2,"[0.96, 1.50]",0.11,ns
+LL,Education (Bach+%),0.85,"[0.66, 1.08]",0.18,ns
+LL,Active living env.,0.53,"[0.40, 0.71]",0.00,***

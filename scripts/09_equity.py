@@ -489,3 +489,187 @@ plt.savefig(f"{FIG_DIR}/vancouver_equity_demographic_builtenv.png",
             dpi=150, bbox_inches="tight")
 plt.close()
 print("Saved: vancouver_equity_demographic_builtenv.png")
+
+
+
+
+
+
+# %% 8. VIF CHECK
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+X_vif = da_model[pred_cols].copy()
+X_vif = sm.add_constant(X_vif)
+
+vif_data = pd.DataFrame({
+    "Variable": pred_cols,
+    "VIF": [variance_inflation_factor(X_vif.values, i+1) 
+            for i in range(len(pred_cols))]
+}).sort_values("VIF", ascending=False)
+
+print("--- VIF Check ---")
+print(vif_data.round(2).to_string(index=False))
+print("\nRule of thumb: VIF > 5 = moderate concern, VIF > 10 = serious concern")
+
+# %% MULTINOMIAL LOGISTIC REGRESSION: DIVERGENCE QUADRANT ~ SES VARIABLES
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+import statsmodels.api as sm
+from statsmodels.miscmodels.ordinal_model import OrderedModel
+import pandas as pd
+import numpy as np
+
+# Load equity data
+da_eq = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
+
+# Keep only DAs with valid divergence and SES data
+model_vars = [
+    "divergence_2x2",
+    "pct_visible_minority",
+    "pct_age_65plus",
+    "pct_LIM_AT",
+    "pct_bachelor_plus",
+    "ale16_08",
+]
+da_model = da_eq[model_vars].dropna().copy()
+da_model = da_model[da_model["divergence_2x2"].isin(["HH", "HL", "LH", "LL"])].copy()
+
+print(f"DAs in model: {len(da_model)}")
+print(f"Quadrant distribution:\n{da_model['divergence_2x2'].value_counts()}")
+
+# Standardize predictors for comparability
+predictors = [
+    "pct_visible_minority",
+    "pct_age_65plus",
+    "pct_LIM_AT",
+    "pct_bachelor_plus",
+    "ale16_08",
+]
+scaler = StandardScaler()
+da_model[predictors] = scaler.fit_transform(da_model[predictors])
+
+# Rename for cleaner output
+rename = {
+    "pct_visible_minority": "Visible minority (%)",
+    "pct_age_65plus":       "Age 65+ (%)",
+    "pct_LIM_AT":           "LIM-AT (%)",
+    "pct_bachelor_plus":    "Education (Bach+%)",
+    "ale16_08":             "Active living env.",
+}
+da_model = da_model.rename(columns=rename)
+pred_cols = list(rename.values())
+
+# %% MULTINOMIAL LOGISTIC REGRESSION (HH as reference)
+from statsmodels.regression.linear_model import OLS
+import statsmodels.formula.api as smf
+
+# Encode outcome with HH as reference
+da_model["quadrant"] = pd.Categorical(
+    da_model["divergence_2x2"],
+    categories=["HH", "LH", "HL", "LL"]
+)
+
+X = sm.add_constant(da_model[pred_cols])
+y = da_model["quadrant"]
+
+mnlogit = sm.MNLogit(y, X)
+result   = mnlogit.fit(method="newton", maxiter=200, disp=False)
+print(result.summary())
+
+
+# %% CLEAN OUTPUT TABLE: ODDS RATIOS + 95% CI
+print("\n--- Odds Ratios (reference = HH) ---")
+
+outcomes = ["LH", "HL", "LL"]
+all_rows = []
+
+conf_int = result.conf_int()
+
+print("\nConfidence interval columns:")
+print(conf_int.columns)
+
+for i, outcome in enumerate(outcomes):
+    params = result.params.iloc[:, i]
+    pvals  = result.pvalues.iloc[:, i]
+    ci_block = result.conf_int().loc[outcome]
+
+    for var in pred_cols:
+        or_val  = np.exp(params[var])
+        ci_low  = np.exp(ci_block.loc[var, "lower"])
+        ci_high = np.exp(ci_block.loc[var, "upper"])
+        p       = pvals[var]
+        sig     = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+
+        all_rows.append({
+            "Outcome (vs HH)": outcome,
+            "Predictor":       var,
+            "OR":              round(or_val, 2),
+            "95% CI":          f"[{ci_low:.2f}, {ci_high:.2f}]",
+            "p":               round(p, 3),
+            "sig":             sig,
+        })
+        print(f"  {outcome} vs HH | {var:25s}: OR={or_val:.2f} "
+              f"[{ci_low:.2f}-{ci_high:.2f}], p={p:.3f} {sig}")
+
+or_df = pd.DataFrame(all_rows)
+or_df.to_csv("outputs/tables/vancouver_multinomial_logit.csv", index=False)
+print(f"\nSaved: outputs/tables/vancouver_multinomial_logit.csv")
+
+
+# %% SUPPLEMENTARY: THREE BINARY MODELS (LL, HL, LH vs all others)
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+print("\n--- Binary logistic models ---")
+binary_results = []
+
+for target in ["LL", "HL", "LH"]:
+    y_bin = (da_model["divergence_2x2"] == target).astype(int)
+    X_bin = sm.add_constant(da_model[pred_cols])
+
+    logit = sm.Logit(y_bin, X_bin)
+    res   = logit.fit(disp=False)
+
+    print(f"\n{target} vs all others:")
+    for var in pred_cols:
+        or_val = np.exp(res.params[var])
+        p      = res.pvalues[var]
+        sig    = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+        print(f"  {var:25s}: OR={or_val:.3f}, p={p:.4f} {sig}")
+        binary_results.append({
+            "Model":     f"{target} vs others",
+            "Predictor": var,
+            "OR":        round(or_val, 3),
+            "p":         round(p, 4),
+            "sig":       sig,
+        })
+
+binary_df = pd.DataFrame(binary_results)
+binary_df.to_csv("outputs/tables/vancouver_binary_logit.csv", index=False)
+print(f"\nSaved: outputs/tables/vancouver_binary_logit.csv")
+
+# %% MODEL FIT STATISTICS
+from scipy import stats
+
+# McFadden pseudo R²
+ll_null  = result.llnull
+ll_model = result.llf
+mcfadden_r2 = 1 - (ll_model / ll_null)
+
+# Cox-Snell R² (alternative)
+n = len(da_model)
+cox_snell_r2 = 1 - np.exp((2/n) * (ll_null - ll_model))
+
+# Nagelkerke R² (normalized Cox-Snell)
+nagelkerke_r2 = cox_snell_r2 / (1 - np.exp((2/n) * ll_null))
+
+print(f"--- Model Fit Statistics ---")
+print(f"n observations:      {n}")
+print(f"Log-likelihood:      {ll_model:.2f}")
+print(f"Null log-likelihood: {ll_null:.2f}")
+print(f"LLR p-value:         {result.llr_pvalue:.4f}")
+print(f"\nMcFadden pseudo R²:  {mcfadden_r2:.4f}")
+print(f"Cox-Snell R²:        {cox_snell_r2:.4f}")
+print(f"Nagelkerke R²:       {nagelkerke_r2:.4f}")
+
+# %%

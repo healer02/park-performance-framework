@@ -427,7 +427,18 @@ for i in range(len(amenity_cols)):
 ax.set_xticks(range(len(quad_amenity_T.columns)))
 ax.set_xticklabels(col_labels, fontsize=9)
 ax.set_yticks(range(len(amenity_cols)))
-ax.set_yticklabels(quad_amenity_T.index, fontsize=9)
+# Build y-axis labels with significance markers
+sig_map = chi2_df.set_index("Amenity")["sig"].to_dict()
+ylabels = []
+for cat in amenity_cols:
+    label = AMENITY_LABELS[cat]
+    sig   = sig_map.get(label, "")
+    star  = " ***" if sig == "***" else " **" if sig == "**" else " *" if sig == "*" else ""
+    ylabels.append(f"{label}{star}")
+
+ax.set_yticks(range(len(amenity_cols)))
+ax.set_yticklabels(ylabels, fontsize=9)
+
 ax.xaxis.set_ticks_position('top')
 ax.xaxis.set_label_position('top')
 
@@ -556,3 +567,46 @@ for cat in TAXONOMY.keys():
 cat_df = pd.DataFrame(cat_results).sort_values("r", ascending=False)
 cat_df.to_csv(f"{TAB_DIR}/vancouver_amenity_sentiment_correlation.csv", index=False)
 print(f"\nSaved: {TAB_DIR}/vancouver_amenity_sentiment_correlation.csv")
+
+
+# %% 12. CHI-SQUARE: AMENITY PRESENCE BY DIVERGENCE QUADRANT
+from scipy.stats import chi2_contingency
+import numpy as np
+
+da_equity = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
+da_usability["DAUID"] = da_usability["DAUID"].astype(str)
+da_merged = da_equity.merge(da_usability, on="DAUID", how="left")
+da_merged = da_merged[da_merged["divergence_2x2"].isin(quad_order)].copy()
+print(f"DAs in chi-square analysis: {len(da_merged)}")
+
+# Keep only DAs with valid divergence classification
+quad_order = ["HH", "LH", "HL", "LL"]
+da_merged = da_merged[da_merged["divergence_2x2"].isin(quad_order)].copy()
+
+print(f"DAs in chi-square analysis: {len(da_merged)}")
+print(f"\n--- Chi-square: Amenity presence by divergence quadrant ---")
+
+chi2_results = []
+for cat in TAXONOMY.keys():
+    if cat not in da_merged.columns:
+        continue
+    ct = pd.crosstab(da_merged["divergence_2x2"], da_merged[cat])
+    if ct.shape[1] < 2:
+        print(f"  Skipping {AMENITY_LABELS[cat]} -- no variation")
+        continue
+    chi2, p, dof, _ = chi2_contingency(ct)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+    print(f"  {AMENITY_LABELS[cat]:20s}: χ²={chi2:.1f}, df={dof}, p={p:.4f} {sig}")
+    chi2_results.append({
+        "Amenity":   AMENITY_LABELS[cat],
+        "chi2":      round(chi2, 1),
+        "df":        dof,
+        "p":         round(p, 4),
+        "sig":       sig,
+    })
+
+chi2_df = pd.DataFrame(chi2_results).sort_values("chi2", ascending=False)
+chi2_df.to_csv(f"{TAB_DIR}/vancouver_amenity_quadrant_chi2.csv", index=False)
+print(f"\nSaved: {TAB_DIR}/vancouver_amenity_quadrant_chi2.csv")
+
+# %%

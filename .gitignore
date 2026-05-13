@@ -225,6 +225,7 @@ data/osm/*
 data/parks/raw/*
 data/google-reviews/*
 scripts/apify_key.txt
+CLAUDE.md
 
 # geospatial
 *.shp
