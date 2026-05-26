@@ -1,12 +1,12 @@
 Amenity,chi2,df,p,sig
-Beach/waterfront,123.9,3,0.0,***
-Trails,68.6,3,0.0,***
-Seating & shelter,45.8,3,0.0,***
-Dog off-leash,43.9,3,0.0,***
-Water play,34.8,3,0.0,***
-Picnic area,33.4,3,0.0,***
-Sports fields,30.4,3,0.0,***
-Washroom,23.4,3,0.0,***
-Playground,19.7,3,0.0002,***
-Community garden,12.5,3,0.0059,**
-Courts,8.6,3,0.0359,*
+Beach/waterfront,113.7,3,0.0,***
+Trails,62.0,3,0.0,***
+Dog off-leash,38.3,3,0.0,***
+Sports fields,37.5,3,0.0,***
+Water play,30.5,3,0.0,***
+Seating & shelter,30.5,3,0.0,***
+Picnic area,29.6,3,0.0,***
+Washroom,17.8,3,0.0005,***
+Playground,14.5,3,0.0023,**
+Community garden,12.7,3,0.0054,**
+Courts,7.3,3,0.0637,ns

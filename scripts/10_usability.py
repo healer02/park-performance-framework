@@ -10,13 +10,16 @@
 #   - data/census/processed/vancouver_db_centroids.gpkg
 #   - data/parks/raw/Vancouver/parks-facilities.csv
 #   - data/parks/raw/Vancouver/public-washrooms.csv
+#   - data/processed/vancouver_da_equity.csv      (for divergence + chi-square)
 #
 # Outputs:
 #   - data/processed/vancouver_park_amenities.csv
 #   - data/processed/vancouver_da_usability.csv
-#   - outputs/figures/vancouver_amenity_heatmap.png       (appendix)
 #   - outputs/figures/vancouver_amenity_by_quadrant.png   (main figure)
+#   - outputs/figures/vancouver_amenity_heatmap_appendix.png
 #   - outputs/tables/vancouver_amenity_kappa.csv
+#   - outputs/tables/vancouver_amenity_quadrant_chi2.csv
+#   - outputs/tables/vancouver_amenity_sentiment_correlation.csv
 # =============================================================================
 
 # %%
@@ -30,14 +33,17 @@ import re
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from scipy.stats import chi2_contingency, spearmanr
+from sklearn.metrics import cohen_kappa_score
 
-REVIEWS_PATH = "data/google-reviews/processed/08a-text-reviews-with-sentiment.csv"
-MASTER_PATH  = "data/parks/processed/06-master-park-placeids.csv"
-DA_SETS_PATH = "data/processed/vancouver_da_park_sets.json"
-DB_PATH      = "data/census/processed/vancouver_db_centroids.gpkg"
-FAC_PATH     = "data/parks/raw/Vancouver/parks-facilities.csv"
-WC_PATH      = "data/parks/raw/Vancouver/public-washrooms.csv"
-DIV_PATH     = "data/processed/vancouver_da_divergence.gpkg"
+REVIEWS_PATH  = "data/google-reviews/processed/08a-text-reviews-with-sentiment.csv"
+MASTER_PATH   = "data/parks/processed/06-master-park-placeids.csv"
+DA_SETS_PATH  = "data/processed/vancouver_da_park_sets.json"
+DB_PATH       = "data/census/processed/vancouver_db_centroids.gpkg"
+FAC_PATH      = "data/parks/raw/Vancouver/parks-facilities.csv"
+WC_PATH       = "data/parks/raw/Vancouver/public-washrooms.csv"
+EQUITY_PATH   = "data/processed/vancouver_da_equity.csv"
+PARK_MET_PATH = "data/google-reviews/processed/08c-park-metrics.csv"
 
 OUT_DIR = "data/processed"
 FIG_DIR = "outputs/figures"
@@ -48,21 +54,23 @@ print("Ready.")
 
 
 # %% 1. DEFINE AMENITY TAXONOMY
-# Tightened keywords to reduce false positives (per Sam's review)
 # Frozen after Vancouver -- applied unchanged to Coquitlam/New Westminster
 TAXONOMY = {
-    "playground": ["playground", "playgrounds","play structure"],
-    "sports_fields": ["soccer field", "football field", "baseball diamond", 
-                      "baseball field", "sports field"],
-    "courts": ["basketball court", "tennis court", "pickleball court", "sports court"],
-    "trails": ["walking trail", "hiking trail", "walking path", "bike path", "forest trail"],
-    "dog_offleash": ["off leash area", "off-leash area"],
-    "water_play": ["spray park", "splash pad", "wading pool"],
+    "playground":       ["playground", "playgrounds", "play structure"],
+    "sports_fields":    ["soccer field", "football field", "baseball diamond",
+                         "baseball field", "sports field"],
+    "courts":           ["basketball court", "tennis court", "pickleball court",
+                         "sports court"],
+    "trails":           ["walking trail", "hiking trail", "walking path",
+                         "bike path", "forest trail"],
+    "dog_offleash":     ["off leash area", "off-leash area"],
+    "water_play":       ["spray park", "splash pad", "wading pool"],
     "beach_waterfront": ["beach", "shoreline", "waterfront"],
-    "picnic": ["picnic area", "picnic table"],
-    "washroom": ["washroom", "washrooms","restroom", "restrooms"],
+    "picnic":           ["picnic area", "picnic table"],
+    "washroom":         ["washroom", "washrooms", "restroom", "restrooms"],
     "community_garden": ["community garden", "allotment", "garden plot"],
-    "seating_shelter": ["park bench", "benches", "picnic shelter", "covered shelter"],
+    "seating_shelter":  ["park bench", "benches", "picnic shelter",
+                         "covered shelter"],
 }
 
 AMENITY_LABELS = {
@@ -90,10 +98,8 @@ reviews = reviews[
     reviews["Review"].notna() & (reviews["Review"].str.strip() != "")
 ].copy()
 reviews["Review_lower"] = reviews["Review"].str.lower()
-
 print(f"Text reviews loaded: {len(reviews)}")
 
-# Explode master to PlaceID level
 master["place_id_list"] = master["place_id"].apply(
     lambda x: [i.strip() for i in x.split(",")] if pd.notna(x) and x != "" else []
 )
@@ -119,23 +125,22 @@ def match_amenities(text, taxonomy):
         pattern = r"\b(" + "|".join([re.escape(kw) for kw in keywords]) + r")\b"
         matches = re.finditer(pattern, text, re.IGNORECASE)
         positive = 0
-        negative = 0
         for match in matches:
-            # Check 4 words before the match for negation
-            start = match.start()
-            preceding = text[max(0, start-30):start].lower()
-            if re.search(r"\b(no|without|lack|missing|needs?|need a|no public)\s*$", preceding):
-                negative += 1
+            start      = match.start()
+            preceding  = text[max(0, start-30):start].lower()
+            if re.search(r"\b(no|without|lack|missing|needs?|need a|no public)\s*$",
+                         preceding):
+                pass  # negation -- skip
             else:
                 positive += 1
         results[category] = 1 if positive > 0 else 0
     return results
 
 print("Running keyword matching...")
-amenity_flags = reviews_joined["Review_lower"].apply(
+amenity_flags  = reviews_joined["Review_lower"].apply(
     lambda t: match_amenities(t, TAXONOMY)
 )
-amenity_df = pd.DataFrame(list(amenity_flags))
+amenity_df     = pd.DataFrame(list(amenity_flags))
 reviews_amenity = pd.concat(
     [reviews_joined[["park_id", "park_name", "PlaceID"]].reset_index(drop=True),
      amenity_df.reset_index(drop=True)],
@@ -147,20 +152,16 @@ for cat, rate in (amenity_df.mean() * 100).items():
     print(f"  {AMENITY_LABELS[cat]:20s}: {rate:.1f}%")
 
 
-# %% 4. AGGREGATE TO PARK LEVEL
-# Threshold: >=2 review mentions OR >=1% of park reviews -- reduces false positives
+# %% 4. AGGREGATE TO PARK LEVEL (>=2 mentions threshold)
 park_counts = reviews_amenity.groupby("park_id")[list(TAXONOMY.keys())].sum()
 park_totals = reviews_amenity.groupby("park_id").size().rename("n_reviews")
-park_pct    = park_counts.div(park_totals, axis=0)
 
-park_amenities_binary = ((park_counts >= 2)).astype(int)
+park_amenities_binary = (park_counts >= 2).astype(int)
 park_amenities = park_amenities_binary.reset_index()
 park_amenities = park_amenities.merge(park_totals, on="park_id", how="left")
 park_amenities = park_amenities.merge(
     master[["park_id", "park_name", "area_ha"]], on="park_id", how="left"
 )
-
-# Amenity type count (not "diversity" to avoid implying quality)
 park_amenities["amenity_type_count"] = park_amenities[list(TAXONOMY.keys())].sum(axis=1)
 
 print(f"\n--- Park-level amenity summary ---")
@@ -190,16 +191,16 @@ for dauid, park_ids in da_park_sets.items():
 
     if len(subset) == 0:
         usability_records.append({
-            "DAUID":                dauid,
-            "amenity_type_count":   np.nan,
-            "n_parks_usability":    0,
+            "DAUID":               dauid,
+            "amenity_type_count":  np.nan,
+            "n_parks_usability":   0,
             **{cat: np.nan for cat in TAXONOMY.keys()}
         })
         continue
 
-    amenity_union        = subset[list(TAXONOMY.keys())].max()
-    amenity_type_count   = amenity_union.sum()
-    mean_types_per_park  = subset["amenity_type_count"].mean()
+    amenity_union       = subset[list(TAXONOMY.keys())].max()
+    amenity_type_count  = amenity_union.sum()
+    mean_types_per_park = subset["amenity_type_count"].mean()
 
     record = {
         "DAUID":               dauid,
@@ -211,6 +212,7 @@ for dauid, park_ids in da_park_sets.items():
     usability_records.append(record)
 
 da_usability = pd.DataFrame(usability_records)
+da_usability["DAUID"] = da_usability["DAUID"].astype(str)
 da_usability.to_csv(f"{OUT_DIR}/vancouver_da_usability.csv", index=False)
 
 print(f"\n--- DA-level usability summary ---")
@@ -248,7 +250,6 @@ fac.columns = fac.columns.str.strip()
 fac["amenity_cat"] = fac["FacilityType"].map(FAC_MAP)
 fac_valid = fac[fac["amenity_cat"].notna()].copy()
 
-# Step 1: Name lookup with manual fixes
 park_name_lookup = fac[["ParkID", "Name"]].drop_duplicates(subset="ParkID")
 park_name_lookup["name_lower"] = park_name_lookup["Name"].str.lower().str.strip()
 name_fixes = {
@@ -257,7 +258,6 @@ name_fixes = {
 }
 park_name_lookup["name_lower"] = park_name_lookup["name_lower"].replace(name_fixes)
 
-# Step 2: Pivot to wide format
 fac_valid["present"] = 1
 official_wide = fac_valid.pivot_table(
     index="ParkID", columns="amenity_cat",
@@ -265,16 +265,13 @@ official_wide = fac_valid.pivot_table(
 ).fillna(0).astype(int).reset_index()
 official_wide.columns.name = None
 
-# Step 3: Merge name lookup
 official_wide = official_wide.merge(park_name_lookup, on="ParkID", how="left")
 
-# Step 4: Rename amenity columns to _official suffix
 amenity_cats_in_official = [c for c in official_wide.columns if c in list(TAXONOMY.keys())]
 official_wide = official_wide.rename(
     columns={c: f"{c}_official" for c in amenity_cats_in_official}
 )
 
-# Step 5: Match to master park_id via name
 master_van = master[master["source"] == "Vancouver"].copy()
 master_van["park_name_lower"] = master_van["park_name"].str.lower().str.strip()
 official_wide = official_wide.merge(
@@ -282,7 +279,6 @@ official_wide = official_wide.merge(
     left_on="name_lower", right_on="park_name_lower", how="inner"
 )
 
-# Step 6: Add washroom from public-washrooms file
 wc = pd.read_csv(WC_PATH, sep=";", encoding="utf-8-sig")
 wc.columns = wc.columns.str.strip()
 wc_parks = set(wc["Park Name"].str.lower().str.strip().unique())
@@ -291,30 +287,15 @@ official_wide["washroom_official"] = (
 ).astype(int)
 
 print(f"Parks matched for validation: {len(official_wide)}")
-print(f"Official columns: {[c for c in official_wide.columns if '_official' in c]}")
 
-# Step 7: Merge with keyword amenities
 validation = official_wide.merge(
     park_amenities[["park_id"] + list(TAXONOMY.keys())],
     on="park_id", how="inner"
 )
 print(f"Parks in final validation set: {len(validation)}")
-print(list(validation.columns))
-
-# QA: unmatched parks
-official_names = set(park_name_lookup["name_lower"].dropna().unique())
-master_names   = set(master_van["park_name_lower"].dropna().unique())
-unmatched_official = official_names - master_names
-unmatched_master   = master_names - official_names
-print(f"\nUnmatched official parks (not in master): {len(unmatched_official)}")
-print(sorted(list(unmatched_official))[:10])
-print(f"\nUnmatched master parks (not in official): {len(unmatched_master)}")
-print(sorted(list(unmatched_master))[:10])
 
 
 # %% 7. KAPPA COMPUTATION
-from sklearn.metrics import cohen_kappa_score
-
 cats_to_validate = [
     "playground", "sports_fields", "courts", "dog_offleash",
     "water_play", "picnic", "washroom"
@@ -323,13 +304,10 @@ cats_to_validate = [
 kappa_results = []
 for cat in cats_to_validate:
     off_col = f"{cat}_official"
-    kw_col  = cat  # keyword columns keep original name -- no conflict in merge
+    kw_col  = cat
 
-    if off_col not in validation.columns:
-        print(f"  Skipping {cat} -- official column not found")
-        continue
-    if kw_col not in validation.columns:
-        print(f"  Skipping {cat} -- keyword column not found")
+    if off_col not in validation.columns or kw_col not in validation.columns:
+        print(f"  Skipping {cat} -- column not found")
         continue
 
     y_true = validation[off_col].fillna(0).astype(int)
@@ -362,44 +340,89 @@ print(f"\nMean Cohen's kappa: {mean_kappa:.3f}")
 print(f"Saved: {TAB_DIR}/vancouver_amenity_kappa.csv")
 
 
-# %% 8. MAIN FIGURE: AMENITY PRESENCE BY DIVERGENCE QUADRANT (vertical)
-da_div = gpd.read_file(DIV_PATH)
+# %% 8. PARK-LEVEL AMENITY-SENTIMENT CORRELATION
+park_metrics = pd.read_csv(PARK_MET_PATH)
 
-da_div["DAUID"] = da_div["DAUID"].astype(str)
-da_usability["DAUID"] = da_usability["DAUID"].astype(str)
-da_merged = da_div.merge(da_usability, on="DAUID", how="left")
+park_corr = park_amenities.merge(
+    park_metrics[["park_id", "MeanSentiment", "AvgRating", "n_text_reviews"]],
+    on="park_id", how="inner"
+)
+park_corr = park_corr[park_corr["MeanSentiment"].notna()].copy()
+print(f"Parks in correlation analysis: {len(park_corr)}")
 
-if "divergence_2x2" not in da_merged.columns:
-    REACH_THRESH  = 0.8
-    qty_med       = da_merged["qty_cap20"].median()
-    sentiment_med = da_merged["satisfaction_sentiment"].median()
-    da_merged["supply_binary"] = (da_merged["DA_reach_400"] >= REACH_THRESH).astype(int)
-    da_merged["experience_hi"] = (
-        da_merged["satisfaction_sentiment"] >= sentiment_med
-    ).astype(int)
-    def classify_2x2(s, e):
-        if pd.isna(s) or pd.isna(e): return "No data"
-        if s==1 and e==1: return "HH"
-        if s==1 and e==0: return "HL"
-        if s==0 and e==1: return "LH"
-        return "LL"
-    da_merged["divergence_2x2"] = [
-        classify_2x2(s, e)
-        for s, e in zip(da_merged["supply_binary"], da_merged["experience_hi"])
-    ]
+r, p = spearmanr(park_corr["amenity_type_count"], park_corr["MeanSentiment"])
+print(f"\nAmenity type count vs MeanSentiment: r={r:.3f}, p={p:.4f}")
+r2, p2 = spearmanr(park_corr["amenity_type_count"], park_corr["AvgRating"])
+print(f"Amenity type count vs AvgRating:    r={r2:.3f}, p={p2:.4f}")
 
-# Compute % of DAs per quadrant with each amenity type
-quad_order  = ["HH", "LH", "HL", "LL"]
+print(f"\n--- Individual amenity type vs MeanSentiment ---")
+cat_results = []
+for cat in TAXONOMY.keys():
+    r_cat, p_cat = spearmanr(park_corr[cat], park_corr["MeanSentiment"])
+    cat_results.append({
+        "Category": AMENITY_LABELS[cat],
+        "r":        round(r_cat, 3),
+        "p":        round(p_cat, 4),
+        "sig":      "***" if p_cat < 0.001 else "**" if p_cat < 0.01
+                    else "*" if p_cat < 0.05 else "ns"
+    })
+    print(f"  {AMENITY_LABELS[cat]:20s}: r={r_cat:.3f}, p={p_cat:.4f}")
+
+cat_df = pd.DataFrame(cat_results).sort_values("r", ascending=False)
+cat_df.to_csv(f"{TAB_DIR}/vancouver_amenity_sentiment_correlation.csv", index=False)
+print(f"\nSaved: {TAB_DIR}/vancouver_amenity_sentiment_correlation.csv")
+
+
+# %% 9. CHI-SQUARE: AMENITY PRESENCE BY DIVERGENCE QUADRANT
+# Load equity file which has corrected divergence_2x2 (NaN = No data, not LL)
+da_equity = pd.read_csv(EQUITY_PATH, dtype={"DAUID": str})
+
+# Merge usability onto equity (classified DAs only)
+quad_order = ["HH", "LH", "HL", "LL"]
+da_equity_class = da_equity[da_equity["divergence_2x2"].isin(quad_order)].copy()
+da_chi = da_equity_class.merge(da_usability, on="DAUID", how="left")
+
+print(f"DAs in chi-square analysis: {len(da_chi)}")
+print(f"\n--- Chi-square: Amenity presence by divergence quadrant ---")
+
+chi2_results = []
+for cat in TAXONOMY.keys():
+    if cat not in da_chi.columns:
+        print(f"  Skipping {AMENITY_LABELS[cat]} -- column not found")
+        continue
+    ct = pd.crosstab(da_chi["divergence_2x2"], da_chi[cat])
+    if ct.shape[1] < 2:
+        print(f"  Skipping {AMENITY_LABELS[cat]} -- no variation")
+        continue
+    chi2, p, dof, _ = chi2_contingency(ct)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+    print(f"  {AMENITY_LABELS[cat]:20s}: χ²={chi2:.1f}, df={dof}, p={p:.4f} {sig}")
+    chi2_results.append({
+        "Amenity": AMENITY_LABELS[cat],
+        "chi2":    round(chi2, 1),
+        "df":      dof,
+        "p":       round(p, 4),
+        "sig":     sig,
+    })
+
+chi2_df = pd.DataFrame(chi2_results).sort_values("chi2", ascending=False)
+chi2_df.to_csv(f"{TAB_DIR}/vancouver_amenity_quadrant_chi2.csv", index=False)
+print(f"\nSaved: {TAB_DIR}/vancouver_amenity_quadrant_chi2.csv")
+
+
+# %% 10. MAIN FIGURE: AMENITY HEATMAP BY DIVERGENCE QUADRANT
+# Use da_chi which has both amenity and divergence data (classified DAs only)
 amenity_cols = list(TAXONOMY.keys())
 
+quad_order = ["HH", "LH", "HL", "LL"]
+
 quad_amenity = (
-    da_merged[da_merged["divergence_2x2"].isin(quad_order)]
-    .groupby("divergence_2x2")[amenity_cols]
+    da_chi.groupby("divergence_2x2")[amenity_cols]
     .mean() * 100
 ).reindex(quad_order)
 
-# Add "All DAs" column
-all_da = da_merged[amenity_cols].mean() * 100
+# Add "All DAs" column (classified only)
+all_da = da_chi[amenity_cols].mean() * 100
 quad_amenity.loc["All"] = all_da
 
 # Transpose: amenities as rows, quadrants + All as columns
@@ -407,12 +430,40 @@ quad_amenity_T = quad_amenity.T
 quad_amenity_T.index = [AMENITY_LABELS[c] for c in amenity_cols]
 
 col_labels = [
-    f"HH\n(n={da_merged['divergence_2x2'].eq('HH').sum()})",
-    f"LH\n(n={da_merged['divergence_2x2'].eq('LH').sum()})",
-    f"HL\n(n={da_merged['divergence_2x2'].eq('HL').sum()})",
-    f"LL\n(n={da_merged['divergence_2x2'].eq('LL').sum()})",
-    f"All DAs\n(n={da_merged['divergence_2x2'].isin(quad_order).sum()})",
+    f"High - High \n(n={da_chi['divergence_2x2'].eq('HH').sum()})",
+    f"Low Supply \n High Exp.\n(n={da_chi['divergence_2x2'].eq('LH').sum()})",
+    f"High Supply \n Low Exp.\n(n={da_chi['divergence_2x2'].eq('HL').sum()})",
+    f"Low - Low\n(n={da_chi['divergence_2x2'].eq('LL').sum()})",
+    f"All DAs\n(n={len(da_chi)})",
 ]
+
+colours_2x2 = {
+    "HH": "#01665e",   # dark teal
+    "LH":  "#80cdc1",   # light teal
+    "HL":  "#8c510a",   # dark brown
+    "LL":   "#dfc27d",   # light brown
+    "No data":                           "#cccccc",
+}
+
+quad_keys = ["HH", "LH", "HL", "LL", "All"]
+
+header_colors = [
+    colours_2x2["HH"],
+    colours_2x2["LH"],
+    colours_2x2["HL"],
+    colours_2x2["LL"],
+    "#666666"  # All DAs
+]
+
+# Build y-axis labels with significance markers
+sig_map = chi2_df.set_index("Amenity")["sig"].to_dict()
+ylabels = []
+for cat in amenity_cols:
+    label = AMENITY_LABELS[cat]
+    sig   = sig_map.get(label, "")
+    star  = " ***" if sig == "***" else " **" if sig == "**" \
+            else " *" if sig == "*" else ""
+    ylabels.append(f"{label}{star}")
 
 fig, ax = plt.subplots(figsize=(9, 7))
 im = ax.imshow(quad_amenity_T.values, cmap="YlGn", aspect="auto", vmin=0, vmax=100)
@@ -420,21 +471,14 @@ im = ax.imshow(quad_amenity_T.values, cmap="YlGn", aspect="auto", vmin=0, vmax=1
 for i in range(len(amenity_cols)):
     for j in range(len(quad_amenity_T.columns)):
         val = quad_amenity_T.values[i, j]
+        if np.isnan(val):
+            continue
         text_col = "white" if val > 60 else "black"
         ax.text(j, i, f"{val:.0f}%", ha="center", va="center",
                 fontsize=9, color=text_col, fontweight="bold")
 
 ax.set_xticks(range(len(quad_amenity_T.columns)))
-ax.set_xticklabels(col_labels, fontsize=9)
-ax.set_yticks(range(len(amenity_cols)))
-# Build y-axis labels with significance markers
-sig_map = chi2_df.set_index("Amenity")["sig"].to_dict()
-ylabels = []
-for cat in amenity_cols:
-    label = AMENITY_LABELS[cat]
-    sig   = sig_map.get(label, "")
-    star  = " ***" if sig == "***" else " **" if sig == "**" else " *" if sig == "*" else ""
-    ylabels.append(f"{label}{star}")
+ax.set_xticklabels(col_labels, fontsize=9, fontweight="bold")
 
 ax.set_yticks(range(len(amenity_cols)))
 ax.set_yticklabels(ylabels, fontsize=9)
@@ -442,14 +486,30 @@ ax.set_yticklabels(ylabels, fontsize=9)
 ax.xaxis.set_ticks_position('top')
 ax.xaxis.set_label_position('top')
 
+# Re-fetch labels AFTER moving ticks to top
+xt = ax.get_xticklabels()
+
+# Color-code quadrant headers
+for label, bg in zip(xt, header_colors):
+    label.set_color("white")
+    label.set_bbox(dict(
+        facecolor=bg,
+        edgecolor="none",
+        boxstyle="round,pad=0.5"
+    ))
+ax.set_title(
+    "Socially Perceived Recreational Affordances by Divergence Quadrant — Vancouver\n"
+    "% of DAs with ≥1 reachable park mentioning each amenity type (≥2 review mentions)",
+    fontsize=10, pad=12
+)
 plt.colorbar(im, ax=ax, shrink=0.6, label="% of DAs")
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0, 1, 0.95])
 plt.savefig(f"{FIG_DIR}/vancouver_amenity_by_quadrant.png", dpi=150, bbox_inches="tight")
 plt.close()
 print(f"Saved: {FIG_DIR}/vancouver_amenity_by_quadrant.png")
 
 
-# %% 9. APPENDIX: PARK-LEVEL AMENITY HEATMAP (top 40 parks)
+# %% 11. APPENDIX: PARK-LEVEL AMENITY HEATMAP (top 40 parks)
 top_parks = park_amenities.nlargest(40, "amenity_type_count")[
     ["park_name"] + list(TAXONOMY.keys())
 ].set_index("park_name")
@@ -463,7 +523,7 @@ ax.set_yticks(range(len(top_parks)))
 ax.set_yticklabels(top_parks.index, fontsize=8)
 ax.set_title(
     "Amenity Type Presence by Park (Top 40) — Vancouver\n"
-    "Based on keyword matching of Google Reviews (≥2 mentions or ≥1% of reviews)",
+    "Based on keyword matching of Google Reviews (≥2 review mentions per park)",
     fontsize=11, pad=12
 )
 plt.tight_layout()
@@ -473,11 +533,11 @@ plt.close()
 print(f"Saved: {FIG_DIR}/vancouver_amenity_heatmap_appendix.png")
 
 
-# %% 10. QA: DISCREPANCY ANALYSIS
+# %% 12. QA: DISCREPANCY ANALYSIS
 print("\n--- Official amenities not mentioned in reviews ---")
 for cat in cats_to_validate:
-    off_col = f"{cat}_official" if f"{cat}_official" in validation.columns else cat
-    kw_col  = f"{cat}_keyword"  if f"{cat}_keyword"  in validation.columns else cat
+    off_col = f"{cat}_official"
+    kw_col  = cat
     if off_col not in validation.columns or kw_col not in validation.columns:
         continue
     missed = validation[
@@ -489,8 +549,8 @@ for cat in cats_to_validate:
 
 print("\n--- User-mentioned amenities absent from official inventory ---")
 for cat in cats_to_validate:
-    off_col = f"{cat}_official" if f"{cat}_official" in validation.columns else cat
-    kw_col  = f"{cat}_keyword"  if f"{cat}_keyword"  in validation.columns else cat
+    off_col = f"{cat}_official"
+    kw_col  = cat
     if off_col not in validation.columns or kw_col not in validation.columns:
         continue
     extra = validation[
@@ -499,114 +559,4 @@ for cat in cats_to_validate:
     if extra:
         print(f"\n  {AMENITY_LABELS.get(cat, cat)} ({len(extra)} parks):")
         print(f"    {', '.join(extra[:5])}{'...' if len(extra)>5 else ''}")
-
-
-# %%
-# Parks with washrooms in keyword data but NOT in validation set
-parks_with_washroom_kw = set(park_amenities[park_amenities["washroom"] == 1]["park_id"].unique())
-parks_in_validation    = set(validation["park_id"].unique())
-
-missing_from_validation = parks_with_washroom_kw - parks_in_validation
-print(f"Parks with keyword washroom not in validation: {len(missing_from_validation)}")
-print(master[master["park_id"].isin(missing_from_validation)][["park_id", "park_name"]].to_string())
-
-
-
-
-# %%
-park_name_lookup_check = fac[["ParkID", "Name"]].drop_duplicates(subset="ParkID")
-park_name_lookup_check["name_lower"] = park_name_lookup_check["Name"].str.lower().str.strip()
-
-master_van_check = master[master["source"] == "Vancouver"].copy()
-master_van_check["park_name_lower"] = master_van_check["park_name"].str.lower().str.strip()
-
-matched = set(park_name_lookup_check["name_lower"]) & set(master_van_check["park_name_lower"])
-unmatched_official = park_name_lookup_check[
-    ~park_name_lookup_check["name_lower"].isin(matched)
-][["ParkID", "Name", "name_lower"]].sort_values("name_lower")
-
-print(f"Unmatched official parks: {len(unmatched_official)}")
-print(unmatched_official.to_string())
-
-# %% 11. PARK-LEVEL AMENITY-SENTIMENT CORRELATION
-from scipy.stats import spearmanr
-import matplotlib.pyplot as plt
-
-park_metrics = pd.read_csv("data/google-reviews/processed/08c-park-metrics.csv")
-
-# Merge amenity type count with sentiment
-park_corr = park_amenities.merge(
-    park_metrics[["park_id", "MeanSentiment", "AvgRating", "n_text_reviews"]],
-    on="park_id", how="inner"
-)
-
-# Only parks with valid sentiment
-park_corr = park_corr[park_corr["MeanSentiment"].notna()].copy()
-print(f"Parks in correlation analysis: {len(park_corr)}")
-
-# Overall: amenity type count vs sentiment
-r, p = spearmanr(park_corr["amenity_type_count"], park_corr["MeanSentiment"])
-print(f"\nAmenity type count vs MeanSentiment: r={r:.3f}, p={p:.4f}")
-
-r2, p2 = spearmanr(park_corr["amenity_type_count"], park_corr["AvgRating"])
-print(f"Amenity type count vs AvgRating:    r={r2:.3f}, p={p2:.4f}")
-
-# Individual amenity categories vs sentiment
-print(f"\n--- Individual amenity type vs MeanSentiment ---")
-cat_results = []
-for cat in TAXONOMY.keys():
-    r_cat, p_cat = spearmanr(park_corr[cat], park_corr["MeanSentiment"])
-    cat_results.append({
-        "Category":  AMENITY_LABELS[cat],
-        "r":         round(r_cat, 3),
-        "p":         round(p_cat, 4),
-        "sig":       "***" if p_cat < 0.001 else "**" if p_cat < 0.01 else "*" if p_cat < 0.05 else "ns"
-    })
-    print(f"  {AMENITY_LABELS[cat]:20s}: r={r_cat:.3f}, p={p_cat:.4f}")
-
-cat_df = pd.DataFrame(cat_results).sort_values("r", ascending=False)
-cat_df.to_csv(f"{TAB_DIR}/vancouver_amenity_sentiment_correlation.csv", index=False)
-print(f"\nSaved: {TAB_DIR}/vancouver_amenity_sentiment_correlation.csv")
-
-
-# %% 12. CHI-SQUARE: AMENITY PRESENCE BY DIVERGENCE QUADRANT
-from scipy.stats import chi2_contingency
-import numpy as np
-
-da_equity = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
-da_usability["DAUID"] = da_usability["DAUID"].astype(str)
-da_merged = da_equity.merge(da_usability, on="DAUID", how="left")
-da_merged = da_merged[da_merged["divergence_2x2"].isin(quad_order)].copy()
-print(f"DAs in chi-square analysis: {len(da_merged)}")
-
-# Keep only DAs with valid divergence classification
-quad_order = ["HH", "LH", "HL", "LL"]
-da_merged = da_merged[da_merged["divergence_2x2"].isin(quad_order)].copy()
-
-print(f"DAs in chi-square analysis: {len(da_merged)}")
-print(f"\n--- Chi-square: Amenity presence by divergence quadrant ---")
-
-chi2_results = []
-for cat in TAXONOMY.keys():
-    if cat not in da_merged.columns:
-        continue
-    ct = pd.crosstab(da_merged["divergence_2x2"], da_merged[cat])
-    if ct.shape[1] < 2:
-        print(f"  Skipping {AMENITY_LABELS[cat]} -- no variation")
-        continue
-    chi2, p, dof, _ = chi2_contingency(ct)
-    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
-    print(f"  {AMENITY_LABELS[cat]:20s}: χ²={chi2:.1f}, df={dof}, p={p:.4f} {sig}")
-    chi2_results.append({
-        "Amenity":   AMENITY_LABELS[cat],
-        "chi2":      round(chi2, 1),
-        "df":        dof,
-        "p":         round(p, 4),
-        "sig":       sig,
-    })
-
-chi2_df = pd.DataFrame(chi2_results).sort_values("chi2", ascending=False)
-chi2_df.to_csv(f"{TAB_DIR}/vancouver_amenity_quadrant_chi2.csv", index=False)
-print(f"\nSaved: {TAB_DIR}/vancouver_amenity_quadrant_chi2.csv")
-
 # %%

@@ -64,7 +64,8 @@ da_div["supply_type"] = da_div.apply(
 )
 
 da_div["supply_binary"] = (da_div["supply_type"] == "HH").astype(int)
-da_div["experience_hi"] = (da_div["satisfaction_sentiment"] >= sentiment_med).astype(int)
+da_div["experience_hi"] = (da_div["satisfaction_sentiment"] >= sentiment_med).astype(float)
+da_div.loc[da_div["satisfaction_sentiment"].isna(), "experience_hi"] = np.nan
 
 def classify_2x2(s, e):
     if pd.isna(s) or pd.isna(e): return "No data"
@@ -206,8 +207,8 @@ for stratum_col, label in [
     print(f"\n{'='*50}")
     print(f"Divergence by {label}:")
     ct = pd.crosstab(
-        da_eq[stratum_col],
-        da_eq["divergence_2x2"],
+        da_eq_classified[stratum_col],
+        da_eq_classified["divergence_2x2"],
         normalize="index"
     ).round(3) * 100
     print(ct.to_string())
@@ -234,7 +235,7 @@ for stratum_col, label in [
     ("edu_stratum",       "Education (Bachelor+)"),
     ("ale_stratum",       "Active Living Environment"),
 ]:
-    ct = pd.crosstab(da_eq[stratum_col], da_eq["divergence_2x2"])
+    ct = pd.crosstab(da_eq_classified[stratum_col], da_eq_classified["divergence_2x2"])
     chi2, p, dof, _ = chi2_contingency(ct)
     v = cramers_v(ct)
     sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
@@ -242,44 +243,32 @@ for stratum_col, label in [
 
 
 
-# %% 8. FIGURE A: STACKED BAR (2-row grid, 3+2)
+# %% 8. FIGURE A: STACKED BAR (reordered by effect size)
 strata_main = [
-    ("limat_stratum",  "Low Income (LIM-AT %)",
-     ["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]),
     ("edu_stratum",    "Education (Bachelor+)",
      ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
-    ("age_stratum",    "Age (65+)",
-     ["Young (<10% 65+)", "Mid age (10-20% 65+)", "Older (>20% 65+)"]),
-    ("vm_stratum",     "Visible Minority",
-     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
     ("ale_stratum",    "Active Living Environment",
      ["Low ALE", "Mid ALE", "High ALE"]),
+    ("age_stratum",    "Age (65+)",
+     ["Young (<10% 65+)", "Mid age (10-20% 65+)", "Older (>20% 65+)"]),
+    ("limat_stratum",  "Low Income (LIM-AT %)",
+     ["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]),
+    ("vm_stratum",     "Visible Minority",
+     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
 ]
-colours_divergence = {
-    "HH": "#01665e",
-    "LH": "#80cdc1",
-    "HL": "#dfc27d",
-    "LL": "#8c510a",
-}
-
-legend_labels_div = {
-    "HH": "High supply / high experience",
-    "LH": "Low supply / high experience",
-    "HL": "High supply / low experience",
-    "LL": "Low supply / low experience",
-}
 
 fig, axes = plt.subplots(3, 2, figsize=(12, 14))
 axes = axes.flatten()
+da_eq_classified = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
 
 for idx, (ax, (col, title, order)) in enumerate(zip(axes, strata_main)):
-    ct_raw = pd.crosstab(da_eq[col], da_eq["divergence_2x2"])
+    ct_raw = pd.crosstab(da_eq_classified[col], da_eq_classified["divergence_2x2"])
     chi2, p, dof, _ = chi2_contingency(ct_raw)
     v = cramers_v(ct_raw)
     sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
 
     ct = pd.crosstab(
-        da_eq[col], da_eq["divergence_2x2"], normalize="index"
+        da_eq_classified[col], da_eq_classified["divergence_2x2"], normalize="index"
     ) * 100
     ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
 
@@ -292,36 +281,31 @@ for idx, (ax, (col, title, order)) in enumerate(zip(axes, strata_main)):
             for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
                 if v_val > 6:
                     ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
-                            ha="center", va="center", fontsize=8,
+                            ha="center", va="center", fontsize=9,
                             color="white" if quad in ["HH", "LL"] else "black")
             bottom += vals
 
     ax.set_xticks(range(len(ct)))
     ax.set_xticklabels(order, rotation=20, ha="right", fontsize=10)
-    ax.set_ylabel("% of DAs", fontsize=10)
-    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
+    ax.set_ylabel("% of DAs", fontsize=11)
+    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=12)
     ax.set_ylim(0, 100)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
-# Hide 6th panel and use it for legend
+# Hide 6th panel and use for legend
 axes[5].set_visible(False)
-
-# Place legend in the 6th panel position
-legend_ax = fig.add_subplot(3, 2, 6)
-legend_ax.set_visible(False)
 
 patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
            for q in ["HH", "LH", "HL", "LL"]]
-
 fig.legend(
     handles=patches,
     loc="center",
-    bbox_to_anchor=(0.75, 0.17),  # right column, bottom row position
-    fontsize=10,
+    bbox_to_anchor=(0.75, 0.17),
+    fontsize=11,
     framealpha=0.9,
     title="Divergence type",
-    title_fontsize=10,
+    title_fontsize=11,
 )
 
 plt.tight_layout(rect=[0, 0.06, 1, 1])
@@ -352,7 +336,7 @@ heatmap_data = []
 row_labels   = []
 
 for col, label, high_stratum in heatmap_strata:
-    subset = da_eq[da_eq[col] == high_stratum]
+    subset = da_eq_classified[da_eq_classified[col] == high_stratum]
     ct     = subset["divergence_2x2"].value_counts(normalize=True) * 100
     row    = [ct.get(q, 0) for q in quad_order]
     heatmap_data.append(row)
@@ -389,9 +373,8 @@ print("Saved: vancouver_equity_heatmap.png")
 
 
 # %% EXTRA: EQUITY CROSSTABS (binary supply/experience)
-# 6. FIGURE A: SOCIOECONOMIC INDICATORS
-# Income, LIM-AT, Education
-fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
+# %% FIGURE A: SOCIOECONOMIC INDICATORS (appendix)
+da_eq_class = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
 
 strata_a = [
     ("inc_stratum",   "Income",
@@ -402,11 +385,16 @@ strata_a = [
      ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
 ]
 
+fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
+
 for ax, (col, title, order) in zip(axes, strata_a):
+    ct_raw = pd.crosstab(da_eq_class[col], da_eq_class["divergence_2x2"])
+    chi2, p, dof, _ = chi2_contingency(ct_raw)
+    v = cramers_v(ct_raw)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+
     ct = pd.crosstab(
-        da_eq[col],
-        da_eq["divergence_2x2"],
-        normalize="index"
+        da_eq_class[col], da_eq_class["divergence_2x2"], normalize="index"
     ) * 100
     ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
 
@@ -415,16 +403,23 @@ for ax, (col, title, order) in zip(axes, strata_a):
         if quad in ct.columns:
             vals = ct[quad].fillna(0).values
             ax.bar(range(len(ct)), vals, bottom=bottom,
-                   color=colours_2x2[quad], label=quad, width=0.6)
+                   color=colours_divergence[quad], width=0.6)
+            for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
+                if v_val > 6:
+                    ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
+                            ha="center", va="center", fontsize=8,
+                            color="white" if quad in ["HH", "LL"] else "black")
             bottom += vals
 
     ax.set_xticks(range(len(ct)))
     ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
-    ax.set_ylabel("% of DAs")
-    ax.set_title(title)
+    ax.set_ylabel("% of DAs", fontsize=10)
+    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
     ax.set_ylim(0, 100)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
-patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q])
+patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
            for q in ["HH", "LH", "HL", "LL"]]
 fig.legend(handles=patches, loc="lower center", ncol=4,
            fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
@@ -439,10 +434,7 @@ plt.close()
 print("Saved: vancouver_equity_socioeconomic.png")
 
 
-# %% 7. FIGURE B: DEMOGRAPHIC + BUILT ENVIRONMENT
-# Visible minority, Age, Immigrant share, ALE
-fig, axes = plt.subplots(1, 4, figsize=(22, 5.5))
-
+# %% FIGURE B: DEMOGRAPHIC + BUILT ENVIRONMENT (appendix)
 strata_b = [
     ("vm_stratum",        "Visible Minority (%)",
      ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
@@ -454,11 +446,16 @@ strata_b = [
      ["Low ALE", "Mid ALE", "High ALE"]),
 ]
 
+fig, axes = plt.subplots(1, 4, figsize=(22, 5.5))
+
 for ax, (col, title, order) in zip(axes, strata_b):
+    ct_raw = pd.crosstab(da_eq_class[col], da_eq_class["divergence_2x2"])
+    chi2, p, dof, _ = chi2_contingency(ct_raw)
+    v = cramers_v(ct_raw)
+    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+
     ct = pd.crosstab(
-        da_eq[col],
-        da_eq["divergence_2x2"],
-        normalize="index"
+        da_eq_class[col], da_eq_class["divergence_2x2"], normalize="index"
     ) * 100
     ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
 
@@ -467,17 +464,24 @@ for ax, (col, title, order) in zip(axes, strata_b):
         if quad in ct.columns:
             vals = ct[quad].fillna(0).values
             ax.bar(range(len(ct)), vals, bottom=bottom,
-                   color=colours_2x2[quad], label=quad, width=0.6)
+                   color=colours_divergence[quad], width=0.6)
+            for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
+                if v_val > 6:
+                    ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
+                            ha="center", va="center", fontsize=8,
+                            color="white" if quad in ["HH", "LL"] else "black")
             bottom += vals
 
     ax.set_xticks(range(len(ct)))
     ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
-    ax.set_ylabel("% of DAs")
-    ax.set_title(title)
+    ax.set_ylabel("% of DAs", fontsize=10)
+    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
     ax.set_ylim(0, 100)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
-patches = [mpatches.Patch(color=colours_2x2[q], label=legend_labels[q])
-           for q in ["HH", "HL", "LH", "LL"]]
+patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
+           for q in ["HH", "LH", "HL", "LL"]]
 fig.legend(handles=patches, loc="lower center", ncol=4,
            fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
 plt.suptitle(
@@ -489,7 +493,6 @@ plt.savefig(f"{FIG_DIR}/vancouver_equity_demographic_builtenv.png",
             dpi=150, bbox_inches="tight")
 plt.close()
 print("Saved: vancouver_equity_demographic_builtenv.png")
-
 
 
 

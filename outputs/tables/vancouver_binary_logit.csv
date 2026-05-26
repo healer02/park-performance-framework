@@ -1,16 +1,16 @@
 Model,Predictor,OR,p,sig
-LL vs others,Visible minority (%),0.949,0.5584,ns
-LL vs others,Age 65+ (%),0.814,0.0058,**
-LL vs others,LIM-AT (%),1.007,0.9256,ns
-LL vs others,Education (Bach+%),0.947,0.5158,ns
-LL vs others,Active living env.,0.456,0.0,***
-HL vs others,Visible minority (%),0.808,0.0434,*
-HL vs others,Age 65+ (%),1.265,0.0022,**
-HL vs others,LIM-AT (%),1.075,0.3804,ns
-HL vs others,Education (Bach+%),0.896,0.2725,ns
-HL vs others,Active living env.,0.91,0.3533,ns
-LH vs others,Visible minority (%),1.211,0.0552,ns
-LH vs others,Age 65+ (%),0.906,0.234,ns
-LH vs others,LIM-AT (%),1.049,0.5535,ns
-LH vs others,Education (Bach+%),1.057,0.5628,ns
-LH vs others,Active living env.,1.884,0.0,***
+LL vs others,Visible minority (%),0.867,0.2065,ns
+LL vs others,Age 65+ (%),0.782,0.009,**
+LL vs others,LIM-AT (%),0.906,0.2548,ns
+LL vs others,Education (Bach+%),0.997,0.9769,ns
+LL vs others,Active living env.,0.31,0.0,***
+HL vs others,Visible minority (%),0.839,0.1342,ns
+HL vs others,Age 65+ (%),1.264,0.0048,**
+HL vs others,LIM-AT (%),1.074,0.4371,ns
+HL vs others,Education (Bach+%),0.847,0.1365,ns
+HL vs others,Active living env.,0.911,0.391,ns
+LH vs others,Visible minority (%),1.224,0.0593,ns
+LH vs others,Age 65+ (%),0.889,0.1716,ns
+LH vs others,LIM-AT (%),1.128,0.1554,ns
+LH vs others,Education (Bach+%),1.03,0.7714,ns
+LH vs others,Active living env.,1.913,0.0,***
