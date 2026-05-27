@@ -559,4 +559,130 @@ for cat in cats_to_validate:
     if extra:
         print(f"\n  {AMENITY_LABELS.get(cat, cat)} ({len(extra)} parks):")
         print(f"    {', '.join(extra[:5])}{'...' if len(extra)>5 else ''}")
+
+
+
+
+
+# %% ORDERED DOT PLOT: amenity prevalence by divergence quadrant
+import pandas as pd, numpy as np, matplotlib.pyplot as plt
+from scipy.stats import chi2_contingency
+
+da_eq   = pd.read_csv("data/processed/vancouver_da_equity.csv",    dtype={"DAUID": str})
+da_usab = pd.read_csv("data/processed/vancouver_da_usability.csv", dtype={"DAUID": str})
+da_eq   = da_eq.merge(da_usab, on="DAUID", how="left")
+da_eq_classified = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
+
+amenity_cols = {
+    "playground":       "Playground",
+    "sports_fields":    "Sports fields",
+    "courts":           "Courts",
+    "trails":           "Trails",
+    "dog_offleash":     "Dog off-leash",
+    "water_play":       "Water play",
+    "beach_waterfront": "Beach/waterfront",
+    "picnic":           "Picnic area",
+    "washroom":         "Washroom",
+    "community_garden": "Community garden",
+    "seating_shelter":  "Seating & shelter",
+}
+
+quad_order  = ["HH", "LH", "HL", "LL"]
+colours_dot = {
+    "HH": "#01665e",
+    "LH": "#80cdc1",
+    "HL": "#dfc27d",
+    "LL": "#8c510a",
+}
+
+# --- Compute prevalence and significance ---
+prevalence = {}
+sig_markers = {}
+
+for col, label in amenity_cols.items():
+    prevalence[label] = {}
+    for q in quad_order:
+        subset = da_eq_classified[da_eq_classified["divergence_2x2"] == q]
+        prevalence[label][q] = subset[col].mean() * 100
+
+    # Chi-square across quadrants
+    ct = pd.crosstab(da_eq_classified["divergence_2x2"], da_eq_classified[col])
+    chi2, p, _, _ = chi2_contingency(ct)
+    sig_markers[label] = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else ""
+
+prev_df = pd.DataFrame(prevalence).T
+
+# --- Sort by high-experience vs low-experience contrast ---
+prev_df["hi_exp_mean"] = (prev_df["HH"] + prev_df["LH"]) / 2
+prev_df["lo_exp_mean"] = (prev_df["HL"] + prev_df["LL"]) / 2
+prev_df["exp_contrast"] = prev_df["hi_exp_mean"] - prev_df["lo_exp_mean"]
+prev_df = prev_df.sort_values("exp_contrast", ascending=True)
+
+amenity_labels = prev_df.index.tolist()
+y_pos = np.arange(len(amenity_labels))
+
+# --- Plot ---
+fig, ax = plt.subplots(figsize=(8, 7))
+fig.patch.set_facecolor("#f8f8f6")
+ax.set_facecolor("#f8f8f6")
+
+for y in y_pos:
+    ax.axhline(y, color="#e0e0e0", lw=0.6, zorder=0)
+
+# Nudge overlapping x-values slightly
+NUDGE = 0.8  # percentage points
+
+for i, amenity in enumerate(amenity_labels):
+    vals = {q: prev_df.loc[amenity, q] for q in quad_order}
+    # find pairs with same or very close values
+    for j, q1 in enumerate(quad_order):
+        for q2 in quad_order[j+1:]:
+            if abs(vals[q1] - vals[q2]) < NUDGE:
+                prev_df.loc[amenity, q1] -= NUDGE / 2
+                prev_df.loc[amenity, q2] += NUDGE / 2
+
+for q in quad_order:
+    xvals = prev_df[q].values
+    ax.scatter(xvals, y_pos, color=colours_dot[q], s=60, zorder=3, label=q)
+
+# --- Y-axis labels with significance markers ---
+y_labels = []
+for amenity in amenity_labels:
+    sig = sig_markers[amenity]
+    y_labels.append(f"{amenity} {sig}".strip())
+
+ax.set_yticks(y_pos)
+ax.set_yticklabels(y_labels, fontsize=11, color="black")
+
+ax.set_xlabel("Prevalence (% of DAs with amenity present)", fontsize=11, color="black")
+ax.tick_params(colors="black", labelsize=10)
+ax.set_xlim(0, 100)
+
+for spine in ["top", "right"]:
+    ax.spines[spine].set_visible(False)
+for spine in ["bottom", "left"]:
+    ax.spines[spine].set_color("#cccccc")
+    ax.spines[spine].set_linewidth(0.8)
+
+# --- Legend: top right, no border ---
+legend_labels_dot = {
+    "HH": "High supply / high experience",
+    "LH": "Low supply / high experience",
+    "HL": "High supply / low experience",
+    "LL": "Low supply / low experience",
+}
+handles = [plt.Line2D([0], [0], marker="o", color="w",
+                      markerfacecolor=colours_dot[q],
+                      markersize=8, label=legend_labels_dot[q])
+           for q in quad_order]
+ax.legend(handles=handles, fontsize=9, frameon=True,
+          facecolor="white", edgecolor="none",
+          loc="upper right", title="Divergence type",
+          title_fontsize=9, bbox_to_anchor=(1.0, 1.0))
+
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_amenity_dotplot.png",
+            dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+plt.close()
+print("Saved: vancouver_amenity_dotplot.png")
 # %%
