@@ -194,77 +194,6 @@ print(f"\nCoverage % summary:")
 print(da_experience["coverage_pct"].describe().round(1))
 
 
-# %% 4b. EXPERIENCE MAPS: Salience and Satisfaction (side by side)
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import geopandas as gpd
-import numpy as np
-
-parks_gdf = gpd.read_file("data/parks/processed/vancouver_parks_merged.shp")
-
-fig, axes = plt.subplots(1, 2, figsize=(18, 8))
-
-# --- Left: Digital Salience ---
-ax = axes[0]
-da_div_plot = da_div.copy()
-
-# Log-transform salience for display (highly skewed)
-da_div_plot["salience_log"] = np.log1p(da_div_plot["salience"])
-
-da_div_plot.plot(
-    ax=ax,
-    column="salience_log",
-    cmap="YlOrRd",
-    legend=True,
-    missing_kwds={"color": "#cccccc", "label": "No data"},
-    legend_kwds={
-        "label": "Log(reviews per 1,000 residents + 1)",
-        "shrink": 0.5
-    }
-)
-parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.6, zorder=2)
-ax.set_title(
-    "Digital Salience\nGoogle reviews per 1,000 residents (log-transformed)",
-    fontsize=11
-)
-ax.set_axis_off()
-
-# --- Right: Expressed Satisfaction (Sentiment) ---
-ax = axes[1]
-da_div.plot(
-    ax=ax,
-    column="satisfaction_sentiment",
-    cmap="RdYlGn",
-    vmin=0.4,
-    vmax=0.9,
-    legend=True,
-    missing_kwds={"color": "#cccccc", "label": "No data"},
-    legend_kwds={
-        "label": "Mean sentiment score (RoBERTa)",
-        "shrink": 0.5
-    }
-)
-parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.6, zorder=2)
-ax.set_title(
-    "Expressed Satisfaction\nMean RoBERTa sentiment score across reachable parks",
-    fontsize=11
-)
-ax.set_axis_off()
-
-plt.suptitle(
-    "Park Experience Dimensions — Vancouver Dissemination Areas (2021)",
-    fontsize=13, y=1.01
-)
-plt.tight_layout()
-plt.savefig(f"{FIG_DIR}/vancouver_da_experience_2maps.png", dpi=150, bbox_inches="tight")
-plt.close()
-print("Saved: vancouver_da_experience_2maps.png")
-
-# %%
-da_equity = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
-print(da_equity[da_equity["satisfaction_sentiment"].isna()]["divergence_2x2"].value_counts())
-print(f"\nTotal NaN sentiment DAs: {da_equity['satisfaction_sentiment'].isna().sum()}")
-
 # %% 5. JOIN SUPPLY + EXPERIENCE AND CLASSIFY DIVERGENCE
 da_supply = gpd.read_file(SUPPLY_PATH)
 
@@ -338,6 +267,78 @@ print(da_div[da_div["experience_hi"]==0]["supply_type"].value_counts())
 
 da_div.to_file(f"{OUT_DIR}/vancouver_da_divergence.gpkg", driver="GPKG")
 print("\nSaved vancouver_da_divergence.gpkg")
+
+
+# %% 5b. EXPERIENCE MAPS: Salience and Satisfaction (side by side)
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import geopandas as gpd
+import numpy as np
+
+parks_gdf = gpd.read_file("data/parks/processed/vancouver_parks_merged.shp")
+
+fig, axes = plt.subplots(1, 2, figsize=(18, 8))
+
+# --- Left: Digital Salience ---
+ax = axes[0]
+da_div_plot = da_div.copy()
+
+# Log-transform salience for display (highly skewed)
+da_div_plot["salience_log"] = np.log1p(da_div_plot["salience"])
+
+da_div_plot.plot(
+    ax=ax,
+    column="salience_log",
+    cmap="YlOrRd",
+    legend=True,
+    missing_kwds={"color": "#cccccc", "label": "No data"},
+    legend_kwds={
+        "label": "Log(reviews per 1,000 residents + 1)",
+        "shrink": 0.5
+    }
+)
+parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.6, zorder=2)
+ax.set_title(
+    "Digital Salience\nGoogle reviews per 1,000 residents (log-transformed)",
+    fontsize=11
+)
+ax.set_axis_off()
+
+# --- Right: Expressed Satisfaction (Sentiment) ---
+ax = axes[1]
+da_div.plot(
+    ax=ax,
+    column="satisfaction_sentiment",
+    cmap="RdYlGn",
+    vmin=0.4,
+    vmax=0.9,
+    legend=True,
+    missing_kwds={"color": "#cccccc", "label": "No data"},
+    legend_kwds={
+        "label": "Mean sentiment score (RoBERTa)",
+        "shrink": 0.5
+    }
+)
+parks_gdf.plot(ax=ax, facecolor="none", edgecolor="#2d6a2d", linewidth=0.6, zorder=2)
+ax.set_title(
+    "Expressed Satisfaction\nMean RoBERTa sentiment score across reachable parks",
+    fontsize=11
+)
+ax.set_axis_off()
+
+plt.suptitle(
+    "Park Experience Dimensions — Vancouver Dissemination Areas (2021)",
+    fontsize=13, y=1.01
+)
+plt.tight_layout()
+plt.savefig(f"{FIG_DIR}/vancouver_da_experience_2maps.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: vancouver_da_experience_2maps.png")
+
+# %%
+da_equity = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
+print(da_equity[da_equity["satisfaction_sentiment"].isna()]["divergence_2x2"].value_counts())
+print(f"\nTotal NaN sentiment DAs: {da_equity['satisfaction_sentiment'].isna().sum()}")
 
 
 # %% 6a. SIMPLE 2x2 DIVERGENCE MAP
@@ -702,4 +703,222 @@ plt.savefig("outputs/figures/vancouver_area_sentiment_scatter.png",
 plt.close()
 print("Saved area-sentiment scatterplot.")
 
+
+# %% 8c. PARK AREA–SENTIMENT CORRELATION: sensitivity across area caps
+from scipy.stats import pearsonr, spearmanr
+
+area_caps = [
+    ("qty_cap10", "10 ha cap"),
+    ("qty_cap20", "20 ha cap (primary)"),
+    ("qty_raw",   "Uncapped"),
+]
+
+df_corr = da_div[da_div["divergence_2x2"] != "No data"].copy()
+
+print("--- Park area–sentiment correlation (DA level) ---")
+print(f"{'Cap':<22} {'r_pearson':>10} {'p_pearson':>10} {'r_spearman':>11} {'p_spearman':>11} {'n':>5}")
+print("-" * 72)
+
+for col, label in area_caps:
+    subset = df_corr[[col, "satisfaction_sentiment"]].dropna()
+    n = len(subset)
+    r_p, p_p = pearsonr(subset[col], subset["satisfaction_sentiment"])
+    r_s, p_s = spearmanr(subset[col], subset["satisfaction_sentiment"])
+    sig_p = "***" if p_p < 0.001 else "**" if p_p < 0.01 else "*" if p_p < 0.05 else "ns"
+    sig_s = "***" if p_s < 0.001 else "**" if p_s < 0.01 else "*" if p_s < 0.05 else "ns"
+    print(f"{label:<22} {r_p:>+9.3f}{sig_p:>2} {p_p:>10.4f} {r_s:>+10.3f}{sig_s:>2} {p_s:>10.4f} {n:>5}")
+
+
+
+
+
+# %% QA figure: extreme DAs by quadrant
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+da = gpd.read_file("data/processed/vancouver_da_divergence.gpkg")
+
+supply_var = "qty_cap20"
+exp_var    = "satisfaction_sentiment"
+
+# Map short codes to full labels
+quad_labels = {
+    "HH": "HH — High supply, high experience",
+    "HL": "HL — High supply, low experience",
+    "LH": "LH — Low supply, high experience",
+    "LL": "LL — Low supply, low experience",
+}
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+quadrants = {
+    "HH": ("High supply / High experience", axes[0, 0]),
+    "HL": ("High supply / Low experience",  axes[0, 1]),
+    "LH": ("Low supply / High experience",  axes[1, 0]),
+    "LL": ("Low supply / Low experience",   axes[1, 1]),
+}
+
+for quad, (title, ax) in quadrants.items():
+    subset = da[da["divergence_2x2"] == quad_labels[quad]].copy()
+    subset = subset[subset[supply_var].notna() & subset[exp_var].notna()]
+
+    if quad == "HH":
+        subset["score"] = subset[supply_var].rank() + subset[exp_var].rank()
+    elif quad == "HL":
+        subset["score"] = subset[supply_var].rank() - subset[exp_var].rank()
+    elif quad == "LH":
+        subset["score"] = subset[exp_var].rank() - subset[supply_var].rank()
+    elif quad == "LL":
+        subset["score"] = -(subset[supply_var].rank() + subset[exp_var].rank())
+
+    top10 = subset.nlargest(10, "score")
+
+    da.plot(ax=ax, color="lightgrey", linewidth=0)
+    subset.plot(ax=ax, color="#dddddd", linewidth=0)
+    top10.plot(ax=ax, color="red", edgecolor="black", linewidth=0.5)
+
+    for _, row in top10.iterrows():
+        x = row.geometry.centroid.x
+        y = row.geometry.centroid.y
+        ax.annotate(
+            row["DAUID"][-4:],
+            xy=(x, y),
+            fontsize=6,
+            ha="center",
+            color="black"
+        )
+
+    ax.set_title(f"{title}\nTop 10 extreme DAs (n={len(subset)})")
+    ax.axis("off")
+
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_extreme_DA_QA.png", dpi=150, bbox_inches="tight")
+plt.show()
+print("Saved.")
+
+
+# %% Moran's I check
+from libpysal.weights import Queen
+from esda.moran import Moran
+
+da = gpd.read_file("data/processed/vancouver_da_divergence.gpkg")
+
+# Encode divergence quadrant as numeric for Moran's I
+quad_map = {
+    "HH — High supply, high experience": 3,
+    "LH — Low supply, high experience":  2,
+    "HL — High supply, low experience":  1,
+    "LL — Low supply, low experience":   0,
+}
+da["divergence_numeric"] = da["divergence_2x2"].map(quad_map)
+
+variables = [
+    "qty_cap20",
+    "satisfaction_sentiment",
+    "divergence_numeric",
+]
+
+for var in variables:
+    subset = da[["DAUID", var, "geometry"]].dropna().copy()
+    subset = subset.reset_index(drop=True)
+
+    w = Queen.from_dataframe(subset)
+    w.transform = "r"
+
+    mi = Moran(subset[var], w)
+    print(f"\n{var} (n={len(subset)})")
+    print(f"  Moran's I = {mi.I:.3f}")
+    print(f"  p-value   = {mi.p_sim:.4f}")
+
+
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+import geopandas as gpd
+from scipy import stats
+
+da = gpd.read_file("data/processed/vancouver_da_divergence.gpkg")
+valid = da[da["satisfaction_sentiment"].notna() & 
+           da["DA_reach_400"].notna() & 
+           da["qty_cap20"].notna()].copy()
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# --- Panel A: Coverage × Sentiment ---
+ax = axes[0]
+
+ceiling     = valid[valid["DA_reach_400"] == 1.0]
+non_ceiling = valid[valid["DA_reach_400"] < 1.0]
+
+ax.hexbin(
+    non_ceiling["DA_reach_400"],
+    non_ceiling["satisfaction_sentiment"],
+    gridsize=20, cmap="YlGn", mincnt=1, alpha=0.8
+)
+
+np.random.seed(42)
+jitter = np.random.normal(1.0, 0.008, len(ceiling))
+ax.scatter(
+    jitter,
+    ceiling["satisfaction_sentiment"],
+    alpha=0.15, s=8, color="#2d6a4f"
+)
+
+r, p = stats.spearmanr(valid["DA_reach_400"], valid["satisfaction_sentiment"])
+ax.set_xlabel("Park coverage (proportion within 400 m)", fontsize=11)
+ax.set_ylabel("Mean sentiment score", fontsize=11)
+ax.set_title(f"A. Coverage × Satisfaction\nSpearman r = {r:.3f}, ns, n = {len(valid)}", 
+             fontsize=11)
+ax.set_xlim(-0.05, 1.12)
+ax.set_ylim(0.15, 0.95)
+
+# Annotation moved to bottom-right, outside hexbin area
+ax.annotate(
+    f"n={len(ceiling)} DAs\nat full coverage",
+    xy=(1.02, 0.5),
+    xytext=(1.04, 0.25),
+    xycoords=("data", "data"),
+    fontsize=9, color="dimgrey",
+    ha="left",
+    arrowprops=dict(arrowstyle="->", color="dimgrey", lw=0.8)
+)
+
+# --- Panel B: Area × Sentiment ---
+ax = axes[1]
+
+r2, p2 = stats.spearmanr(valid["qty_cap20"], valid["satisfaction_sentiment"])
+ax.scatter(
+    valid["qty_cap20"],
+    valid["satisfaction_sentiment"],
+    alpha=0.25, s=12, color="#2d6a4f"
+)
+ax.set_xscale("log")
+
+# Median lines — darker and labelled
+med_x = valid["qty_cap20"].median()
+med_y = valid["satisfaction_sentiment"].median()
+ax.axvline(med_x, color="#555555", linestyle="--", linewidth=1.2)
+ax.axhline(med_y, color="#555555", linestyle="--", linewidth=1.2)
+ax.text(med_x * 1.08, 0.18, "median area", fontsize=8, color="#555555")
+ax.text(0.11, med_y + 0.01, "median sentiment", fontsize=8, color="#555555")
+
+ax.set_xlabel("Accessible park area (ha per 1,000 residents, log scale)", fontsize=11)
+ax.set_ylabel("Mean sentiment score", fontsize=11)
+ax.set_title(f"B. Park Area × Satisfaction\nSpearman r = {r2:.3f}, p < 0.001, n = {len(valid)}", 
+             fontsize=11)
+ax.set_ylim(0.15, 0.95)
+
+plt.suptitle(
+    "Park supply and expressed satisfaction — Vancouver dissemination areas",
+    fontsize=12, y=1.02
+)
+plt.tight_layout()
+plt.savefig(
+    "outputs/figures/vancouver_figure1_supply_experience.png",
+    dpi=150, bbox_inches="tight"
+)
+plt.show()
+print("Saved.")
 # %%

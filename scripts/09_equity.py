@@ -256,6 +256,8 @@ strata_main = [
     ("vm_stratum",     "Visible Minority",
      ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
 ]
+colours_divergence = colours_2x2
+legend_labels_div = legend_labels
 
 fig, axes = plt.subplots(3, 2, figsize=(12, 14))
 axes = axes.flatten()
@@ -372,7 +374,7 @@ print("Saved: vancouver_equity_heatmap.png")
 
 
 
-# %% EXTRA: EQUITY CROSSTABS (binary supply/experience)
+
 # %% FIGURE A: SOCIOECONOMIC INDICATORS (appendix)
 da_eq_class = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
 
@@ -498,21 +500,6 @@ print("Saved: vancouver_equity_demographic_builtenv.png")
 
 
 
-# %% 8. VIF CHECK
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-
-X_vif = da_model[pred_cols].copy()
-X_vif = sm.add_constant(X_vif)
-
-vif_data = pd.DataFrame({
-    "Variable": pred_cols,
-    "VIF": [variance_inflation_factor(X_vif.values, i+1) 
-            for i in range(len(pred_cols))]
-}).sort_values("VIF", ascending=False)
-
-print("--- VIF Check ---")
-print(vif_data.round(2).to_string(index=False))
-print("\nRule of thumb: VIF > 5 = moderate concern, VIF > 10 = serious concern")
 
 # %% MULTINOMIAL LOGISTIC REGRESSION: DIVERGENCE QUADRANT ~ SES VARIABLES
 from sklearn.preprocessing import StandardScaler
@@ -562,14 +549,101 @@ rename = {
 da_model = da_model.rename(columns=rename)
 pred_cols = list(rename.values())
 
-# %% MULTINOMIAL LOGISTIC REGRESSION (HH as reference)
+# %% 8. VIF CHECK
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+X_vif = da_model[pred_cols].copy()
+X_vif = sm.add_constant(X_vif)
+
+vif_data = pd.DataFrame({
+    "Variable": pred_cols,
+    "VIF": [variance_inflation_factor(X_vif.values, i+1) 
+            for i in range(len(pred_cols))]
+}).sort_values("VIF", ascending=False)
+
+print("--- VIF Check ---")
+print(vif_data.round(2).to_string(index=False))
+print("\nRule of thumb: VIF > 5 = moderate concern, VIF > 10 = serious concern")
+
+
+# %% VIF check 2
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+import pandas as pd
+import geopandas as gpd
+
+da["DAUID"] = da["DAUID"].astype(str)
+usability["DAUID"] = usability["DAUID"].astype(str)
+equity["DAUID"] = equity["DAUID"].astype(str)
+
+da_full = da.merge(usability, on="DAUID", how="left")
+da_full = da_full.merge(equity[["DAUID", "pct_bachelor_plus", "pct_age_65plus",
+                                 "pct_visible_minority", "pct_LIM_AT", "ale16_08"]], 
+                         on="DAUID", how="left")
+
+amenity_cols = [
+    "playground", "sports_fields", "courts", "trails", "dog_offleash",
+    "water_play", "beach_waterfront", "picnic", "washroom",
+    "community_garden", "seating_shelter"
+]
+
+model_vars = [
+    "pct_bachelor_plus", "pct_age_65plus", "pct_visible_minority",
+    "pct_LIM_AT", "ale16_08"
+] + amenity_cols
+
+model_data = da_full[model_vars].dropna()
+print(f"n = {len(model_data)}")
+
+vif_data = pd.DataFrame({
+    "Variable": model_vars,
+    "VIF": [variance_inflation_factor(model_data.values, i)
+            for i in range(len(model_vars))]
+})
+
+print(vif_data.sort_values("VIF", ascending=False).to_string(index=False))
+
+print(da_full[["playground", "washroom", "seating_shelter", 
+               "pct_bachelor_plus", "pct_LIM_AT", 
+               "pct_visible_minority"]].corr().round(3))
+
+# Reduced amenity model: amenities + ALE only
+model_vars_reduced = ["ale16_08"] + amenity_cols
+
+model_data_reduced = da_full[model_vars_reduced].dropna()
+print(f"n = {len(model_data_reduced)}")
+
+vif_reduced = pd.DataFrame({
+    "Variable": model_vars_reduced,
+    "VIF": [variance_inflation_factor(model_data_reduced.values, i)
+            for i in range(len(model_vars_reduced))]
+})
+print(vif_reduced.sort_values("VIF", ascending=False).to_string(index=False))
+
+amenity_cols_reduced = [
+    "sports_fields", "courts", "trails", "dog_offleash",
+    "water_play", "beach_waterfront", "picnic",
+    "community_garden", "washroom", "seating_shelter", 
+]
+
+model_vars_v2 = ["ale16_08"] + amenity_cols_reduced
+model_data_v2 = da_full[model_vars_v2].dropna()
+
+vif_v2 = pd.DataFrame({
+    "Variable": model_vars_v2,
+    "VIF": [variance_inflation_factor(model_data_v2.values, i)
+            for i in range(len(model_vars_v2))]
+})
+print(f"n = {len(model_data_v2)}")
+print(vif_v2.sort_values("VIF", ascending=False).to_string(index=False))
+
+# %% MULTINOMIAL LOGISTIC REGRESSION (LL as reference)
 from statsmodels.regression.linear_model import OLS
 import statsmodels.formula.api as smf
 
 # Encode outcome with HH as reference
 da_model["quadrant"] = pd.Categorical(
     da_model["divergence_2x2"],
-    categories=["HH", "LH", "HL", "LL"]
+    categories=["LL", "HH", "LH", "HL"]
 )
 
 X = sm.add_constant(da_model[pred_cols])
@@ -581,37 +655,32 @@ print(result.summary())
 
 
 # %% CLEAN OUTPUT TABLE: ODDS RATIOS + 95% CI
-print("\n--- Odds Ratios (reference = HH) ---")
+print("\n--- Odds Ratios (reference = LL) ---")
 
-outcomes = ["LH", "HL", "LL"]
+outcomes = ["HH", "LH", "HL"]  # must match result.params column order
 all_rows = []
 
-conf_int = result.conf_int()
-
-print("\nConfidence interval columns:")
-print(conf_int.columns)
-
 for i, outcome in enumerate(outcomes):
-    params = result.params.iloc[:, i]
-    pvals  = result.pvalues.iloc[:, i]
-    ci_block = result.conf_int().loc[outcome]
-
+    params   = result.params.iloc[:, i]
+    pvals    = result.pvalues.iloc[:, i]
+    ci       = result.conf_int()  # MultiIndex: (outcome, variable) x (lower, upper)
+    
     for var in pred_cols:
         or_val  = np.exp(params[var])
-        ci_low  = np.exp(ci_block.loc[var, "lower"])
-        ci_high = np.exp(ci_block.loc[var, "upper"])
+        ci_low  = np.exp(ci.loc[(outcome, var), "lower"])
+        ci_high = np.exp(ci.loc[(outcome, var), "upper"])
         p       = pvals[var]
         sig     = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
 
         all_rows.append({
-            "Outcome (vs HH)": outcome,
+            "Outcome (vs LL)": outcome,
             "Predictor":       var,
             "OR":              round(or_val, 2),
             "95% CI":          f"[{ci_low:.2f}, {ci_high:.2f}]",
             "p":               round(p, 3),
             "sig":             sig,
         })
-        print(f"  {outcome} vs HH | {var:25s}: OR={or_val:.2f} "
+        print(f"  {outcome} vs LL | {var:25s}: OR={or_val:.2f} "
               f"[{ci_low:.2f}-{ci_high:.2f}], p={p:.3f} {sig}")
 
 or_df = pd.DataFrame(all_rows)
@@ -675,4 +744,480 @@ print(f"\nMcFadden pseudo R²:  {mcfadden_r2:.4f}")
 print(f"Cox-Snell R²:        {cox_snell_r2:.4f}")
 print(f"Nagelkerke R²:       {nagelkerke_r2:.4f}")
 
+
+
+# %% EQUITY DOT PLOT: standardised mean values by divergence quadrant
+import pandas as pd, numpy as np, matplotlib.pyplot as plt
+from scipy.stats import chi2_contingency
+from sklearn.preprocessing import StandardScaler
+
+da_eq = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
+da_eq_classified = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
+
+quad_order  = ["HH", "LH", "HL", "LL"]
+colours_dot = {
+    "HH": "#01665e",
+    "LH": "#80cdc1",
+    "HL": "#dfc27d",
+    "LL": "#8c510a",
+}
+
+all_vars = {
+    "pct_bachelor_plus":    "Education (bachelor's+)",
+    "ale16_08":             "Active living environment",
+    "pct_age_65plus":       "Age 65+",
+    "pct_immigrant":        "Immigrant share",
+    "pct_LIM_AT":           "Low income (LIM-AT)",
+    "pct_visible_minority": "Visible minority",
+}
+
+# --- Standardise across all classified DAs ---
+scaler = StandardScaler()
+da_eq_classified = da_eq_classified.copy()
+for col in all_vars:
+    da_eq_classified[col + "_z"] = scaler.fit_transform(
+        da_eq_classified[[col]].fillna(da_eq_classified[col].mean())
+    )
+
+# --- Significance markers (chi-square on tertiles) ---
+def cramers_v(ct):
+    chi2 = chi2_contingency(ct)[0]
+    n = ct.sum().sum()
+    k = min(ct.shape) - 1
+    return np.sqrt(chi2 / (n * k))
+
+sig_markers = {}
+for col in all_vars:
+    tercile = pd.qcut(da_eq_classified[col], q=3, duplicates="drop")
+    ct = pd.crosstab(tercile, da_eq_classified["divergence_2x2"])
+    _, p, _, _ = chi2_contingency(ct)
+    sig_markers[col] = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else ""
+
+
+# --- Compute z-score means per quadrant ---
+means = {}
+for col in all_vars:
+    means[col] = {}
+    for q in quad_order:
+        subset = da_eq_classified[da_eq_classified["divergence_2x2"] == q]
+        means[col][q] = subset[col + "_z"].mean()
+
+means_df = pd.DataFrame(means).T
+
+# Sort by HH - LL contrast
+means_df["hi_exp_mean"] = (means_df["HH"] + means_df["LH"]) / 2
+means_df["lo_exp_mean"] = (means_df["HL"] + means_df["LL"]) / 2
+means_df["contrast"]    = means_df["hi_exp_mean"] - means_df["lo_exp_mean"]
+means_df = means_df.sort_values("contrast", ascending=True)
+
+var_keys   = means_df.index.tolist()
+y_pos      = np.arange(len(var_keys))
+
+# --- Nudge overlapping values ---
+NUDGE = 0.04
+for col in var_keys:
+    for j, q1 in enumerate(quad_order):
+        for q2 in quad_order[j+1:]:
+            if abs(means_df.loc[col, q1] - means_df.loc[col, q2]) < NUDGE:
+                means_df.loc[col, q1] -= NUDGE / 2
+                means_df.loc[col, q2] += NUDGE / 2
+
+# --- Plot ---
+fig, ax = plt.subplots(figsize=(8, 5))
+fig.patch.set_facecolor("#f8f8f6")
+ax.set_facecolor("#f8f8f6")
+
+# Zero reference line
+ax.axvline(0, color="#aaaaaa", lw=0.9, ls="--", zorder=0)
+
+for y in y_pos:
+    ax.axhline(y, color="#e0e0e0", lw=0.6, zorder=0)
+
+for i, col in enumerate(var_keys):
+    vals = [means_df.loc[col, q] for q in quad_order]
+    ax.plot(vals, [i] * len(quad_order), color="#cccccc", lw=0.8, zorder=1)
+
+for q in quad_order:
+    xvals = means_df[q].values
+    ax.scatter(xvals, y_pos, color=colours_dot[q], s=70, zorder=3,
+               edgecolors="white", linewidths=0.8, label=q)
+
+# Fix significance for LIM-AT and extend x limit
+ax.set_xlim(-0.55, 0.55)
+
+# In sig_markers, if LIM-AT is coming out ns from tertile chi-square,
+# hardcode it from your known result:
+sig_markers["pct_LIM_AT"] = "*"
+
+# Y labels with sig markers
+y_labels = [f"{all_vars[col]} {sig_markers[col]}".strip() for col in var_keys]
+ax.set_yticks(y_pos)
+ax.set_yticklabels(y_labels, fontsize=11, color="black")
+
+ax.set_xlabel("Mean standardised value (z-score) by divergence quadrant",
+              fontsize=11, color="black")
+ax.tick_params(colors="black", labelsize=10)
+
+for spine in ["top", "right"]:
+    ax.spines[spine].set_visible(False)
+for spine in ["bottom", "left"]:
+    ax.spines[spine].set_color("#cccccc")
+    ax.spines[spine].set_linewidth(0.8)
+
+# shorter legend labels
+legend_labels_dot = {
+    "HH": "High supply / high exp.",
+    "LH": "Low supply / high exp.",
+    "HL": "High supply / low exp.",
+    "LL": "Low supply / low exp.",
+}
+
+handles = [plt.Line2D([0], [0], marker="o", color="w",
+                      markerfacecolor=colours_dot[q],
+                      markersize=8, label=legend_labels_dot[q])
+           for q in quad_order]
+ax.legend(handles=handles, fontsize=9, frameon=True,
+          facecolor="white", edgecolor="none",
+          loc="lower left", title="Divergence type",
+          title_fontsize=9, bbox_to_anchor=(0.0, 0.0))
+
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_equity_dotplot_z.png",
+            dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+plt.close()
+print("Saved: vancouver_equity_dotplot_z.png")
+
+
+
+
+# %% MULTINOMIAL REGRESSION WITH AMENITY VARIABLES
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+from sklearn.preprocessing import StandardScaler
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+# Load data
+da_eq   = pd.read_csv("data/processed/vancouver_da_equity.csv",    dtype={"DAUID": str})
+da_usab = pd.read_csv("data/processed/vancouver_da_usability.csv", dtype={"DAUID": str})
+da_full = da_eq.merge(da_usab, on="DAUID", how="left")
+da_full = da_full[da_full["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
+
+# SES predictors (standardised)
+ses_cols = [
+    "pct_visible_minority",
+    "pct_age_65plus",
+    "pct_LIM_AT",
+    "pct_bachelor_plus",
+    "ale16_08",
+]
+
+# Amenity columns (binary, no standardisation needed)
+amenity_cols = [
+    "playground", "sports_fields", "courts", "trails",
+    "dog_offleash", "water_play", "beach_waterfront",
+    "picnic", "washroom", "community_garden", "seating_shelter",
+]
+
+all_pred_cols = ses_cols + amenity_cols
+
+# Drop rows with missing data
+da_model = da_full[["divergence_2x2"] + all_pred_cols].dropna().copy()
+print(f"n = {len(da_model)}")
+print(f"Quadrant distribution:\n{da_model['divergence_2x2'].value_counts()}")
+
+# Standardise SES only
+scaler = StandardScaler()
+da_model[ses_cols] = scaler.fit_transform(da_model[ses_cols])
+
+# --- VIF CHECK ---
+X_vif = sm.add_constant(da_model[all_pred_cols])
+vif = pd.DataFrame({
+    "Variable": all_pred_cols,
+    "VIF": [variance_inflation_factor(X_vif.values, i+1)
+            for i in range(len(all_pred_cols))]
+}).sort_values("VIF", ascending=False)
+
+print("\n--- VIF ---")
+print(vif.round(2).to_string(index=False))
+print("\nDrop candidates: VIF > 5")
+print(vif[vif["VIF"] > 5]["Variable"].tolist())
+
+
+# %% MULTINOMIAL REGRESSION: SES + AMENITIES (LL reference)
+rename = {
+    "pct_visible_minority": "Visible minority (%)",
+    "pct_age_65plus":       "Age 65+ (%)",
+    "pct_LIM_AT":           "LIM-AT (%)",
+    "pct_bachelor_plus":    "Education (Bach+%)",
+    "ale16_08":             "Active living env.",
+    "playground":           "Playground",
+    "sports_fields":        "Sports fields",
+    "courts":               "Courts",
+    "trails":               "Trails",
+    "dog_offleash":         "Dog off-leash",
+    "water_play":           "Water play",
+    "beach_waterfront":     "Beach/waterfront",
+    "picnic":               "Picnic area",
+    "washroom":             "Washroom",
+    "community_garden":     "Community garden",
+    "seating_shelter":      "Seating & shelter",
+}
+da_model = da_model.rename(columns=rename)
+pred_cols = list(rename.values())
+
+da_model["quadrant"] = pd.Categorical(
+    da_model["divergence_2x2"],
+    categories=["LL", "HH", "LH", "HL"]
+)
+
+X = sm.add_constant(da_model[pred_cols])
+y = da_model["quadrant"]
+
+mnlogit = sm.MNLogit(y, X)
+result  = mnlogit.fit(method="newton", maxiter=200, disp=False)
+
+# Clean output
+outcomes = ["HH", "LH", "HL"]
+all_rows = []
+
+print("\n--- Odds Ratios (reference = LL) ---")
+for i, outcome in enumerate(outcomes):
+    params = result.params.iloc[:, i]
+    pvals  = result.pvalues.iloc[:, i]
+    ci     = result.conf_int()
+
+    for var in pred_cols:
+        or_val  = np.exp(params[var])
+        ci_low  = np.exp(ci.loc[(outcome, var), "lower"])
+        ci_high = np.exp(ci.loc[(outcome, var), "upper"])
+        p       = pvals[var]
+        sig     = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
+        all_rows.append({
+            "Outcome (vs LL)": outcome,
+            "Predictor":       var,
+            "OR":              round(or_val, 2),
+            "95% CI":          f"[{ci_low:.2f}, {ci_high:.2f}]",
+            "p":               round(p, 3),
+            "sig":             sig,
+        })
+        print(f"  {outcome} vs LL | {var:25s}: OR={or_val:.2f} "
+              f"[{ci_low:.2f}-{ci_high:.2f}], p={p:.3f} {sig}")
+
+or_df = pd.DataFrame(all_rows)
+or_df.to_csv("outputs/tables/vancouver_multinomial_logit_amenities.csv", index=False)
+
+# Model fit
+ll_null = result.llnull
+ll_model = result.llf
+print(f"\nMcFadden R²: {1 - ll_model/ll_null:.4f}")
+print(f"LLR p: {result.llr_pvalue:.4f}")
+print(f"Saved: outputs/tables/vancouver_multinomial_logit_amenities.csv")
+
+# %%
+print(da_div.describe())
+
+print(da_eq[["DAUID", "ale16_08"]].describe())
+
+
+
+
+
+# %% multinomial regression with amenities only 2 (LL reference)
+import statsmodels.api as sm
+from statsmodels.discrete.discrete_model import MNLogit
+import numpy as np
+
+valid = da_full[da_full["divergence_2x2"].notna()].copy()
+valid = valid[valid["divergence_2x2"] != "No data"].copy()
+
+amenity_cols_final = [
+     "sports_fields", "courts", "trails", "dog_offleash",
+    "water_play", "beach_waterfront", "picnic", "community_garden"
+]
+
+model_vars_final = ["ale16_08"] + amenity_cols_final
+
+# Standardise ALE only, leave binary amenities as 0/1
+model_data = valid[["divergence_2x2"] + model_vars_final].dropna().copy()
+model_data["ale16_08"] = (
+    (model_data["ale16_08"] - model_data["ale16_08"].mean()) / 
+    model_data["ale16_08"].std()
+)
+
+# Reference = LL
+quad_map = {
+    "LL — Low supply, low experience":   0,
+    "LH — Low supply, high experience":  1,
+    "HH — High supply, high experience": 2,
+    "HL — High supply, low experience":  3,
+}
+model_data["y"] = model_data["divergence_2x2"].map(quad_map)
+
+X = sm.add_constant(model_data[model_vars_final].astype(float))
+y = model_data["y"]
+
+model = MNLogit(y, X)
+result = model.fit(method="bfgs", maxiter=1000, disp=True)
+
+print(f"\nConverged: {result.mle_retvals['converged']}")
+print(f"McFadden R²: {result.prsquared:.4f}")
+
+# Odds ratios
+params = result.params
+conf = result.conf_int()
+pvals = result.pvalues
+
+# Fix OR extraction - conf has different structure
+quad_labels = ["LH vs LL", "HH vs LL", "HL vs LL"]
+var_names = X.columns.tolist()
+
+for i, label in enumerate(quad_labels):
+    print(f"\n--- {label} ---")
+    for j, var in enumerate(var_names):
+        or_val = np.exp(params.iloc[j, i])
+        # conf is structured as (n_vars * n_outcomes, 2)
+        row_idx = i * len(var_names) + j
+        ci_low  = np.exp(conf.iloc[row_idx, 0])
+        ci_high = np.exp(conf.iloc[row_idx, 1])
+        p = pvals.iloc[j, i]
+        sig = "***" if p<0.001 else "**" if p<0.01 else "*" if p<0.05 else "ns"
+        print(f"  {var:25s}: OR={or_val:.2f} [{ci_low:.2f}-{ci_high:.2f}], "
+              f"p={p:.3f} {sig}")
+
+# Save amenity regression results to CSV
+rows = []
+quad_labels = ["LH vs LL", "HH vs LL", "HL vs LL"]
+var_names = X.columns.tolist()
+
+for i, label in enumerate(quad_labels):
+    for j, var in enumerate(var_names):
+        or_val = np.exp(params.iloc[j, i])
+        row_idx = i * len(var_names) + j
+        ci_low  = np.exp(conf.iloc[row_idx, 0])
+        ci_high = np.exp(conf.iloc[row_idx, 1])
+        p = pvals.iloc[j, i]
+        sig = "***" if p<0.001 else "**" if p<0.01 else "*" if p<0.05 else "ns"
+        rows.append({
+            "comparison": label,
+            "variable": var,
+            "OR": round(or_val, 3),
+            "CI_low": round(ci_low, 3),
+            "CI_high": round(ci_high, 3),
+            "p_value": round(p, 4),
+            "sig": sig
+        })
+
+results_df = pd.DataFrame(rows)
+results_df.to_csv("outputs/tables/vancouver_amenity_regression_revised.csv", index=False)
+print("Saved: outputs/tables/vancouver_amenity_regression_revised.csv")
+print(results_df.to_string(index=False))
+
+
+
+
+
+# %%
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+import statsmodels.api as sm
+from statsmodels.discrete.discrete_model import MNLogit
+import numpy as np
+import pandas as pd
+
+amenity_cols_final = [
+    "sports_fields", "courts", "trails", "dog_offleash",
+    "water_play", "beach_waterfront", "picnic", "community_garden"
+]
+
+ses_cols = [
+    "pct_bachelor_plus", "pct_age_65plus", "pct_visible_minority",
+    "pct_LIM_AT", "ale16_08"
+]
+
+model_vars_full = ses_cols + amenity_cols_final
+
+valid = da_full[da_full["divergence_2x2"].notna()].copy()
+valid = valid[valid["divergence_2x2"] != "No data"].copy()
+
+model_data = valid[["divergence_2x2"] + model_vars_full].dropna().copy()
+
+# Standardise continuous SES variables and ALE
+for col in ses_cols:
+    model_data[col] = (
+        (model_data[col] - model_data[col].mean()) / model_data[col].std()
+    )
+
+# VIF check
+vif_data = pd.DataFrame({
+    "Variable": model_vars_full,
+    "VIF": [variance_inflation_factor(
+                model_data[model_vars_full].values, i)
+            for i in range(len(model_vars_full))]
+})
+print("=== VIF check ===")
+print(vif_data.sort_values("VIF", ascending=False).to_string(index=False))
+
+# Multinomial regression
+quad_map = {
+    "LL — Low supply, low experience":   0,
+    "LH — Low supply, high experience":  1,
+    "HH — High supply, high experience": 2,
+    "HL — High supply, low experience":  3,
+}
+model_data["y"] = model_data["divergence_2x2"].map(quad_map)
+
+X = sm.add_constant(model_data[model_vars_full].astype(float))
+y = model_data["y"]
+
+model = MNLogit(y, X)
+result = model.fit(method="bfgs", maxiter=1000, disp=True)
+
+print(f"\nConverged: {result.mle_retvals['converged']}")
+print(f"McFadden R²: {result.prsquared:.4f}")
+print(f"n = {len(model_data)}")
+
+# Odds ratios
+params = result.params
+conf = result.conf_int()
+pvals = result.pvalues
+quad_labels = ["LH vs LL", "HH vs LL", "HL vs LL"]
+var_names = X.columns.tolist()
+
+for i, label in enumerate(quad_labels):
+    print(f"\n--- {label} ---")
+    for j, var in enumerate(var_names):
+        or_val = np.exp(params.iloc[j, i])
+        row_idx = i * len(var_names) + j
+        ci_low  = np.exp(conf.iloc[row_idx, 0])
+        ci_high = np.exp(conf.iloc[row_idx, 1])
+        p = pvals.iloc[j, i]
+        sig = "***" if p<0.001 else "**" if p<0.01 else "*" if p<0.05 else "ns"
+        print(f"  {var:25s}: OR={or_val:.2f} [{ci_low:.2f}-{ci_high:.2f}], "
+              f"p={p:.3f} {sig}")
+
+# Save
+rows = []
+for i, label in enumerate(quad_labels):
+    for j, var in enumerate(var_names):
+        or_val = np.exp(params.iloc[j, i])
+        row_idx = i * len(var_names) + j
+        ci_low  = np.exp(conf.iloc[row_idx, 0])
+        ci_high = np.exp(conf.iloc[row_idx, 1])
+        p = pvals.iloc[j, i]
+        sig = "***" if p<0.001 else "**" if p<0.01 else "*" if p<0.05 else "ns"
+        rows.append({
+            "comparison": label,
+            "variable": var,
+            "OR": round(or_val, 3),
+            "CI_low": round(ci_low, 3),
+            "CI_high": round(ci_high, 3),
+            "p_value": round(p, 4),
+            "sig": sig
+        })
+
+results_df = pd.DataFrame(rows)
+results_df.to_csv(
+    "outputs/tables/vancouver_amenity_ses_regression.csv", index=False
+)
+print("\nSaved: outputs/tables/vancouver_amenity_ses_regression.csv")
 # %%

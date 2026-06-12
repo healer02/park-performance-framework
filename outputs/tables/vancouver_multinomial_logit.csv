@@ -1,16 +1,16 @@
-Outcome (vs HH),Predictor,OR,95% CI,p,sig
-LH,Visible minority (%),1.11,"[0.84, 1.47]",0.457,ns
-LH,Age 65+ (%),0.82,"[0.66, 1.01]",0.063,ns
-LH,LIM-AT (%),1.24,"[0.98, 1.57]",0.077,ns
-LH,Education (Bach+%),0.89,"[0.68, 1.16]",0.401,ns
-LH,Active living env.,1.49,"[1.19, 1.86]",0.0,***
-HL,Visible minority (%),0.85,"[0.63, 1.16]",0.307,ns
-HL,Age 65+ (%),1.06,"[0.86, 1.29]",0.594,ns
-HL,LIM-AT (%),1.21,"[0.94, 1.55]",0.14,ns
-HL,Education (Bach+%),0.77,"[0.58, 1.03]",0.074,ns
-HL,Active living env.,0.95,"[0.72, 1.25]",0.715,ns
-LL,Visible minority (%),0.86,"[0.64, 1.15]",0.309,ns
-LL,Age 65+ (%),0.74,"[0.59, 0.93]",0.009,**
-LL,LIM-AT (%),1.06,"[0.83, 1.34]",0.655,ns
-LL,Education (Bach+%),0.88,"[0.67, 1.15]",0.339,ns
-LL,Active living env.,0.37,"[0.24, 0.56]",0.0,***
+Outcome (vs LL),Predictor,OR,95% CI,p,sig
+HH,Visible minority (%),0.78,"[0.61, 1.00]",0.049,*
+HH,Age 65+ (%),1.45,"[1.20, 1.76]",0.0,***
+HH,LIM-AT (%),0.78,"[0.63, 0.97]",0.027,*
+HH,Education (Bach+%),1.32,"[1.04, 1.67]",0.021,*
+HH,Active living env.,0.97,"[0.79, 1.18]",0.73,ns
+LH,Visible minority (%),0.95,"[0.76, 1.19]",0.662,ns
+LH,Age 65+ (%),0.98,"[0.79, 1.20]",0.836,ns
+LH,LIM-AT (%),0.9,"[0.74, 1.09]",0.279,ns
+LH,Education (Bach+%),1.29,"[1.04, 1.62]",0.023,*
+LH,Active living env.,0.91,"[0.75, 1.09]",0.301,ns
+HL,Visible minority (%),1.07,"[0.82, 1.39]",0.611,ns
+HL,Age 65+ (%),1.09,"[0.87, 1.38]",0.454,ns
+HL,LIM-AT (%),1.05,"[0.87, 1.28]",0.597,ns
+HL,Education (Bach+%),0.97,"[0.75, 1.24]",0.795,ns
+HL,Active living env.,0.67,"[0.49, 0.91]",0.011,*

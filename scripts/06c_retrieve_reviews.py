@@ -339,4 +339,94 @@ has_text = complete['text'].notna() & (complete['text'].str.strip() != '')
 print(f"Total: {len(complete)}")
 print(f"With text: {has_text.sum()}")
 print(f"Without text: {(~has_text).sum()}")
+
+
+
+
+
+# %% DATA QUALITY AUDIT: stratified random sample for manual coding
+import os
+os.chdir('/Users/keunpark/Documents/GitHub/park-performance-framework')
+
+import pandas as pd
+import numpy as np
+
+complete = pd.read_csv(
+    "data/google-reviews/processed/07-all-reviews-complete.csv",
+    low_memory=False
+)
+
+pid_col  = "PlaceID" if "PlaceID" in complete.columns else "placeId"
+
+# Add park name lookup
+master = pd.read_csv("data/parks/processed/06-master-park-placeids.csv")
+pid_to_name = {}
+for _, row in master.iterrows():
+    if pd.notna(row["place_id"]):
+        for pid in str(row["place_id"]).split(","):
+            pid_to_name[pid.strip()] = row["park_name"]
+complete["park_name"] = complete[pid_col].map(pid_to_name)
+
+# Use textTranslated, fall back to text if missing
+complete["review_text"] = (
+    complete["textTranslated"]
+    .fillna(complete["text"])
+    if "textTranslated" in complete.columns
+    else complete["text"]
+)
+
+# Filter to reviews with substantive text
+has_text = complete["review_text"].notna() & (complete["review_text"].str.strip().str.len() > 10)
+reviews  = complete[has_text].copy()
+print(f"Reviews with text: {len(reviews)}")
+
+# Define strata
+destination_pids = [
+    "ChIJo-QmrYxxhlQRFuIJtJ1jSjY",  # Stanley Park
+    "ChIJIcZrTvVzhlQRiKTnD03vt7Q",  # Queen Elizabeth Park
+    "ChIJ7WHSBi9yhlQRdLXmpczA6wo",  # English Bay
+    "ChIJAWo0tC1yhlQRAL6Iz7Cs6G4",  # Sunset Beach
+]
+
+park_counts = reviews.groupby(pid_col).size().reset_index(name="n")
+low_pids    = park_counts[park_counts["n"] <= 30][pid_col].tolist()
+mod_pids    = park_counts[
+    (park_counts["n"] > 30) &
+    (~park_counts[pid_col].isin(destination_pids))
+][pid_col].tolist()
+
+np.random.seed(42)
+
+def sample_stratum(df, pids, n, label):
+    subset = df[df[pid_col].isin(pids)]
+    n      = min(n, len(subset))
+    s      = subset.sample(n, random_state=42).copy()
+    s["stratum"] = label
+    return s
+
+dest_sample = sample_stratum(reviews, destination_pids, 100, "destination")
+mod_sample  = sample_stratum(reviews, mod_pids,         100, "neighbourhood")
+low_sample  = sample_stratum(reviews, low_pids,         100, "low_review")
+
+sample = pd.concat([dest_sample, mod_sample, low_sample]).reset_index(drop=True)
+sample = sample.sample(frac=1, random_state=42).reset_index(drop=True)
+
+# Build output with park_name next to place_id
+keep = [pid_col, "park_name", "stratum", "review_text"]
+if "Rating" in sample.columns: keep.append("Rating")
+if "stars"  in sample.columns: keep.append("stars")
+sample = sample[[c for c in keep if c in sample.columns]].copy()
+
+# Add empty coding columns
+sample["reviewer_type"]      = ""  # local / visitor-tourist / unclear
+sample["content_quality"]    = ""  # substantive / generic / bot-spam
+sample["use_relevance"]      = ""  # park experience / irrelevant
+
+out_path = "data/google-reviews/processed/manual_audit_sample_300.csv"
+sample.to_csv(out_path, index=False)
+print(f"\nSaved {len(sample)} reviews: {out_path}")
+print(f"\nStratum counts:\n{sample['stratum'].value_counts()}")
+print(f"\nSample preview:")
+print(sample[[pid_col, "park_name", "stratum", "review_text"]].head(5).to_string())
+
 # %%

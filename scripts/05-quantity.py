@@ -105,7 +105,7 @@ if missing_pids:
 
 entrance_node_set = set(node_to_parks.keys())
 
-# %% Step 3: DB loop (run once, takes 5-15 min)
+# %% Step 3: DB loop (run once)
 # ── Step 3: DB-level reachable park sets ──────────────────────────────────────
 
 print(f"\nStep 3: Computing DB-level reachable park sets (cutoff={THRESHOLD}m)...")
@@ -165,6 +165,18 @@ for _, db_row in db_centroids.iterrows():
         print(f"  Processed {n_processed}/{len(db_centroids)} DBs...")
 
 print(f"  Done. DAs with reachable parks: {len(da_park_sets)}")
+
+# Save corrected DA park sets
+import json
+
+with open("data/processed/vancouver_da_park_sets.json", "w") as f:
+    json.dump(
+        {str(k): sorted(list(v)) for k, v in da_park_sets.items()},
+        f,
+        indent=2
+    )
+
+print("Saved corrected vancouver_da_park_sets.json")
 
 # %% Step 4-5: Aggregate and save
 # ── Step 4: Aggregate to DA level ─────────────────────────────────────────────
@@ -471,5 +483,6 @@ ax.set_axis_off()
 plt.tight_layout()
 plt.savefig('outputs/figures/vancouver_da_supply_typology_sensitivity.png', dpi=150, bbox_inches='tight')
 plt.close()
+
 
 

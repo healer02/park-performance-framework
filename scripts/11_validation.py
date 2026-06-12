@@ -68,8 +68,6 @@ print(f"\n--- DA-level: Sentiment vs Rating ---")
 print(f"Pearson r:  {r_da_p:.3f}, p={p_da_p:.4f}")
 print(f"Spearman r: {r_da_sp:.3f}, p={p_da_sp:.4f}")
 
-# %%
-print([c for c in da_div_val.columns if 'sat' in c or 'sent' in c])
 
 # %% 3. QUADRANT AGREEMENT
 # Use da_val directly -- no need to merge with da_div
@@ -180,4 +178,81 @@ print(summary.to_string(index=False))
 
 
 
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+import geopandas as gpd
+from scipy import stats
+
+da = gpd.read_file("data/processed/vancouver_da_divergence.gpkg")
+valid = da[
+    da["satisfaction_sentiment"].notna() &
+    da["satisfaction_star"].notna()
+].copy()
+
+park_metrics = pd.read_csv("data/google-reviews/processed/08c-park-metrics.csv")
+park_valid = park_metrics[
+    park_metrics["MeanSentiment"].notna() &
+    park_metrics["AvgRating"].notna()
+].copy()
+
+colours = {
+    "HH — High supply, high experience": "#3a2f36",
+    "LH — Low supply, high experience":  "#d29a6a",
+    "HL — High supply, low experience":  "#6fa3c8",
+    "LL — Low supply, low experience":   "#efe7dc",
+}
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# --- Panel A: Park level (monochrome) ---
+ax = axes[0]
+r1, p1 = stats.pearsonr(park_valid["MeanSentiment"], park_valid["AvgRating"])
+r1s, p1s = stats.spearmanr(park_valid["MeanSentiment"], park_valid["AvgRating"])
+ax.scatter(park_valid["MeanSentiment"], park_valid["AvgRating"],
+           alpha=0.5, s=20, color="#2d6a4f")
+m, b = np.polyfit(park_valid["MeanSentiment"], park_valid["AvgRating"], 1)
+x_line = np.linspace(park_valid["MeanSentiment"].min(), park_valid["MeanSentiment"].max(), 100)
+ax.plot(x_line, m * x_line + b, color="#8b4513", linewidth=1.5)
+ax.set_xlabel("Mean sentiment score (RoBERTa)", fontsize=11)
+ax.set_ylabel("Mean star rating", fontsize=11)
+ax.set_title(f"A. Park level (n={len(park_valid)})\nPearson r={r1:.3f}, Spearman r={r1s:.3f}",
+             fontsize=11)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# --- Panel B: DA level (coloured by divergence quadrant) ---
+ax = axes[1]
+for quad, colour in colours.items():
+    subset = valid[valid["divergence_2x2"] == quad]
+    ax.scatter(
+        subset["satisfaction_sentiment"],
+        subset["satisfaction_star"],
+        color=colour, alpha=0.5, s=15,
+        label=quad.split(" — ")[0]
+    )
+r2, p2 = stats.pearsonr(valid["satisfaction_sentiment"], valid["satisfaction_star"])
+r2s, p2s = stats.spearmanr(valid["satisfaction_sentiment"], valid["satisfaction_star"])
+m2, b2 = np.polyfit(valid["satisfaction_sentiment"], valid["satisfaction_star"], 1)
+x_line2 = np.linspace(valid["satisfaction_sentiment"].min(), valid["satisfaction_sentiment"].max(), 100)
+ax.plot(x_line2, m2 * x_line2 + b2, color="#8b4513", linewidth=1.5)
+ax.set_xlabel("Mean sentiment score (RoBERTa)", fontsize=11)
+ax.set_ylabel("Mean star rating", fontsize=11)
+ax.set_title(f"B. DA level (n={len(valid)})\nPearson r={r2:.3f}, Spearman r={r2s:.3f}",
+             fontsize=11)
+ax.legend(title="Divergence quadrant", fontsize=8, loc="upper left",
+          framealpha=0.9)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+plt.suptitle(
+    "Agreement between sentiment scores and star ratings\nat park and neighbourhood levels, Vancouver",
+    fontsize=12, y=1.02
+)
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_validation_scatter2.png",
+            dpi=150, bbox_inches="tight")
+plt.show()
+print("Saved.")
 

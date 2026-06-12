@@ -284,3 +284,31 @@ import os
 os.makedirs('data/processed', exist_ok=True)
 da_van.to_file('data/processed/vancouver_da_reachability.gpkg', driver='GPKG')
 print("Saved: data/processed/vancouver_da_reachability.gpkg")
+
+
+# %% Visual check: parks on top of DA boundaries
+import os
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+os.chdir('/Users/keunpark/Documents/GitHub/park-performance-framework')
+
+parks = gpd.read_file('data/parks/processed/vancouver_parks_merged.shp').to_crs('EPSG:3005')
+da_boundaries = gpd.read_file('data/census/raw/lda_000b21a_e/lda_000b21a_e.shp').to_crs('EPSG:3005')
+
+import pandas as pd
+da_reach = pd.read_csv('data/processed/vancouver_da_reachability.csv', dtype={'DAUID': str})
+da_van = da_boundaries[da_boundaries['DAUID'].isin(da_reach['DAUID'])]
+
+fig, ax = plt.subplots(figsize=(10, 10))
+
+da_van.plot(ax=ax, color='#f0f0f0', edgecolor='#cccccc', linewidth=0.3)
+parks.plot(ax=ax, color='#2d6a4f', edgecolor='none', alpha=0.8, zorder=2)
+
+ax.set_title('Parks on DA Boundaries — Vancouver')
+ax.set_axis_off()
+plt.tight_layout()
+plt.savefig('outputs/figures/vancouver_parks_DA_merged_check.png', dpi=150)
+plt.close()
+print("Saved: outputs/figures/vancouver_parks_DA_merged_check.png")
+# %%
