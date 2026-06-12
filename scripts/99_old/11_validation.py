@@ -256,3 +256,132 @@ plt.savefig("outputs/figures/vancouver_validation_scatter2.png",
 plt.show()
 print("Saved.")
 
+
+
+# %% check correaltion between star rating and sentiment score at park level at the review level
+# Load raw reviews with sentiment scores
+reviews_sentiment = pd.read_csv("data/google-reviews/processed/08a-text-reviews-with-sentiment.csv")  
+# adjust path if different
+print(reviews_sentiment.columns.tolist())
+print(reviews_sentiment.head(2))
+
+# Review-level correlation
+valid_reviews = reviews_sentiment[
+    reviews_sentiment["Sentiment"].notna() & 
+    reviews_sentiment["Rating"].notna()
+].copy()
+
+r, p = stats.pearsonr(valid_reviews["Sentiment"], valid_reviews["Rating"])
+rs, ps = stats.spearmanr(valid_reviews["Sentiment"], valid_reviews["Rating"])
+print(f"Review-level Pearson r={r:.3f}, p={p:.4f}, n={len(valid_reviews)}")
+print(f"Review-level Spearman r={rs:.3f}, p={ps:.4f}")
+
+
+
+
+
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+from scipy import stats
+
+# Load data
+reviews = pd.read_csv("data/google-reviews/processed/08a-text-reviews-with-sentiment.csv",
+                      low_memory=False)
+park_metrics = pd.read_csv("data/google-reviews/processed/08c-park-metrics.csv")
+da = gpd.read_file("data/processed/vancouver_da_divergence.gpkg")
+
+# Review level
+review_valid = reviews[
+    reviews["Sentiment"].notna() &
+    reviews["Rating"].notna()
+].copy()
+
+# Park level
+park_valid = park_metrics[
+    park_metrics["MeanSentiment"].notna() &
+    park_metrics["AvgRating"].notna()
+].copy()
+
+# DA level
+da_valid = da[
+    da["satisfaction_sentiment"].notna() &
+    da["satisfaction_star"].notna()
+].copy()
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+# --- Panel A: Review level (horizontal violin by star rating) ---
+ax = axes[0]
+
+star_groups = [
+    review_valid[review_valid["Rating"] == s]["Sentiment"].values
+    for s in [1, 2, 3, 4, 5]
+]
+
+parts = ax.violinplot(star_groups, positions=[1, 2, 3, 4, 5],
+                      showmedians=True, showextrema=False,
+                      vert=False)
+
+for pc in parts["bodies"]:
+    pc.set_facecolor("#2d6a4f")
+    pc.set_alpha(0.6)
+parts["cmedians"].set_color("#8b4513")
+parts["cmedians"].set_linewidth(1.5)
+
+ax.set_ylabel("Google Star rating", fontsize=12)
+ax.set_xlabel("Sentiment score (RoBERTa)", fontsize=12)
+ax.set_yticks([1, 2, 3, 4, 5])
+ax.set_title(f"A. Review level (n={len(review_valid):,})\n"
+             f"Pearson r={r0:.3f}, Spearman r={r0s:.3f}", fontsize=14)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# --- Panel B: Park level ---
+ax = axes[1]
+r1, p1 = stats.pearsonr(park_valid["MeanSentiment"], park_valid["AvgRating"])
+r1s, p1s = stats.spearmanr(park_valid["MeanSentiment"], park_valid["AvgRating"])
+ax.scatter(park_valid["MeanSentiment"], park_valid["AvgRating"],
+           alpha=0.5, s=20, color="#2d6a4f")
+m1, b1 = np.polyfit(park_valid["MeanSentiment"], park_valid["AvgRating"], 1)
+x1 = np.linspace(park_valid["MeanSentiment"].min(),
+                  park_valid["MeanSentiment"].max(), 100)
+ax.plot(x1, m1 * x1 + b1, color="#8b4513", linewidth=1.5)
+ax.set_xlabel("Mean sentiment score (RoBERTa)", fontsize=12)
+ax.set_ylabel("Mean star rating", fontsize=12)
+ax.set_title(f"B. Park level (n={len(park_valid)})\n"
+             f"Pearson r={r1:.3f}, Spearman r={r1s:.3f}", fontsize=14)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+# --- Panel C: DA level (monochrome) ---
+ax = axes[2]
+r2, p2 = stats.pearsonr(da_valid["satisfaction_sentiment"],
+                         da_valid["satisfaction_star"])
+r2s, p2s = stats.spearmanr(da_valid["satisfaction_sentiment"],
+                             da_valid["satisfaction_star"])
+ax.scatter(da_valid["satisfaction_sentiment"], da_valid["satisfaction_star"],
+           alpha=0.3, s=15, color="#2d6a4f")
+m2, b2 = np.polyfit(da_valid["satisfaction_sentiment"],
+                     da_valid["satisfaction_star"], 1)
+x2 = np.linspace(da_valid["satisfaction_sentiment"].min(),
+                  da_valid["satisfaction_sentiment"].max(), 100)
+ax.plot(x2, m2 * x2 + b2, color="#8b4513", linewidth=1.5)
+ax.set_xlabel("Mean sentiment score (RoBERTa)", fontsize=12)
+ax.set_ylabel("Mean star rating", fontsize=12)
+ax.set_title(f"C. DA level (n={len(da_valid)})\n"
+             f"Pearson r={r2:.3f}, Spearman r={r2s:.3f}", fontsize=14)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_validation_scatter3.png",
+            dpi=150, bbox_inches="tight")
+plt.show()
+print("Saved.")
+
+
+# %%
