@@ -17,6 +17,7 @@ Outputs:
     outputs/tables/{CITY}_binary_logit.csv
 """
 
+# %% Imports and setup
 import os
 import sys
 
@@ -74,7 +75,12 @@ print("Ready.")
 
 # %% 1. LOAD AND CLASSIFY DIVERGENCE
 da_div    = gpd.read_file(DIV_PATH)
-da_census = pd.read_csv(CENSUS_PATH)
+da_census = pd.read_csv(CENSUS_PATH)  # load census first
+da_census["DAUID"] = da_census["DAUID"].astype(str)
+
+# Merge Can-ALE 2021 into census
+canale21 = pd.read_csv("data/census/raw/CanALE_2021.csv", dtype={"DAUID": str})
+da_census = da_census.merge(canale21[["DAUID", "ALE_index"]], on="DAUID", how="left")
 
 REACH_THRESH  = config.SUPPLY_REACH_THRESH
 qty_med       = da_div["qty_cap20"].median()
@@ -131,192 +137,53 @@ da_census["pct_immigrant"] = (
 da_census["pct_bachelor_plus"] = (
     da_census["education_bachelor_plus"] / da_census["education_totalpop"] * 100
 ).round(1)
+da_census["pct_age_0_14"] = (
+    da_census["age_0_14"] / da_census["pop_total"] * 100
+).round(1)
 
 equity_cols = [
     "DAUID", "medhhinc", "pop_total",
-    "pct_visible_minority", "pct_age_65plus",
+    "pct_visible_minority", "pct_age_65plus", "pct_age_0_14", 
     "pct_LIM_AT", "pct_immigrant", "pct_bachelor_plus",
-    "inc_LIM_AT", "inc_totalpop",
+    "inc_LIM_AT", "inc_totalpop", 
     "immigrant_immigrant", "immigrant_totalpop",
     "education_bachelor_plus", "education_totalpop",
-    "ale16_08",
+    "ALE_index",
 ]
 da_eq = da_div.merge(da_census[equity_cols], on="DAUID", how="left")
 print(f"\nDAs with equity data: {da_eq['medhhinc'].notna().sum()} / {len(da_eq)}")
 
 
-# %% 3. DEFINE EQUITY STRATA
-city_median_inc = da_eq["medhhinc"].median()
-
-da_eq["inc_stratum"] = pd.cut(
-    da_eq["medhhinc"],
-    bins=[0, city_median_inc * 0.6, city_median_inc * 1.4, float("inf")],
-    labels=["Low income", "Middle income", "High income"]
-)
-da_eq["vm_stratum"] = pd.cut(
-    da_eq["pct_visible_minority"], bins=[0, 20, 50, 100],
-    labels=["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]
-)
-da_eq["age_stratum"] = pd.cut(
-    da_eq["pct_age_65plus"], bins=[0, 10, 20, 100],
-    labels=["Young (<10% 65+)", "Mid age (10-20% 65+)", "Older (>20% 65+)"]
-)
-da_eq["limat_stratum"] = pd.cut(
-    da_eq["pct_LIM_AT"], bins=[0, 20, 35, 100],
-    labels=["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]
-)
-da_eq["immigrant_stratum"] = pd.cut(
-    da_eq["pct_immigrant"], bins=[0, 30, 50, 100],
-    labels=["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]
-)
-da_eq["edu_stratum"] = pd.cut(
-    da_eq["pct_bachelor_plus"], bins=[0, 30, 50, 100],
-    labels=["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]
-)
-da_eq["ale_stratum"] = pd.qcut(
-    da_eq["ale16_08"], q=3, labels=["Low ALE", "Mid ALE", "High ALE"]
-)
-
-# Save equity file
-da_eq.drop(columns="geometry").to_csv(f"{OUT_DIR}/{CITY}_da_equity.csv", index=False)
-print(f"\nSaved: {OUT_DIR}/{CITY}_da_equity.csv")
-
-
-# %% 4. CHI-SQUARE + CRAMÉR'S V
-
-def cramers_v(ct):
-    chi2 = chi2_contingency(ct)[0]
-    n    = ct.sum().sum()
-    k    = min(ct.shape) - 1
-    return np.sqrt(chi2 / (n * k))
+# %% 3. KRUSKAL-WALLIS + ETA-SQUARED
+from scipy.stats import kruskal
 
 da_eq_classified = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
 
-print("\n--- Chi-square + Cramér's V ---")
-strata_all = [
-    ("inc_stratum",       "Income"),
-    ("vm_stratum",        "Visible Minority"),
-    ("age_stratum",       "Age (65+)"),
-    ("limat_stratum",     "Low Income (LIM-AT %)"),
-    ("immigrant_stratum", "Immigrant Share"),
-    ("edu_stratum",       "Education (Bachelor+)"),
-    ("ale_stratum",       "Active Living Environment"),
-]
-for stratum_col, label in strata_all:
-    ct    = pd.crosstab(da_eq_classified[stratum_col], da_eq_classified["divergence_2x2"])
-    chi2, p, dof, _ = chi2_contingency(ct)
-    v     = cramers_v(ct)
-    sig   = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
-    print(f"{label:35s} χ²={chi2:.1f}, df={dof}, p={p:.4f} {sig}, V={v:.3f}")
-
-
-# %% 5. FIGURE A: SOCIOECONOMIC STACKED BAR (appendix)
-colours_divergence = colours_2x2
-legend_labels_div  = legend_labels
-
-strata_a = [
-    ("inc_stratum",   "Income",
-     ["Low income", "Middle income", "High income"]),
-    ("limat_stratum", "Low Income (LIM-AT %)",
-     ["Low poverty (<20%)", "Mid poverty (20-35%)", "High poverty (>35%)"]),
-    ("edu_stratum",   "Education (Bachelor+ %)",
-     ["Low education (<30%)", "Mid education (30-50%)", "High education (>50%)"]),
+continuous_vars = [
+    ("medhhinc",            "Income"),
+    ("pct_visible_minority","Visible Minority"),
+    ("pct_age_65plus",      "Age (65+)"),
+    ("pct_age_0_14",        "Age 0-14 (children)"),
+    ("pct_LIM_AT",          "Low Income (LIM-AT %)"),
+    ("pct_immigrant",       "Immigrant Share"),
+    ("pct_bachelor_plus",   "Education (Bachelor+)"),
+    ("ALE_index",           "Active Living Environment"),
 ]
 
-fig, axes = plt.subplots(1, 3, figsize=(17, 5.5))
-for ax, (col, title, order) in zip(axes, strata_a):
-    ct_raw = pd.crosstab(da_eq_classified[col], da_eq_classified["divergence_2x2"])
-    chi2, p, dof, _ = chi2_contingency(ct_raw)
-    v = cramers_v(ct_raw)
+print("\n--- Kruskal-Wallis test ---")
+kw_results = {}
+for col, label in continuous_vars:
+    groups = [
+        da_eq_classified.loc[da_eq_classified["divergence_2x2"] == q, col].dropna().values
+        for q in ["HH", "LH", "HL", "LL"]
+    ]
+    H, p = kruskal(*groups)
+    # Eta-squared as effect size: H / (n - 1)
+    n = sum(len(g) for g in groups)
+    eta2 = (H - len(groups) + 1) / (n - len(groups))
     sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
-    ct = pd.crosstab(
-        da_eq_classified[col], da_eq_classified["divergence_2x2"], normalize="index"
-    ) * 100
-    ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
-    bottom = np.zeros(len(ct))
-    for quad in ["HH", "LH", "HL", "LL"]:
-        if quad in ct.columns:
-            vals = ct[quad].fillna(0).values
-            ax.bar(range(len(ct)), vals, bottom=bottom, color=colours_divergence[quad], width=0.6)
-            for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
-                if v_val > 6:
-                    ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
-                            ha="center", va="center", fontsize=8,
-                            color="white" if quad in ["HH", "LL"] else "black")
-            bottom += vals
-    ax.set_xticks(range(len(ct)))
-    ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
-    ax.set_ylabel("% of DAs", fontsize=10)
-    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
-    ax.set_ylim(0, 100)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
-           for q in ["HH", "LH", "HL", "LL"]]
-fig.legend(handles=patches, loc="lower center", ncol=4,
-           fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
-plt.suptitle(
-    f"Supply–Experience Divergence by Socioeconomic Indicators — {CITY.title()}",
-    fontsize=12, y=1.02
-)
-plt.tight_layout()
-plt.savefig(f"{FIG_DIR}/{CITY}_equity_socioeconomic.png", dpi=150, bbox_inches="tight")
-plt.close()
-print(f"Saved: {CITY}_equity_socioeconomic.png")
-
-
-# %% 6. FIGURE B: DEMOGRAPHIC + BUILT ENVIRONMENT (appendix)
-strata_b = [
-    ("vm_stratum",        "Visible Minority (%)",
-     ["Low VM (<20%)", "Mid VM (20-50%)", "High VM (>50%)"]),
-    ("age_stratum",       "Age Composition (65+)",
-     ["Young (<10% 65+)", "Mid age (10-20% 65+)", "Older (>20% 65+)"]),
-    ("immigrant_stratum", "Immigrant Share (%)",
-     ["Low immigrant (<30%)", "Mid immigrant (30-50%)", "High immigrant (>50%)"]),
-    ("ale_stratum",       "Active Living Environment",
-     ["Low ALE", "Mid ALE", "High ALE"]),
-]
-fig, axes = plt.subplots(1, 4, figsize=(22, 5.5))
-for ax, (col, title, order) in zip(axes, strata_b):
-    ct_raw = pd.crosstab(da_eq_classified[col], da_eq_classified["divergence_2x2"])
-    chi2, p, dof, _ = chi2_contingency(ct_raw)
-    v = cramers_v(ct_raw)
-    sig = "***" if p < 0.001 else "**" if p < 0.01 else "*" if p < 0.05 else "ns"
-    ct = pd.crosstab(
-        da_eq_classified[col], da_eq_classified["divergence_2x2"], normalize="index"
-    ) * 100
-    ct = ct.reindex(index=order, columns=["HH", "LH", "HL", "LL"])
-    bottom = np.zeros(len(ct))
-    for quad in ["HH", "LH", "HL", "LL"]:
-        if quad in ct.columns:
-            vals = ct[quad].fillna(0).values
-            ax.bar(range(len(ct)), vals, bottom=bottom, color=colours_divergence[quad], width=0.6)
-            for i, (v_val, b_val) in enumerate(zip(vals, bottom)):
-                if v_val > 6:
-                    ax.text(i, b_val + v_val/2, f"{v_val:.0f}%",
-                            ha="center", va="center", fontsize=8,
-                            color="white" if quad in ["HH", "LL"] else "black")
-            bottom += vals
-    ax.set_xticks(range(len(ct)))
-    ax.set_xticklabels(order, rotation=15, ha="right", fontsize=9)
-    ax.set_ylabel("% of DAs", fontsize=10)
-    ax.set_title(f"{title}\nχ²={chi2:.1f}, p={p:.3f} {sig}, V={v:.2f}", fontsize=10)
-    ax.set_ylim(0, 100)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-patches = [mpatches.Patch(color=colours_divergence[q], label=legend_labels_div[q])
-           for q in ["HH", "LH", "HL", "LL"]]
-fig.legend(handles=patches, loc="lower center", ncol=4,
-           fontsize=9, framealpha=0.9, bbox_to_anchor=(0.5, -0.05))
-plt.suptitle(
-    f"Supply–Experience Divergence by Demographic and Built Environment — {CITY.title()}",
-    fontsize=12, y=1.02
-)
-plt.tight_layout()
-plt.savefig(f"{FIG_DIR}/{CITY}_equity_demographic_builtenv.png", dpi=150, bbox_inches="tight")
-plt.close()
-print(f"Saved: {CITY}_equity_demographic_builtenv.png")
-
+    kw_results[col] = {"H": H, "p": p, "eta2": eta2, "sig": sig}
+    print(f"{label:35s} H={H:.1f}, p={p:.4f} {sig}, η²={eta2:.3f}")
 
 # %% 7. MULTINOMIAL LOGISTIC REGRESSION
 from sklearn.preprocessing import StandardScaler
@@ -325,25 +192,26 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 da_eq_full = pd.read_csv(f"{OUT_DIR}/{CITY}_da_equity.csv", dtype={"DAUID": str})
 
 model_vars = [
-    "divergence_2x2",
+    "divergence_2x2","pct_age_0_14",
     "pct_visible_minority", "pct_age_65plus", "pct_LIM_AT",
-    "pct_bachelor_plus", "ale16_08",
+    "pct_bachelor_plus", "ALE_index",
 ]
 da_model = da_eq_full[model_vars].dropna().copy()
 da_model = da_model[da_model["divergence_2x2"].isin(["HH", "HL", "LH", "LL"])].copy()
 print(f"\nDAs in model: {len(da_model)}")
 
-predictors = ["pct_visible_minority", "pct_age_65plus", "pct_LIM_AT",
-              "pct_bachelor_plus", "ale16_08"]
+predictors = ["pct_visible_minority", "pct_age_65plus", "pct_LIM_AT","pct_age_0_14",
+              "pct_bachelor_plus", "ALE_index"]
 scaler = StandardScaler()
 da_model[predictors] = scaler.fit_transform(da_model[predictors])
 
 rename = {
-    "pct_visible_minority": "Visible minority (%)",
+    "pct_age_0_14":         "Age 0-14 (%)",
     "pct_age_65plus":       "Age 65+ (%)",
+    "pct_visible_minority": "Visible minority (%)",
     "pct_LIM_AT":           "LIM-AT (%)",
     "pct_bachelor_plus":    "Education (Bach+%)",
-    "ale16_08":             "Active living env.",
+    "ALE_index":             "Active living env.",
 }
 da_model = da_model.rename(columns=rename)
 pred_cols = list(rename.values())
@@ -418,3 +286,141 @@ binary_df.to_csv(f"{TAB_DIR}/{CITY}_binary_logit.csv", index=False)
 print(f"\nSaved: {TAB_DIR}/{CITY}_binary_logit.csv")
 
 print("\nDone.")
+
+
+# %% EQUITY DOT PLOT: standardised mean values by divergence quadrant
+import pandas as pd, numpy as np, matplotlib.pyplot as plt
+from scipy.stats import chi2_contingency
+from sklearn.preprocessing import StandardScaler
+
+da_eq = pd.read_csv("data/processed/vancouver_da_equity.csv", dtype={"DAUID": str})
+da_eq_classified = da_eq[da_eq["divergence_2x2"].isin(["HH", "LH", "HL", "LL"])].copy()
+
+quad_order  = ["HH", "LH", "HL", "LL"]
+colours_dot = {
+    "HH": "#01665e",
+    "LH": "#80cdc1",
+    "HL": "#dfc27d",
+    "LL": "#8c510a",
+}
+
+all_vars = {
+    "pct_bachelor_plus":    "Education (bachelor's+)",
+    "ALE_index":             "Active living environment",
+    "pct_age_65plus":       "Older adults (age 65+)",
+    "pct_immigrant":        "Immigrant share",
+    "pct_LIM_AT":           "Low income (LIM-AT)",
+    "pct_visible_minority": "Visible minority",
+    "pct_age_0_14": "Children (age 0–14)",
+}
+
+# --- Standardise across all classified DAs ---
+scaler = StandardScaler()
+da_eq_classified = da_eq_classified.copy()
+for col in all_vars:
+    da_eq_classified[col + "_z"] = scaler.fit_transform(
+        da_eq_classified[[col]].fillna(da_eq_classified[col].mean())
+    )
+
+# --- Significance markers  ---
+sig_markers = {}
+for col in all_vars:
+    if col in kw_results:
+        sig_markers[col] = kw_results[col]["sig"]
+    else:
+        sig_markers[col] = ""
+
+# --- Compute z-score means per quadrant ---
+means = {}
+for col in all_vars:
+    means[col] = {}
+    for q in quad_order:
+        subset = da_eq_classified[da_eq_classified["divergence_2x2"] == q]
+        means[col][q] = subset[col + "_z"].mean()
+
+means_df = pd.DataFrame(means).T
+
+# Sort by HH - LL contrast
+means_df["hi_exp_mean"] = (means_df["HH"] + means_df["LH"]) / 2
+means_df["lo_exp_mean"] = (means_df["HL"] + means_df["LL"]) / 2
+means_df["contrast"]    = means_df["hi_exp_mean"] - means_df["lo_exp_mean"]
+means_df = means_df.sort_values("contrast", ascending=True)
+
+var_keys   = means_df.index.tolist()
+y_pos      = np.arange(len(var_keys))
+
+# --- Nudge overlapping values ---
+NUDGE = 0.04
+for col in var_keys:
+    for j, q1 in enumerate(quad_order):
+        for q2 in quad_order[j+1:]:
+            if abs(means_df.loc[col, q1] - means_df.loc[col, q2]) < NUDGE:
+                means_df.loc[col, q1] -= NUDGE / 2
+                means_df.loc[col, q2] += NUDGE / 2
+
+# --- Plot ---
+fig, ax = plt.subplots(figsize=(8, 5))
+fig.patch.set_facecolor("#f8f8f6")
+ax.set_facecolor("#f8f8f6")
+
+# Zero reference line
+ax.axvline(0, color="#aaaaaa", lw=0.9, ls="--", zorder=0)
+
+for y in y_pos:
+    ax.axhline(y, color="#e0e0e0", lw=0.6, zorder=0)
+
+for i, col in enumerate(var_keys):
+    vals = [means_df.loc[col, q] for q in quad_order]
+    ax.plot(vals, [i] * len(quad_order), color="#cccccc", lw=0.8, zorder=1)
+
+for q in quad_order:
+    xvals = means_df[q].values
+    ax.scatter(xvals, y_pos, color=colours_dot[q], s=70, zorder=3,
+               edgecolors="white", linewidths=0.8, label=q)
+
+# Fix significance for LIM-AT and extend x limit
+ax.set_xlim(-0.55, 0.55)
+
+
+# Y labels with sig markers
+y_labels = [f"{all_vars[col]} {sig_markers[col]}".strip() for col in var_keys]
+ax.set_yticks(y_pos)
+ax.set_yticklabels(y_labels, fontsize=11, color="black")
+
+ax.set_xlabel("Mean standardised value (z-score) by divergence quadrant",
+              fontsize=11, color="black")
+ax.tick_params(colors="black", labelsize=10)
+
+for spine in ["top", "right"]:
+    ax.spines[spine].set_visible(False)
+for spine in ["bottom", "left"]:
+    ax.spines[spine].set_color("#cccccc")
+    ax.spines[spine].set_linewidth(0.8)
+
+# shorter legend labels
+legend_labels_dot = {
+    "HH": "High supply / high exp.",
+    "LH": "Low supply / high exp.",
+    "HL": "High supply / low exp.",
+    "LL": "Low supply / low exp.",
+}
+
+handles = [plt.Line2D([0], [0], marker="o", color="w",
+                      markerfacecolor=colours_dot[q],
+                      markersize=8, label=legend_labels_dot[q])
+           for q in quad_order]
+ax.legend(handles=handles, fontsize=9, frameon=True,
+          facecolor="white", edgecolor="none",
+          loc="lower left", title="Divergence type",
+          title_fontsize=9, bbox_to_anchor=(0.0, 0.0))
+
+plt.tight_layout()
+plt.savefig("outputs/figures/vancouver_equity_dotplot_z.png",
+            dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+plt.close()
+print("Saved: vancouver_equity_dotplot_z.png")
+
+
+
+
+# %%

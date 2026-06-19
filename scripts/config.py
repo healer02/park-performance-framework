@@ -125,7 +125,9 @@ MIN_REVIEWS = 10  # minimum text reviews for a park to contribute to satisfactio
 #   5915025  Burnaby
 #   5915031  Richmond
 CANUE_AVAILABLE = True
-CANUE_CSV       = 'data/census/raw/census_CANUE_DA_nearVan.csv'
+CANUE_CSV     = 'data/census/raw/census_CANUE_DA_nearVan.csv'  # census variables
+CANALE21_CSV  = 'data/census/raw/CanALE_2021.csv'              # Can-ALE 2.0 (2021)
+
 
 # ── Official park facilities inventory ───────────────────────────────────────
 # Set HAS_OFFICIAL_INVENTORY = False for cities without a machine-readable
