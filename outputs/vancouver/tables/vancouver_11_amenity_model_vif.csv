@@ -1,0 +1,15 @@
+predictor,predictor_label,vif
+pct_age_0_14,Children aged 0-14 (%),1.6372531049798684
+pct_age_65plus,Age 65+ (%),1.319944024124961
+pct_visible_minority,Visible minority (%),1.8639155128588298
+pct_LIM_AT,LIM-AT (%),1.2044830607389796
+pct_bachelor_plus,Education (bachelor's+),1.8057398197439307
+ALE_index,Active living environment,2.3139688361339443
+sports_fields,Sports fields,1.2494379189529352
+courts,Courts,1.1905963609632164
+trails,Trails,2.890227573233163
+dog_offleash,Dog off-leash,1.3345349029284472
+water_play,Water play,1.13837069489931
+beach_waterfront,Beach/waterfront,2.9679869684777045
+picnic,Picnic area,1.5595617335444514
+community_garden,Community garden,1.334080986503792

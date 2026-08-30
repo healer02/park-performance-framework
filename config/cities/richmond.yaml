@@ -1,0 +1,5 @@
+analysis_area:
+  name: "Richmond"
+  slug: "richmond"
+  analysis_csd_codes:
+    - "5915015"

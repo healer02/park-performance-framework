@@ -1,0 +1,246 @@
+PlaceID,TotalReviews,AvgRating,MeanSentiment,n_text_reviews,has_valid_sentiment,text_review_ratio,matched_park_ids,matched_park_names,matched_municipalities,in_validated_shared_inventory,reachable_from_populated_vancouver_da,linkage_status
+ChIJ0Ry2keJwhlQRx1QZL7yHxGg,14,3.8,0.3325,8,False,0.571,,,,False,False,not in current validated match table
+ChIJ0UCTbi1yhlQRQCKD7zPvHBk,373,4.8,0.832,195,True,0.523,,,,False,False,not in current validated match table
+ChIJ0Y_5UwR0hlQR-iOTsGZ7xEw,372,4.3,0.7549,127,True,0.341,park_01698,Grays Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ0f6r_RlzhlQRG3hs6hOQHDc,249,4.4,0.7752,116,True,0.466,park_01648,Chaldecott Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ1XTxNQ9zhlQRC65vCiN3u-E,35,4.1,0.6555,21,True,0.6,park_01821,Valdez Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ2-nGU-RzhlQRg10wKBoIhv4,689,4.5,0.771,286,True,0.415,park_01752,Mount Pleasant Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ2UOPGdZzhlQRwvt3gDG7RIY,234,4.0,0.3969,91,True,0.389,park_01835,Yaletown Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ2YWjyVdzhlQRbrb5QTvwKQs,110,4.4,0.7113,56,True,0.509,park_01664,Deering Island Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ2Zs7K-FzhlQRUrWRcS8n4jE,37,4.4,0.8165,14,True,0.378,park_01868,Major Matthews Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ2cKodkhxhlQRF9dd0FsDc14,376,4.3,0.7459,146,True,0.388,park_01743,McSpadden Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ38kXhc1zhlQRSwgjFzVBDgE,938,4.5,0.7873,392,True,0.418,park_01695,Granville Island Water Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ3StweQBzhlQROdIhlxaHYNU,1,5.0,0.9588,1,False,1.0,,,,False,False,not in current validated match table
+ChIJ47iOlshzhlQRTY5NyGaKwuU,609,4.3,0.6979,233,True,0.383,park_01696,Granville Loop Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ4bD6IF9xhlQRslSTYK4lOfM,766,4.3,0.5873,342,True,0.446,park_01700,Guelph Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ4eZqHpBzhlQRbF5hkWtQPN8,72,4.2,0.6707,38,True,0.528,park_01667,Devonshire Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ4w9s-VdxhlQRmt-tSScFR8I,390,4.4,0.7545,168,True,0.431,park_01785,Robson Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ5QquEQF2hlQRtCOKuJ4Zh1U,1087,4.5,0.7558,512,True,0.471,park_00019,Burnaby Fraser Foreshore Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJ5RWQau9zhlQR7QbpfAPnPME,76,4.3,0.7864,32,True,0.421,park_01729,Lilian To,Vancouver,True,True,reachable and sentiment eligible
+ChIJ5XTCEFBxhlQRSX_XuEGkLJA,123,4.2,0.5654,56,True,0.455,park_01653,China Creek South Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ5xH-_PZyhlQR2oyzoLe8M-c,5151,4.7,0.8117,2054,True,0.399,park_01713,Jericho Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ74xCONl2hlQRkat0UqHiG-Q,109,4.2,0.5651,40,True,0.367,park_00013,Broadview Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJ7Rw__kV0hlQRQ_CXlmJWnFU,23,4.5,0.8026,9,False,0.391,,,,False,False,not in current validated match table
+ChIJ7U-FfOp2hlQRNtM0uW9ApMc,71,4.1,0.5158,23,True,0.324,park_01642,Cariboo Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ7Xx4ht51hlQRhjfWRhTTv8A,3,4.0,0.561,3,False,1.0,,,,False,False,not in current validated match table
+ChIJ7a4QtdhwhlQRJG5RiFTWPe4,197,4.3,0.7237,64,True,0.325,park_01704,Hastings Community Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ86zkaC9yhlQR4GhBA8iTiy4,19173,4.7,0.7958,7847,True,0.409,park_01679,English Bay Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ8YDE_HZzhlQRHs20Hhi1pyk,23,4.4,0.428,12,True,0.522,park_01779,Ravine Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ8aj4P550hlQRjTZU5Nstqok,458,4.5,0.7934,211,True,0.461,park_01735,Maple Grove Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ91Xo0aRxhlQRRaOE88piwQ4,397,4.6,0.7829,235,True,0.592,park_01905,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow),Vancouver,True,True,reachable and sentiment eligible
+ChIJ97K1cFF1hlQRZbJi19XTdwA,4,4.0,0.3977,3,False,0.75,,,,False,False,not in current validated match table
+ChIJAStCZUBxhlQRNnG7eEcbtxw,65,4.3,0.6898,32,True,0.492,park_01751,Mosaic Creek Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJATo6iOV0hlQRFQbsRk6mgH0,87,4.1,0.5829,43,True,0.494,park_01764,Park Site On Shaughnessy Street,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJAUw1JNRzhlQRCnHVzI24sCs,274,4.7,0.8518,105,True,0.383,,,,False,False,not in current validated match table
+ChIJAWo0tC1yhlQRAL6Iz7Cs6G4,8911,4.7,0.8145,3359,True,0.377,park_01809,Sunset Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJBR-XSExyhlQRVaU4Z8qga0I,44,4.6,0.7313,20,True,0.455,park_01768,Park Site on Point Grey at Stephens,Vancouver,True,True,reachable and sentiment eligible
+ChIJBdOUdVhyhlQRf5X1qM6aus8,529,4.7,0.7784,256,True,0.484,,,,False,False,not in current validated match table
+ChIJBdvqe1dyhlQR7Nf9Nd_YHIA,381,4.5,0.8144,171,True,0.449,park_01705,Hastings Mill Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJBzAe6bV2hlQRzPY-vJUxr-s,355,4.4,0.7327,146,True,0.411,park_01631,Beaconsfield Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJC5SWvl90hlQRB89ZpxoUHI4,672,4.3,0.7072,269,True,0.4,park_01833,Winona Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJC7uNpdd1hlQRud9Kp4snUtU,741,4.4,0.7227,369,True,0.498,park_01680,Everett Crowley Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJCSGA_eJwhlQRJo-DM9T0oVw,30,4.5,0.634,19,True,0.633,park_01904,Street End - Wall St @ Penticton,Vancouver,True,True,reachable and sentiment eligible
+ChIJD842oIBxhlQRlqBtvXLhgLg,33,4.4,0.3005,18,True,0.545,,,,False,False,not in current validated match table
+ChIJDVxdVcxzhlQR4VVMIenhbVE,3,5.0,0.6123,2,False,0.667,park_01824,Vanier Park (Cultural Harmony Grove),Vancouver,True,True,reachable but below sentiment review threshold
+ChIJDX5iWN1whlQRwiiUycZhmuw,4,4.3,0.3037,4,False,1.0,park_01662,Creekway Park,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJDa_CRR50hlQR6O1HYuG72ys,311,4.2,0.6655,140,True,0.45,park_01716,Jones Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJDdlYSlV1hlQR1hzKJVB7Ckc,31,4.4,0.5462,20,True,0.645,park_01724,Kinross Corridor - South,Vancouver,True,True,reachable and sentiment eligible
+ChIJDyI5MmRxhlQRgNoRd-LruNU,48,3.8,0.5975,32,True,0.667,park_01816,Thornton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJEWq_7hhxhlQR_k-jUi4iX1I,643,4.4,0.7362,302,True,0.47,park_01763,Pandora Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJEaF3zSVzhlQRoHELsXvwmDM,1818,4.7,0.8204,849,True,0.467,park_01893,Pacific Spirit Regional Park,Metro Vancouver Regional Parks,True,True,reachable and sentiment eligible
+ChIJF0eHNERzhlQRvbsIL32Zi6I,174,4.2,0.5332,78,True,0.448,park_01753,Musqueam Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJF0sFL3JxhlQRkjUfpiWMnXo,1247,3.3,0.1849,740,True,0.593,park_01761,Oppenheimer Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJF391QrBzhlQRw86A7fL1egg,136,4.5,0.7482,65,True,0.478,park_01623,Arbutus Greenway Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJF3ZzyvpyhlQR2PRpa6WD4yw,382,4.6,0.8538,161,True,0.421,park_01830,West Point Grey Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJFRGrHHtxhlQRAZVZlqaROSw,1128,4.0,0.459,532,True,0.472,park_01621,Andy Livingstone Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJFZRR0DhxhlQRx0NrqkpG4x4,316,4.3,0.6698,139,True,0.44,park_01825,Victoria Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJFZtqm6BzhlQRViBt0mI2ZIU,264,4.4,0.6697,107,True,0.405,park_01819,Trafalgar Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJG6h0OXt0hlQRY4B37Wd5hPs,370,4.3,0.6435,155,True,0.419,park_01818,Tisdall Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJG_DeAJN2hlQRchN6SnOa_Ok,87,4.6,0.799,31,True,0.356,park_01744,Melbourne Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJGc_YA2xxhlQRYCN8Qrra0a4,49,4.1,0.7352,25,True,0.51,park_01803,Strathcona Linear Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJGxBSE8h2hlQREGZuQbBmLk4,913,4.3,0.7613,338,True,0.37,park_01780,Renfrew Community Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJGxWYt5N2hlQRpSVP-1KR7mM,436,4.3,0.6472,150,True,0.344,park_01687,Gaston Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJHTh_ntZzhlQRfufbHHTUOrY,1493,4.3,0.7136,634,True,0.425,park_01677,Emery Barnes Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJHUYfoDVyhlQRrGFzpe5fhaQ,1784,4.7,0.7608,884,True,0.496,,,,False,False,not in current validated match table
+ChIJHYNgmH12hlQR0gLImPSspGs,75,4.4,0.7872,29,True,0.387,park_01801,Sparwood Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJI6DcWsNzhlQRkRpRrXP9q0w,77,3.7,0.6063,40,True,0.519,park_01869,Willow Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJIZKsD8BwhlQRAMHnVzVhUWk,157,4.2,0.6672,56,True,0.357,,,,False,False,not in current validated match table
+ChIJIcZrTvVzhlQRiKTnD03vt7Q,15410,4.7,0.8553,6735,True,0.437,park_01777,Queen Elizabeth Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJIxV11ZZyhlQR6lOWn2aTIlQ,1632,4.7,0.7889,711,True,0.436,,,,False,False,not in current validated match table
+ChIJJ0-wUspzhlQRKt_ZlwgVYYs,71,4.1,0.5464,39,True,0.549,park_01793,Seaforth Peace Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJJUHa9ih3hlQRNLbTZnBaVIs,52,3.8,0.6351,24,True,0.462,park_00074,Jim Lorimer Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJJZf3XeBwhlQR85cMSoejEXw,151,4.3,0.6755,63,True,0.417,park_01637,Callister Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJJ_kBcVJxhlQRiqlikNPSCLY,518,4.4,0.7031,214,True,0.413,park_01654,Clark Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJJc32Trl2hlQR8l9XDVPjlFM,178,4.2,0.6271,89,True,0.5,park_01781,Renfrew Ravine Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJJdYerONwhlQRjHzqGcMZNHo,258,4.5,0.8334,114,True,0.442,park_01635,Burrard View Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJK2UkddV1hlQRTBAqFsTxlhg,5,4.4,0.4575,2,False,0.4,park_01787,Rosemont Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJK5QMvYNxhlQRDW_gXLRmz9I,114,4.1,0.601,46,True,0.404,park_01772,Portal Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJK86qDpF0hlQRY2FkPtkYryw,86,4.3,0.6943,32,True,0.372,park_01795,Shannon Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJK9gkC2FzhlQRXlcBrT9bETA,35,4.0,0.2394,16,True,0.457,park_01741,McCleery Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJKRZjqO50hlQRFUt8m76rzKw,115,4.3,0.8073,49,True,0.426,park_01674,Ebisu Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJKcr50CJxhlQRAfbaI6BCHD4,100,4.3,0.5015,35,True,0.35,park_01815,Templeton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJL9zIRYN2hlQRS0ojoIdUiPE,1180,4.4,0.684,396,True,0.336,park_01721,Killarney Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJLQnMgZJyhlQRnRaqpqnAhgg,3003,4.7,0.8083,1265,True,0.421,park_01799,Spanish Banks Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJLWJQgpZ0hlQR7ZOtwMe5urQ,121,4.3,0.6558,43,True,0.355,park_01784,Riverview Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM0glEqV2hlQRKWLMXS0IhBQ,206,4.1,0.555,80,True,0.388,park_01688,General Brock Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM2LXoixxhlQR6cOFWdWtq4w,407,4.5,0.8499,180,True,0.442,park_01808,Sunrise Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM302BHF0hlQRqFOUt6e8n90,157,4.3,0.6166,54,True,0.344,park_01658,Columbia Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM4NmxEZxhlQRAM7rBUX3uN4,82,4.0,0.7016,43,True,0.524,park_01619,Alice Townley Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM8cCYt9whlQRY02U31n5pbs,2513,4.4,0.7116,905,True,0.36,park_01707,Hastings Park - Sanctuary,Vancouver,True,True,reachable and sentiment eligible
+ChIJMVTzBthzhlQRW6T6LQaOxoU,1398,4.5,0.7811,567,True,0.406,park_01660,Coopers' Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJM_hBYox0hlQRcujRUfx1r24,477,4.3,0.7235,193,True,0.405,park_01760,Oak Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJMbvsBntzhlQRBbPTAp4qVpY,40,4.3,0.6399,15,True,0.375,park_01719,Kerrisdale Centennial Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJMdSO6Wx0hlQRZVtjAbrtrW8,98,4.1,0.5621,40,True,0.408,park_01732,MacDonald Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJMzf4dmJxhlQRWGgp8cpI0eU,767,4.4,0.7376,335,True,0.437,park_01765,Park Site On South East False Creek (Hinge Park),Vancouver,True,True,reachable and sentiment eligible
+ChIJN2vpOgx0hlQReb3pmmh_wZI,43,4.1,0.8462,22,True,0.512,park_01645,Cartier Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJN7q5Ek9xhlQRnuYOz9pJpoM,137,3.9,0.4368,72,True,0.526,park_01828,W.C. Shelly Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJNTdgR7N2hlQRsGx3wkOQ0sk,3865,4.6,0.7751,1628,True,0.421,park_01714,John Hendry (Trout Lake) Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJNa3NzqFzhlQRKYEj2VkGFK0,33,4.2,0.5552,13,True,0.394,park_01625,Arbutus Village Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJNf8SCQ9xhlQR0XX0ndH7c-U,5,3.6,0.605,5,False,1.0,,,,False,False,not in current validated match table
+ChIJO-T6lIhxhlQRCWwZrAhZ7vA,85,4.5,0.8743,35,True,0.412,park_01737,Marina Square,Vancouver,True,True,reachable and sentiment eligible
+ChIJO7VBr1p0hlQRkXQcCX3w55k,115,4.1,0.663,46,True,0.4,park_01689,George Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJO8AziRx0hlQRVI1T6sf_Gdo,517,4.3,0.7419,192,True,0.371,park_01718,Kensington Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJOQXOBtp1hlQR9z7z1XRMcyI,17,4.0,0.5007,6,False,0.353,park_01725,Kinross Ravine Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJOTyt_ZdzhlQRszXvVBYi0ws,29,4.6,0.6421,16,True,0.552,park_01622,Angus Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJP2cAOltxhlQROoXZvfN2rdY,677,4.4,0.7235,311,True,0.459,park_01652,China Creek North Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJP8TmK392hlQRs8kUSp-kvQI,433,4.3,0.6723,161,True,0.372,park_01649,Champlain Heights Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJPSghNvtzhlQRiFdqmVl152A,34,3.5,0.1949,22,True,0.647,park_01805,Sun Hop Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJQ1sOFchzhlQRoXMYDrzBCi8,73,4.4,0.8536,37,True,0.507,,,,False,False,not in current validated match table
+ChIJQR19tJ1zhlQRHjXiVUw7YjQ,394,4.5,0.7615,191,True,0.485,park_01778,Quilchena Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJQWLyspZ2hlQRcqZoordgcDc,114,4.4,0.648,38,True,0.333,park_01657,Collingwood Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJQcEWtE1yhlQRq5EvZuP3fYM,282,4.7,0.892,139,True,0.493,park_01736,Margaret Pigott Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJQwI_Q4RxhlQRJ-IPbxaY9Os,2484,4.7,0.8587,906,True,0.365,park_01703,Harbour Green Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJRRoBy4J3hlQR-uUkl4HSaBo,1,4.0,,0,False,0.0,,,,False,False,not in current validated match table
+ChIJS5wbJLBzhlQRoCRPmPuGU8Y,12,4.0,0.896,8,False,0.667,park_01786,Rosemary Brown Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJSbuugZVzhlQRTdS00C0zXyY,253,4.4,0.6758,133,True,0.526,park_01796,Shaughnessy Park,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJSyp71WtxhlQReZtp3mzmPnY,839,4.0,0.4849,418,True,0.498,park_01804,Strathcona Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJT67BwrhwhlQRoUW5PEDaZzE,74,4.4,0.8249,35,True,0.473,park_00098,Mcgill Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJTRl33BtxhlQRM2vJsGWhUj8,16,3.2,0.2262,9,False,0.562,park_01762,Oxford Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJTU9RhTJ0hlQReT_ozcd7LFU,361,4.4,0.7009,132,True,0.366,park_01632,Bobolink Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJU85SfvNyhlQROqo2GnhKkPY,246,4.7,0.8114,124,True,0.504,park_01730,Locarno Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJUVM6OsFwhlQRocviQfwQBYo,375,4.6,0.7908,157,True,0.419,park_00020,Burnaby Heights Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJU_7O9QdzhlQRT1nFVPrl2yE,279,4.4,0.7354,108,True,0.387,park_01644,Carnarvon Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJV40wYpJ2hlQRcNMAsizCLwY,143,4.3,0.7355,50,True,0.35,park_01616,Aberdeen Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJV6yYZh1xhlQRJb41JgTpR54,46,4.2,0.5918,23,True,0.5,park_01903,Street End - Wall St @ Nanaimo,Vancouver,True,True,reachable and sentiment eligible
+ChIJVVQ1MipxhlQRJzWpvSkLUvs,307,4.5,0.7271,133,True,0.433,park_01790,Rupert Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJVXd-yJRzhlQRX9v0OrdFejs,2,4.0,0.7349,1,False,0.5,,,,False,False,not in current validated match table
+ChIJXRC8b41yhlQRLSiIqsnw5m0,956,4.7,0.7916,469,True,0.491,park_01800,Spanish Banks Extension,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJX_EtwUd0hlQRSqoCuc14Pjs,317,4.2,0.5935,118,True,0.372,park_01788,Ross Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJXayKduNwhlQRCIpah-P90nQ,10,4.3,0.5732,8,False,0.8,,,,False,False,not in current validated match table
+ChIJXfWhew1zhlQRxF2EcUJj18U,257,4.4,0.7103,117,True,0.455,park_01628,Balaclava Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJY-gCRX52hlQRZGZEgqY7bQU,63,4.3,0.7234,31,True,0.492,park_01640,Captain Cook Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJYTzEQeZwhlQRvYumbduROOs,1089,4.5,0.7901,496,True,0.455,park_01757,New Brighton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJZ13eaDdxhlQR4XCkXOKSOAU,206,4.3,0.6462,81,True,0.393,park_01686,Garden Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJZ6OKcZJ2hlQRP7l2hZWu-ZQ,8,3.5,0.5458,5,False,0.625,park_01682,Foster Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJZyqg6a52hlQRP-UiMhm_Sdw,132,4.5,0.7302,61,True,0.462,park_01634,Brewers Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJZzh7dhB1hlQRSlV-04fDXD0,5,4.2,,0,False,0.0,,,,False,False,not in current validated match table
+ChIJ_8GQ6V1zhlQRVtXzc6MCZVg,27,4.5,0.89,16,True,0.593,park_01831,Westmount Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ_V-LvhZ0hlQRPyVZcd83YiY,1572,4.5,0.7477,608,True,0.387,park_01745,Memorial South Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ__-vMMhzhlQRvgmDj4xwh40,25,4.6,0.8166,14,True,0.56,park_01614,5th and Pine,Vancouver,True,True,reachable and sentiment eligible
+ChIJ____Ezt0hlQRbH4nQIeSKys,427,4.3,0.6804,160,True,0.375,park_01693,Gordon Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJ__wzVS9yhlQRXRtamFaDvyY,107,4.6,0.8115,64,True,0.598,park_01750,Morton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJaUl9s-t0hlQRgz7XB6izdek,149,4.1,0.661,55,True,0.369,park_01738,Marpole Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJaVvpl891hlQRMxprW0l3Vgc,767,4.4,0.7546,317,True,0.413,park_01783,Riverfront Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJafAXZYhzhlQRZ1X6Zx94FeU,190,4.2,0.5966,96,True,0.505,park_01759,Oak Meadows Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJb0USbNx2hlQRlgEmn_YekGE,131,4.2,0.6528,58,True,0.443,park_00003,Avondale Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJbyrrMGxxhlQRY5TfOsP4DfI,587,4.4,0.784,286,True,0.487,park_01733,Maclean Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJc-9iJdFwhlQRLBxxhG8Aos0,373,4.3,0.6797,143,True,0.383,park_01617,Adanac Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJc6RIWYp2hlQRn1enR_bqb2A,6295,4.6,0.7811,2692,True,0.428,park_00038,Central Park,Burnaby,True,True,reachable and sentiment eligible
+ChIJcU6_Epx2hlQRNvEPUWuryHI,127,4.1,0.5068,50,True,0.394,park_01671,Earles Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJcUir1MxzhlQRBUXcDCRBgoI,1992,4.6,0.8166,794,True,0.399,park_01823,Vanier Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJcbmkHLxzhlQRkMlWXjPgShU,278,4.3,0.6444,130,True,0.468,park_01697,Granville Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJd7CrglFyhlQRhCfsNwzHzYE,177,4.6,0.8082,76,True,0.429,park_01770,Park Site on Point Grey at Trutch,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJdT38dmRxhlQRq93GlaDNzn4,3042,4.5,0.7986,1159,True,0.381,park_01661,Creekside Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJdWKlgZh2hlQRzqmlKiCHq5w,594,4.3,0.6818,224,True,0.377,park_01758,Norquay Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJdY0tlipxhlQRGfacJ8at8O4,52,4.1,0.5964,16,True,0.308,park_01817,Thunderbird Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJe9a54hxxhlQRdnmu96eNPx4,56,4.5,0.714,28,True,0.5,park_01767,Park Site On Trinity Street,Vancouver,True,True,reachable and sentiment eligible
+ChIJeZApNfJ2hlQRBkl5DdS55n4,153,4.2,0.6711,62,True,0.405,park_00062,George Mclean Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJeZSkvAZzhlQRQdKZJ08SxVU,7,4.0,0.7106,3,False,0.429,park_01776,Quadra West Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJfecbAzNxhlQRuPoXxBEQCio,89,4.2,0.5654,40,True,0.449,park_01717,Kaslo Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJfwIDQTh3hlQR2IcSmppKEwo,1,5.0,-0.6253,1,False,1.0,park_00132,Wesburn Ravine Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJg7fz5n50hlQRo9GXpVhSDlM,174,4.2,0.6342,78,True,0.448,park_01749,Montgomery Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJgRB-c3lxhlQRxAU0p5Nk128,1436,4.1,0.4947,734,True,0.511,park_01826,Victory Square,Vancouver,True,True,reachable and sentiment eligible
+ChIJh6pVh-NwhlQR5Q9CISVPPm8,62,4.3,0.8094,37,True,0.597,park_01670,Dusty Greenwell Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJhQHU_z1xhlQRMzIBq7vJ02A,84,4.2,0.6523,41,True,0.488,park_01792,Salsbury Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJhShFK6p2hlQRScal2yKlk_Y,135,4.4,0.7768,58,True,0.43,park_01722,Kingcrest Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJi06rTb50hlQRBFFBzgkGIBM,941,4.5,0.8108,469,True,0.498,park_01683,Fraser River Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJi1Mbee50hlQRKK0mG1GDtUc,104,4.0,0.4552,42,True,0.404,park_01675,Eburne Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJi4cql2ZxhlQRt2G0F4-JFus,9,4.0,0.5224,5,False,0.556,,,,False,False,not in current validated match table
+ChIJi8uFFc9zhlQRsj44EqhKgzA,64,4.5,0.8026,38,True,0.594,park_01811,Sutcliffe Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJicVMCYlxhlQRLly-YmGOfu4,575,4.6,0.8173,223,True,0.388,park_01666,Devonian Harbour Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJj3G_rkdxhlQRwXb7n3u0aG8,156,3.5,0.2948,104,True,0.667,park_01636,CRAB Park at Portside,Vancouver,True,True,reachable and sentiment eligible
+ChIJj76x_Wl0hlQRo_4SU8yo40k,316,4.4,0.7444,112,True,0.354,park_01810,Sunset Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJj9LmgVJyhlQRMSv-tmobp8U,168,4.5,0.7019,65,True,0.387,park_01812,Tatlow Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJj9M8XCJ0hlQRPKFMohArkMo,163,4.1,0.5886,65,True,0.399,park_01814,Tecumseh Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJjZEhpMRzhlQRXE_k76Ovthk,18,4.1,0.8448,8,False,0.444,park_01728,Laurel Landbridge Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJjyFfrRVxhlQRAM9mIepSnEo,445,4.3,0.7005,207,True,0.465,park_01834,Woodland Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJk11occl1hlQRUEwbZnbL6gc,372,4.4,0.7856,157,True,0.422,park_01691,Gladstone-Riverside Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJk1uxP2VzhlQRi5nrQ102bFA,136,4.3,0.7014,60,True,0.441,park_01676,Elm Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJk2TkDgp0hlQRkWrt4bl_2QM,480,4.5,0.7643,182,True,0.379,park_01782,Riley Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJk2ojTWV2hlQRDpU3m6pEVlM,62,4.4,0.869,22,True,0.355,park_00128,Suncrest School Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJk3MmTC13hlQRpBc5ngzc9rI,601,4.4,0.7299,218,True,0.363,park_00137,Willingdon Heights Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJk9VbpjVyhlQRoPnK3Fg0pTg,824,4.6,0.8247,308,True,0.374,park_01702,Hadden Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJkTBzFHF2hlQRLCCYot0Z5Pw,23,4.3,0.7957,12,True,0.522,,,,False,False,not in current validated match table
+ChIJkZyYPuh0hlQR-O6-mDuHWKY,94,4.3,0.5775,46,True,0.489,,,,False,False,not in current validated match table
+ChIJl6aPJBl1hlQRc7lNZlu_qqQ,1,4.0,0.1541,1,False,1.0,,,,False,False,not in current validated match table
+ChIJlRlWCz9xhlQREiA2lK11iBA,998,4.3,0.6634,451,True,0.452,park_01694,Grandview Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJlTfKFFRxhlQRUctT1m7IU8c,158,4.4,0.7418,64,True,0.405,park_01807,Sunnyside Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJm9c-2_tzhlQRCZ0h-hxuSaw,343,4.4,0.7683,136,True,0.397,park_01774,Prince Edward Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJmUG1iutzhlQRMbhW_oYYz6s,197,4.1,0.6425,90,True,0.457,park_01708,Heather Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJmWmNzdp2hlQRWjnSYGKO9j8,350,4.3,0.7559,138,True,0.394,park_01681,Falaise Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJmYd6Q8RzhlQRnQcUS9mQFVo,86,4.5,0.8351,48,True,0.558,park_01867,Choklit Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJmfKAD_R0hlQR2etVxiSVvu8,210,4.3,0.6511,98,True,0.467,park_01627,Ash Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJn6ZWa8JwhlQR9bGRxUHxkfE,117,4.1,0.4612,61,True,0.521,park_01630,Bates Park,Vancouver,True,False,validated but not reachable in Vancouver
+ChIJnRglPVFyhlQR03Sua9dIDi0,139,4.6,0.802,61,True,0.439,park_01712,Jean Beaty Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJnUSZ3VtxhlQRHp5L-dYmDbA,97,3.9,0.6485,41,True,0.423,park_01791,Sahalli Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJnVFsezVyhlQRf5O-Pe5uQ04,8801,4.7,0.8004,3381,True,0.384,park_01726,Kitsilano Beach Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJnfJjlE1yhlQR6fGIpVjE_9E,275,4.6,0.762,105,True,0.382,park_01827,Volunteer Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJo-QmrYxxhlQRFuIJtJ1jSjY,49129,4.8,0.8515,21835,True,0.444,park_01802,Stanley Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJoQ4kvd9whlQRmGkWeuxCzpI,90,4.4,0.7865,41,True,0.456,park_01706,Hastings Park - Italian Garden,Vancouver,True,True,reachable and sentiment eligible
+ChIJp0x5YWF0hlQRYMKUL3U2BcE,77,4.1,0.6166,33,True,0.429,park_01638,Cambie Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJp46ViGt1hlQRr2L0RXVYFoc,3,4.0,-0.7523,1,False,0.333,park_01685,Fraserview Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJp6Yu-ipyhlQRTLUcQSOMft8,833,4.3,0.6504,381,True,0.457,park_01756,Nelson Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJpcthL9tzhlQRctQyvr0X2MI,1141,4.6,0.8129,500,True,0.438,park_01651,Charleson Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJq6oaxVdxhlQRh60Yg_aLLj4,17,4.0,0.4656,11,True,0.647,,,,False,False,not in current validated match table
+ChIJq6rqyDF0hlQRXLjveZ83HR8,24,4.2,0.5668,9,False,0.375,park_01711,Humm Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJq74VcLx2hlQRqTLGA5zPWJw,583,4.3,0.5853,235,True,0.403,park_01798,Slocan Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJqTIU0Op2hlQRnLzWdxS4vXg,47,4.2,0.7102,15,True,0.319,park_01643,Carleton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJqYcdRFRyhlQRaECLerpvnGU,274,4.4,0.6973,127,True,0.464,park_01740,McBride Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJqe3omWVxhlQRnQQZik9OmLk,520,4.2,0.5784,215,True,0.413,park_01820,Trillium Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJqeRyDUxyhlQRhqdvgElWoRo,308,4.6,0.7628,140,True,0.455,park_01769,Park Site on Point Grey at Trafalgar,Vancouver,True,True,reachable and sentiment eligible
+ChIJr31-jxtxhlQREFvHCIcvI48,137,4.4,0.6985,85,True,0.62,,,,False,False,not in current validated match table
+ChIJr5Ykeo1zhlQRxTFCPQi4ndQ,120,4.1,0.5722,58,True,0.483,park_01633,Braemar Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJrWwEf2JxhlQRKMuYEPVuOPU,44,4.5,0.7868,26,True,0.591,park_01701,Habitat Island Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJr_LGGFtxhlQRC5VWE8jAYHA,27,4.2,0.6406,13,True,0.481,park_00133,West-sells Park,Burnaby,True,False,validated but not reachable in Vancouver
+ChIJryDxBQB0hlQRbtirTQEAV5Y,239,4.2,0.7206,92,True,0.385,park_01692,Glen Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJrzzU_y5yhlQR3gtnchw_YCI,103,4.4,0.7425,46,True,0.447,park_01618,Alexandra Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJt8HMwOp0hlQRoABp_Ffp65Q,79,4.3,0.7045,34,True,0.43,park_01832,William Mackie Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJtRQtKlBxhlQRaIjzYLWTH8c,62,4.3,0.8242,31,True,0.5,park_01647,Cedar Cottage Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJta9pnIZxhlQRjOVLcnemBFE,327,4.7,0.8414,135,True,0.413,park_01656,Coal Harbour Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJu1Lnq6lxhlQR6pcX6rbjjts,42,4.6,0.9179,25,True,0.595,,,,False,False,not in current validated match table
+ChIJu9PyFjBxhlQRcu77PZFWKM0,478,4.4,0.7442,204,True,0.427,park_01655,Clinton Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJuRmp2ylyhlQRRRIBDobG380,114,4.5,0.7685,57,True,0.5,park_01629,Barclay Heritage Square,Vancouver,True,True,reachable and sentiment eligible
+ChIJuRwPsR1xhlQRlVZ7Wa4LGok,62,4.2,0.712,19,True,0.306,park_01742,McGill Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJuSjYgoFxhlQRkNmzBbPyqU4,35,4.3,0.6225,25,True,0.714,park_01626,Art Phillips Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJuZnNIHpzhlQRH-rkHfIn4bI,66,4.4,0.6083,31,True,0.47,park_01720,Kerrisdale Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJuxe5nuBzhlQRGzxeBtLX_90,868,4.4,0.6867,382,True,0.44,park_01715,Jonathan Rogers Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJwW3HeIZzhlQRVxJgWI8VjAg,13383,4.7,0.8388,6696,True,0.5,park_01822,Vandusen Botanical Garden,Vancouver,True,True,reachable and sentiment eligible
+ChIJwwg2M65zhlQR4r-M83JybOI,858,4.5,0.7258,317,True,0.369,park_01659,Connaught Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJwzH1iPNyhlQRnNtrx--1dRo,2413,4.7,0.802,976,True,0.404,,,,False,False,not in current validated match table
+ChIJxZsulu1yhlQRqT0pZTQ8X4s,0,,,0,False,,,,,False,False,not in current validated match table
+ChIJxaN7ewZzhlQRx8EAfFpKGg0,12,3.8,0.2883,8,False,0.667,,,,False,False,not in current validated match table
+ChIJxe0X69BzhlQRN8arE-4IpMY,3654,4.6,0.8217,1408,True,0.385,park_01663,David Lam Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJxxdSOONzhlQRSddacN9azVQ,122,4.3,0.6964,64,True,0.525,park_01813,Tea Swamp Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJy1jYS_RzhlQRAGB4_a8DoeI,980,4.5,0.7297,357,True,0.364,park_01710,Hillcrest Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJy45ZONJzhlQR8LQwVz87pzA,69,4.1,0.6895,35,True,0.507,park_01739,May & Lorne Brown Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJy5zamnVzhlQROs6bOMWf3m4,132,4.4,0.6114,55,True,0.417,park_01775,Prince Of Wales Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJy6XHNhRzhlQRgMzwOxCqpZ0,254,4.5,0.7733,100,True,0.394,park_01746,Memorial West Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJyRYm0NVwhlQRhx_safq7qa8,61,4.3,0.712,37,True,0.607,park_01650,Charles Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJyc3aydFzhlQR43lpkTY-G0c,1282,4.6,0.802,535,True,0.417,park_01690,George Wainborn Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJz07OE2hzhlQRIlnM7UC9NLg,15,4.2,0.5097,6,False,0.4,park_01734,Malkin Park,Vancouver,True,True,reachable but below sentiment review threshold
+ChIJz2Z0KHlxhlQRLtddSsnlI6U,421,4.3,0.5534,198,True,0.47,park_01646,Cathedral Square,Vancouver,True,True,reachable and sentiment eligible
+ChIJz4_4Rph0hlQR-dUPngR--es,35,4.3,0.612,11,True,0.314,park_01624,Arbutus Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJz8WExvdxhlQRidQocfyDsGg,2,4.0,0.8774,2,False,1.0,,,,False,False,not in current validated match table
+ChIJz8ibx7ZzhlQRfNxBURpAlo0,89,4.1,0.6502,42,True,0.472,park_01665,Delamont Park,Vancouver,True,True,reachable and sentiment eligible
+ChIJzdD-3yhyhlQR9TvnmTwhdMw,14,3.1,-0.1203,10,True,0.714,,,,False,False,not in current validated match table
+ChIJzy68lgFzhlQR3bAMfmlJakQ,179,4.3,0.7381,85,True,0.475,park_01620,Almond Park,Vancouver,True,True,reachable and sentiment eligible

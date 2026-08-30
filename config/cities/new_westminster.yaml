@@ -1,0 +1,5 @@
+analysis_area:
+  name: "New Westminster"
+  slug: "new_westminster"
+  analysis_csd_codes:
+    - "5915029"

@@ -1,168 +1,280 @@
-"""
-01_network.py  (was 01-get-osm-network.py)
-Downloads OSM pedestrian walk network for the study area.
+"""Prepare or validate the shared Metro Vancouver pedestrian network."""
 
-Inputs:
-    data/census/raw/2021_92-151_x.csv        (StatCan Geographic Attribute File)
-    data/census/raw/lda_000b21a_e/lda_000b21a_e.shp  (DA boundaries)
+from __future__ import annotations
 
-Outputs:
-    data/osm/{CITY}_walk.graphml
-    data/osm/{CITY}_osm_nodes.shp
-    data/osm/{CITY}_osm_edges.shp
-    data/osm/{CITY}_study_area_boundary.shp
-    outputs/figures/{CITY}_osm_network_check.png
-    outputs/figures/{CITY}_da_points_check.png
-"""
-
+import argparse
 import os
-import sys
+import pickle
+from pathlib import Path
+from typing import Any
 
-_SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
-if _SCRIPTS_DIR not in sys.path:
-    sys.path.insert(0, _SCRIPTS_DIR)
-import config
-os.chdir(config.REPO_DIR)
-
-import pandas as pd
 import geopandas as gpd
 import osmnx as ox
-import matplotlib.pyplot as plt
+import pandas as pd
+import pyogrio
 
-CITY = config.CITY
-
-OUTPUT_DIR = 'data/osm'
-FIG_DIR    = 'outputs/figures'
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs(FIG_DIR, exist_ok=True)
-
-TARGET_CSDS = set(config.CSD_CODES)
-
-# ── Step 1: Load Geographic Attribute File ────────────────────────────────────
-
-print("Step 1: Loading Geographic Attribute File...")
-gaf = pd.read_csv(
-    config.GAF_CSV,
-    dtype=str,
-    encoding='latin-1',
-    usecols=['DAUID_ADIDU', 'CSDUID_SDRIDU', 'CSDNAME_SDRNOM']
-)
-print(f"  GAF rows loaded: {len(gaf):,}")
-
-# ── Step 2: Get target DAUIDs ─────────────────────────────────────────────────
-
-target_daids = gaf[gaf['CSDUID_SDRIDU'].isin(TARGET_CSDS)]['DAUID_ADIDU'].unique()
-print(f"  Target DAs identified: {len(target_daids)}")
-
-# ── Step 3: Load and filter DA boundaries ─────────────────────────────────────
-
-print("Step 3: Loading DA boundaries...")
-da = gpd.read_file(config.DA_SHP)
-study_area = da[da['DAUID'].isin(target_daids)].copy()
-print(f"  DAs in study area: {len(study_area)}")
-print(f"  Source CRS: {study_area.crs}")
-
-# ── Step 4: Build merged boundary polygon ─────────────────────────────────────
-
-study_area_4326 = study_area.to_crs('EPSG:4326')
-boundary        = study_area_4326.unary_union
-print(f"  Boundary bounds (lon/lat): {boundary.bounds}")
-
-study_area_4326.dissolve().to_file(
-    os.path.join(OUTPUT_DIR, f'{CITY}_study_area_boundary.shp')
+from project_config import (
+    ConfigError,
+    data_path,
+    inherited_temp_directory,
+    load_config,
+    project_root,
 )
 
-# ── Step 5: Download OSM walk network ─────────────────────────────────────────
 
-print("Step 5: Downloading OSM pedestrian network (1–3 minutes)...")
-G = ox.graph_from_polygon(boundary, network_type='walk')
+def read_csv_with_fallback(
+    path: Path,
+    usecols: list[str] | None = None,
+    dtype: dict[str, Any] | None = None,
+) -> pd.DataFrame:
+    last_error: Exception | None = None
 
-nodes, edges = ox.graph_to_gdfs(G)
-print(f"  Nodes: {len(nodes):,}")
-print(f"  Edges: {len(edges):,}")
+    for encoding in ("utf-8-sig", "utf-8", "cp1252", "latin1"):
+        try:
+            return pd.read_csv(
+                path,
+                usecols=usecols,
+                dtype=dtype,
+                encoding=encoding,
+                low_memory=False,
+            )
+        except UnicodeDecodeError as error:
+            last_error = error
 
-# ── Step 6: Save outputs ──────────────────────────────────────────────────────
+    raise ValueError(f"Could not read CSV using supported encodings: {last_error}")
 
-print("Step 6: Saving outputs...")
 
-ox.save_graphml(G, os.path.join(OUTPUT_DIR, f'{CITY}_walk.graphml'))
+def network_paths(config: dict[str, Any], root: Path | None = None) -> dict[str, Path]:
+    network_slug = config["network"]["slug"]
+    base = (root or Path(config["runtime"]["data_root"])) / "interim" / "network" / network_slug
 
-nodes_3005 = nodes.to_crs(config.CRS)
-edges_3005 = edges.to_crs(config.CRS)
-nodes_3005.to_file(os.path.join(OUTPUT_DIR, f'{CITY}_osm_nodes.shp'))
-edges_3005.to_file(os.path.join(OUTPUT_DIR, f'{CITY}_osm_edges.shp'))
+    return {
+        "boundary": base / f"{network_slug}_network_boundary.gpkg",
+        "graphml": base / f"{network_slug}_walk.graphml",
+        "graph_cache": base / f"{network_slug}_walk_graph.pkl",
+        "nodes": base / f"{network_slug}_osm_nodes.gpkg",
+        "edges": base / f"{network_slug}_osm_edges.gpkg",
+    }
 
-print(f"  {CITY}_walk.graphml")
-print(f"  {CITY}_osm_nodes.shp")
-print(f"  {CITY}_osm_edges.shp")
-print(f"  {CITY}_study_area_boundary.shp")
 
-# ── Step 7: Quick network validation map ─────────────────────────────────────
+def _check_spatial(
+    path: Path,
+    expected_crs: str,
+    required_fields: set[str],
+) -> tuple[int, str]:
+    info = pyogrio.read_info(path, force_feature_count=True)
+    fields = set(info["fields"])
+    missing = required_fields - fields
+    if missing:
+        raise ValueError(f"{path.name} is missing fields: {', '.join(sorted(missing))}")
 
-import networkx as nx
-boundary_gdf = gpd.read_file(os.path.join(OUTPUT_DIR, f'{CITY}_study_area_boundary.shp'))
-print(f"\nStep 7: Validation checks...")
-print(f"  Graph nodes: {G.number_of_nodes():,}")
-print(f"  Graph edges: {G.number_of_edges():,}")
-print(f"  Weakly connected: {nx.is_weakly_connected(G)}")
+    features = int(info["features"])
+    if features < 1:
+        raise ValueError(f"{path.name} contains no features")
 
-fig, ax = plt.subplots(figsize=(10, 10))
-boundary_gdf.boundary.plot(ax=ax, color='red', linewidth=1)
-edges_3005.plot(ax=ax, color='grey', linewidth=0.3, alpha=0.5)
-nodes_3005.plot(ax=ax, color='blue', markersize=0.5, alpha=0.3)
-ax.set_title(f'{CITY.title()} Walk Network')
-plt.tight_layout()
-plt.savefig(os.path.join(FIG_DIR, f'{CITY}_osm_network_check.png'), dpi=150)
-plt.close()
+    crs = str(info["crs"])
+    if crs.upper() != expected_crs.upper():
+        raise ValueError(f"{path.name} CRS is {crs}; expected {expected_crs}")
 
-# ── Step 8: DA representative points map ─────────────────────────────────────
+    return features, crs
 
-print("\nStep 8: DA representative points map...")
-gaf_full = pd.read_csv(
-    config.GAF_CSV,
-    dtype=str,
-    encoding='latin-1',
-    usecols=['DAUID_ADIDU', 'DBUID_IDIDU', 'DBPOP2021_IDPOP2021',
-             'DARPLAT_ADLAT', 'DARPLONG_ADLONG', 'CSDUID_SDRIDU']
-)
-gaf_primary = gaf_full[gaf_full['CSDUID_SDRIDU'] == config.STUDY_CSD].copy()
-gaf_primary['lat']    = pd.to_numeric(gaf_primary['DARPLAT_ADLAT'],      errors='coerce')
-gaf_primary['lon']    = pd.to_numeric(gaf_primary['DARPLONG_ADLONG'],     errors='coerce')
-gaf_primary['db_pop'] = pd.to_numeric(gaf_primary['DBPOP2021_IDPOP2021'], errors='coerce')
 
-da_pop = (
-    gaf_primary.groupby('DAUID_ADIDU')
-    .agg(da_pop=('db_pop', 'sum'), lat=('lat', 'first'), lon=('lon', 'first'))
-    .reset_index()
-)
+def validate_network(config: dict[str, Any], paths: dict[str, Path]) -> dict[str, Any]:
+    missing = [path for path in paths.values() if not path.exists()]
+    if missing:
+        names = ", ".join(path.name for path in missing)
+        raise FileNotFoundError(f"Missing network artifacts: {names}")
 
-da_points = gpd.GeoDataFrame(
-    da_pop,
-    geometry=gpd.points_from_xy(da_pop['lon'], da_pop['lat']),
-    crs='EPSG:4326'
-).to_crs(config.CRS)
+    projected_crs = config["crs"]["projected"]
+    boundary_count, boundary_crs = _check_spatial(
+        paths["boundary"],
+        projected_crs,
+        {"boundary_csd_codes", "selected_da_count"},
+    )
+    node_count, node_crs = _check_spatial(
+        paths["nodes"], projected_crs, {"osmid", "x", "y"}
+    )
+    edge_count, edge_crs = _check_spatial(
+        paths["edges"], projected_crs, {"u", "v", "key", "length"}
+    )
 
-boundary_3005 = boundary_gdf.to_crs(config.CRS)
-da_all        = gpd.read_file(config.DA_SHP).to_crs(config.CRS)
-primary_daids = gaf_primary['DAUID_ADIDU'].unique()
-da_primary    = da_all[da_all['DAUID'].isin(primary_daids)]
-da_points_clip = gpd.clip(da_points, boundary_3005)
+    with paths["graphml"].open("rb") as stream:
+        header = stream.read(4096).lower()
+    if b"graphml" not in header:
+        raise ValueError(f"{paths['graphml'].name} does not have a GraphML header")
 
-fig, ax = plt.subplots(figsize=(10, 10))
-da_primary.plot(ax=ax, color='#f0f0f0', edgecolor='#aaaaaa', linewidth=0.4)
-da_points_clip.plot(
-    ax=ax, column='da_pop', cmap='OrRd', markersize=6, alpha=0.9,
-    vmin=da_points_clip['da_pop'].quantile(0.05),
-    vmax=da_points_clip['da_pop'].quantile(0.95),
-    legend=True,
-    legend_kwds={'label': 'DA population (2021)', 'shrink': 0.5}
-)
-boundary_3005.boundary.plot(ax=ax, color='#333333', linewidth=1.2, linestyle='--')
-ax.set_title(f'DA Representative Points — {CITY.title()}\n'
-             f'n={len(da_points_clip):,} DAs, coloured by 2021 population')
-ax.set_axis_off()
-plt.tight_layout()
-plt.savefig(os.path.join(FIG_DIR, f'{CITY}_da_points_check.png'), dpi=150)
-plt.close()
+    if paths["graph_cache"].stat().st_size == 0:
+        raise ValueError(f"{paths['graph_cache'].name} is empty")
 
-print("\nDone. All steps complete.")
+    boundary = gpd.read_file(paths["boundary"], rows=1)
+    stored_codes = {
+        value.strip()
+        for value in str(boundary.iloc[0]["boundary_csd_codes"]).split(",")
+        if value.strip()
+    }
+    configured_codes = {str(value) for value in config["network"]["boundary_csd_codes"]}
+    if stored_codes != configured_codes:
+        raise ValueError(
+            "Stored network boundary CSD codes do not match config/settings.yaml"
+        )
+
+    return {
+        "boundary_features": boundary_count,
+        "selected_da_count": int(boundary.iloc[0]["selected_da_count"]),
+        "node_count": node_count,
+        "edge_count": edge_count,
+        "crs": node_crs,
+        "graphml_mb": paths["graphml"].stat().st_size / (1024 * 1024),
+        "graph_cache_mb": paths["graph_cache"].stat().st_size / (1024 * 1024),
+        "boundary_crs": boundary_crs,
+        "edge_crs": edge_crs,
+    }
+
+
+def build_network(config: dict[str, Any], paths: dict[str, Path]) -> None:
+    network = config["network"]
+    fields = config["fields"]
+    projected_crs = config["crs"]["projected"]
+    geographic_crs = config["crs"]["geographic"]
+    boundary_codes = [str(value) for value in network["boundary_csd_codes"]]
+
+    gaf_path = data_path(config, "census_gaf")
+    da_path = data_path(config, "da_boundaries")
+    gaf_csd = fields["gaf_csd_id"]
+    gaf_da = fields["gaf_da_id"]
+    da_id = fields["da_id"]
+
+    print("Reading Census geography lookup...")
+    gaf = read_csv_with_fallback(
+        gaf_path,
+        usecols=[gaf_csd, gaf_da],
+        dtype={gaf_csd: str, gaf_da: str},
+    )
+    selected_da_ids = set(
+        gaf.loc[gaf[gaf_csd].isin(boundary_codes), gaf_da].dropna().astype(str)
+    )
+    if not selected_da_ids:
+        raise ValueError("No DAs matched network.boundary_csd_codes")
+
+    print("Reading and filtering DA boundaries...")
+    da = gpd.read_file(da_path)
+    da[da_id] = da[da_id].astype(str)
+    selected = da[da[da_id].isin(selected_da_ids)].to_crs(projected_crs)
+    if selected.empty:
+        raise ValueError("No DA polygons matched the selected network DAs")
+
+    boundary = gpd.GeoDataFrame(
+        {
+            "slug": [network["slug"]],
+            "name": ["Metro Vancouver network context"],
+            "boundary_csd_codes": [",".join(boundary_codes)],
+            "selected_da_count": [len(selected)],
+            "projected_crs": [projected_crs],
+        },
+        geometry=[selected.geometry.union_all()],
+        crs=projected_crs,
+    )
+
+    paths["boundary"].parent.mkdir(parents=True, exist_ok=True)
+    with inherited_temp_directory(
+        paths["boundary"].parent.parent, "network_build_"
+    ) as temp_dir:
+        temp_paths = network_paths(config, temp_dir)
+        temp_paths["boundary"].parent.mkdir(parents=True, exist_ok=True)
+
+        boundary.to_file(temp_paths["boundary"], layer="network_boundary", driver="GPKG")
+        polygon = boundary.to_crs(geographic_crs).geometry.iloc[0]
+
+        print("Downloading the OSM pedestrian network...")
+        ox.settings.use_cache = True
+        ox.settings.log_console = True
+        graph = ox.graph_from_polygon(
+            polygon,
+            network_type=network.get("network_type", "walk"),
+            simplify=True,
+            retain_all=bool(network.get("retain_all", True)),
+            truncate_by_edge=bool(network.get("truncate_by_edge", True)),
+        )
+        graph = ox.project_graph(graph, to_crs=projected_crs)
+
+        ox.save_graphml(graph, temp_paths["graphml"])
+        with temp_paths["graph_cache"].open("wb") as stream:
+            pickle.dump(graph, stream, protocol=pickle.HIGHEST_PROTOCOL)
+
+        nodes, edges = ox.graph_to_gdfs(graph, nodes=True, edges=True)
+        nodes.to_file(temp_paths["nodes"], layer="osm_nodes", driver="GPKG")
+        edges.to_file(temp_paths["edges"], layer="osm_edges", driver="GPKG")
+
+        validate_network(config, temp_paths)
+        for key, target in paths.items():
+            os.replace(temp_paths[key], target)
+
+
+def write_summary(
+    config: dict[str, Any],
+    paths: dict[str, Path],
+    metrics: dict[str, Any],
+    status: str,
+) -> Path:
+    output_dir = project_root() / "outputs" / config["network"]["slug"] / "tables"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    summary_path = output_dir / f"{config['network']['slug']}_01_network_summary.csv"
+
+    row = {
+        "network_slug": config["network"]["slug"],
+        "status": status,
+        "boundary_csd_codes": ",".join(config["network"]["boundary_csd_codes"]),
+        **metrics,
+        **{f"{key}_path": str(value) for key, value in paths.items()},
+    }
+    pd.DataFrame([row]).to_csv(summary_path, index=False)
+    return summary_path
+
+
+def main(area: str, force: bool = False) -> int:
+    config = load_config(area)
+    paths = network_paths(config)
+
+    print("\nStage 01: shared pedestrian network")
+    print(f"Network slug: {config['network']['slug']}")
+    print(f"Artifact folder: {paths['graphml'].parent}")
+
+    if force:
+        print("Force enabled: rebuilding network artifacts.")
+        build_network(config, paths)
+        status = "rebuilt"
+    else:
+        print("Reuse mode: validating existing network artifacts.")
+        try:
+            metrics = validate_network(config, paths)
+        except (FileNotFoundError, ValueError) as error:
+            print(f"Network validation failed: {error}")
+            print("Rebuild explicitly with --force after reviewing the configured boundary.")
+            return 1
+        status = "reused"
+
+    metrics = validate_network(config, paths)
+    summary_path = write_summary(config, paths, metrics, status)
+
+    print(f"Validated nodes: {metrics['node_count']:,}")
+    print(f"Validated edges: {metrics['edge_count']:,}")
+    print(f"CRS: {metrics['crs']}")
+    print(f"Summary: {summary_path}")
+    return 0
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--area", default="metro", help="Configured area (network is shared)")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Download and atomically replace the shared network artifacts",
+    )
+    args = parser.parse_args()
+
+    try:
+        raise SystemExit(main(args.area, force=args.force))
+    except ConfigError as error:
+        print(f"Configuration error: {error}")
+        raise SystemExit(2)

@@ -1,0 +1,2 @@
+model,n,LL_count,HH_count,LH_count,HL_count,status,constant_predictors_removed,log_likelihood,null_log_likelihood,likelihood_ratio_p_value,mcfadden_r2,baseline_sociodemographic_mcfadden_r2,mcfadden_r2_improvement
+Amenity-adjusted multinomial logit; reference = LL,844,279,198,227,140,fitted,,-945.2012305816093,-1145.5221531518462,4.960742724311296e-60,0.17487302364172008,0.046357309503884,0.12851571413783608

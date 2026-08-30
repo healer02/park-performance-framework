@@ -1,0 +1,5 @@
+analysis_area:
+  name: "Burnaby"
+  slug: "burnaby"
+  analysis_csd_codes:
+    - "5915025"

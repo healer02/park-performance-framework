@@ -1,0 +1,12 @@
+geopandas>=1.0,<2
+matplotlib>=3.8,<4
+networkx>=3.2,<4
+numpy>=1.26,<3
+osmnx>=2.0,<3
+pandas>=2.2,<4
+pyogrio>=0.10,<1
+PyYAML>=6,<7
+requests>=2.31,<3
+scipy>=1.12,<2
+shapely>=2.0,<3
+statsmodels>=0.14,<1

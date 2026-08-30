@@ -1,0 +1,8 @@
+analysis_area,experience_variant,variable,variable_label,test,n,group_count,h_statistic,degrees_of_freedom,p_value,p_value_method,eta_squared,significance
+Vancouver,sentiment,pct_bachelor_plus,Education (bachelor's+),Kruskal-Wallis comparison across divergence quadrants,851,4,33.118620916526964,3,3.0403543570149916e-07,scipy_asymptotic,0.03555917463580515,***
+Vancouver,sentiment,ALE_index,Active living environment,Kruskal-Wallis comparison across divergence quadrants,852,4,6.46739412091847,3,0.0909573067606673,scipy_asymptotic,0.00408890816146046,ns
+Vancouver,sentiment,pct_age_0_14,Children aged 0-14,Kruskal-Wallis comparison across divergence quadrants,852,4,8.695562022994663,3,0.033624737083061795,scipy_asymptotic,0.006716464649757857,*
+Vancouver,sentiment,pct_age_65plus,Age 65+,Kruskal-Wallis comparison across divergence quadrants,852,4,20.688835680404697,3,0.00012216043387598701,scipy_asymptotic,0.020859476038213087,***
+Vancouver,sentiment,pct_LIM_AT,Low income (LIM-AT),Kruskal-Wallis comparison across divergence quadrants,844,4,0.8006366015349184,3,0.849314760637029,scipy_asymptotic,0.0,ns
+Vancouver,sentiment,pct_immigrant,Immigrant share,Kruskal-Wallis comparison across divergence quadrants,851,4,15.171240592032543,3,0.0016760079403361598,scipy_asymptotic,0.014369823603344207,**
+Vancouver,sentiment,pct_visible_minority,Visible minority,Kruskal-Wallis comparison across divergence quadrants,851,4,41.59660594262794,3,4.886170075608187e-09,scipy_asymptotic,0.04556860205741197,***

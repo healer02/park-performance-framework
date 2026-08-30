@@ -1,0 +1,45 @@
+amenity,amenity_label,divergence_class,da_count,prevalence_percent
+playground,Playground,HH,199,93.46733668341709
+playground,Playground,LH,227,93.83259911894272
+playground,Playground,HL,145,98.62068965517241
+playground,Playground,LL,281,88.25622775800713
+sports_fields,Sports fields,HH,199,48.24120603015075
+sports_fields,Sports fields,LH,227,45.37444933920705
+sports_fields,Sports fields,HL,145,81.37931034482759
+sports_fields,Sports fields,LL,281,41.99288256227758
+courts,Courts,HH,199,50.753768844221106
+courts,Courts,LH,227,50.66079295154186
+courts,Courts,HL,145,55.172413793103445
+courts,Courts,LL,281,37.01067615658363
+trails,Trails,HH,199,52.26130653266332
+trails,Trails,LH,227,23.348017621145374
+trails,Trails,HL,145,16.551724137931036
+trails,Trails,LL,281,8.540925266903916
+dog_offleash,Dog off-leash,HH,199,41.70854271356784
+dog_offleash,Dog off-leash,LH,227,25.55066079295154
+dog_offleash,Dog off-leash,HL,145,28.27586206896552
+dog_offleash,Dog off-leash,LL,281,13.523131672597867
+water_play,Water play,HH,199,31.155778894472363
+water_play,Water play,LH,227,27.75330396475771
+water_play,Water play,HL,145,29.655172413793103
+water_play,Water play,LL,281,20.640569395017792
+beach_waterfront,Beach/waterfront,HH,199,58.291457286432156
+beach_waterfront,Beach/waterfront,LH,227,29.955947136563875
+beach_waterfront,Beach/waterfront,HL,145,12.413793103448276
+beach_waterfront,Beach/waterfront,LL,281,7.473309608540925
+picnic,Picnic area,HH,199,37.68844221105528
+picnic,Picnic area,LH,227,23.788546255506606
+picnic,Picnic area,HL,145,11.03448275862069
+picnic,Picnic area,LL,281,8.185053380782918
+washroom,Washroom,HH,199,95.97989949748744
+washroom,Washroom,LH,227,77.97356828193833
+washroom,Washroom,HL,145,91.0344827586207
+washroom,Washroom,LL,281,67.61565836298932
+community_garden,Community garden,HH,199,10.552763819095476
+community_garden,Community garden,LH,227,23.788546255506606
+community_garden,Community garden,HL,145,29.655172413793103
+community_garden,Community garden,LL,281,23.843416370106763
+seating_shelter,Seating & shelter,HH,199,95.47738693467338
+seating_shelter,Seating & shelter,LH,227,87.22466960352423
+seating_shelter,Seating & shelter,HL,145,82.06896551724138
+seating_shelter,Seating & shelter,LL,281,71.17437722419929

@@ -1,0 +1,2 @@
+weight_definition,n,primary_median,review_weighted_median,high_low_agreement_percent,high_low_cohen_kappa,divergence_changed_n,divergence_changed_percent
+log1p total Google reviews,852,0.7092083333333332,0.7103,97.76995305164318,0.9553990610328638,19,2.2300469483568075

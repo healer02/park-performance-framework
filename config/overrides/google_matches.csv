@@ -1,0 +1,33 @@
+municipality,park_name,google_match_decision,google_match_reason
+New Westminster,Muni Evers Park (future site),reject,wrong Google match: returned Westminster Pier Park
+New Westminster,Queensborough Off Leash Dog Area,accept,correct off-leash area match despite distance warning
+New Westminster,Port Royal Riverfront Walk (Dyke Trail),reject,wrong Google match: returned Port Royal Park instead of dyke trail
+New Westminster,Queen's Park Off Leash Dog Area,accept,correct off-leash area feature match
+New Westminster,Ryall Park/Queensborough Community Centre,accept,correct main park component match
+Burnaby,Burnaby Fraser Foreshore Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Burnaby Fraser Foreshore Park
+Burnaby,Burnaby Lake Regional Nature Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Burnaby Lake Regional Park
+Burnaby,Deer Lake Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Deer Lake Park
+Coquitlam,Harrier Tot Lot,accept,manual QA: official/credible park match accepted despite distance/name flag; Harrier Park
+Coquitlam,Hockaday Creek Ravine and Natural Areas,accept,manual QA: official/credible park match accepted despite distance/name flag; Hockaday Park
+Coquitlam,Hoy Creek Linear Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Hoy Creek Linear Park
+Coquitlam,Hoy Creek Ravine and Natural Areas,accept,manual QA: official/credible park match accepted despite distance/name flag; Hoy Creek Linear Park
+Coquitlam,Mariner Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Mariner Park and Tennis Courts
+Coquitlam,Ozada Tot Lot,accept,manual QA: official/credible park match accepted despite distance/name flag; Ozada Park
+Richmond,Britannia Heritage Shipyard,accept,manual QA: official/credible park match accepted despite distance/name flag; Britannia Shipyards National Historic Site
+Richmond,Garden City Lands,accept,manual QA: official/credible park match accepted despite distance/name flag; Garden City Lands: Community Farm and Bog Conservation Area
+Richmond,Hugh Boyd,accept,manual QA: official/credible park match accepted despite distance/name flag; Hugh Boyd Community Park
+Richmond,Kidd,accept,manual QA: official/credible park match accepted despite distance/name flag; Thomas Kidd Neighbourhood Park
+Richmond,Mcnair,accept,manual QA: official/credible park match accepted despite distance/name flag; McNair Neighbourhood School Park
+Richmond,Paulik,accept,manual QA: official/credible park match accepted despite distance/name flag; Paulik Neighbourhood Park
+Richmond,Skateboard Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Richmond River Road Skatepark
+Richmond,Sturgeon Banks Natural Area,accept,manual QA: official/credible park match accepted despite distance/name flag; Sturgeon Banks Wildlife Management Area
+Surrey,Elgin Heritage Park / Stewart Farm / Wards Marina,accept,manual QA: official/credible park match accepted despite distance/name flag; Elgin Heritage Park
+Surrey,Surrey Bend,accept,manual QA: official/credible park match accepted despite distance/name flag; Surrey Bend Regional Park
+Surrey,Tannery Park,accept,manual QA: official/credible park match accepted despite distance/name flag; Tannery Park Dog Off-leash Area
+Surrey,The Glades,accept,manual QA: official/credible park match accepted despite distance/name flag; The Glades Woodland Garden
+Vancouver,Park Site On South East False Creek (Hinge Park),accept,manual QA: official/credible park match accepted despite distance/name flag; Hinge Park
+Vancouver,Park Site On Trinity Street,accept,manual QA: official/credible park match accepted despite distance/name flag; Trinity Park
+Vancouver,Park Site on Point Grey at Stephens,accept,manual QA: official/credible park match accepted despite distance/name flag; Point Grey Park Site at Stephens Street
+Vancouver,Park Site on Point Grey at Trutch,accept,manual QA: official/credible park match accepted despite distance/name flag; Point Grey Road Park
+Vancouver,Spanish Banks Extension,accept,manual QA: official/credible park match accepted despite distance/name flag; Spanish Banks Beach
+Port Moody,View Street Park,reject,manual QA: Port Moody inventory lists View Street Park and Seaview Park separately; reject the Seaview candidate

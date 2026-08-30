@@ -1,0 +1,264 @@
+municipality,park_name,park_eligibility,eligibility_reason
+New Westminster,Connaught Village Green,include,manual override: public green/open space
+New Westminster,Curling Club Grounds,exclude,manual override: facility grounds not park experience
+New Westminster,NWSS Memorial Grounds,exclude,manual override: school-related grounds
+New Westminster,Old Fraser,exclude,manual override: Old Fraser Cemetery / not regular park experience
+New Westminster,Old School House Park,include,manual override: named public park
+New Westminster,Pioneer House and Elizabeth Barnett Terrace,exclude,manual override: facility/terrace not park experience
+New Westminster,Ryall Park/Queensborough Community Centre,include,manual override: Ryall Park is the park component
+New Westminster,Terry Hughes,include,manual override: official public park/open space
+New Westminster,Victoria Hill Detention Pond,exclude,manual override: stormwater infrastructure
+Richmond,5th Avenue,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,6900 River Road,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Aberdeen,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Agassiz,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Albert Airey,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Alexandra,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Alr Buffer,exclude,manual override: excluded non-park/support record
+Richmond,Anderson,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Birch,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Blundell,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Bridge,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Bridgeport Industrial,exclude,manual override: excluded non-park/support record
+Richmond,Brighouse,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Britannia Heritage Shipyard,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Burkeville,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Burnett/thompson,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Cook,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Debeck,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Diefenbaker,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Dixon,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Dover,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,East Richmond,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Errington,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Fedoruk Kartner,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Ferris,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Flight Path,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Fraserwood,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Garnet Tot Lot,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Garratt,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Garry Point,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,General Currie,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Gibbons Vla,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Gilmore,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Grauer,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Great West Cannery,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Hamilton,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Hamilton Highway,exclude,manual override: excluded non-park/support record
+Richmond,Hamilton Vla,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Heather Dolphin,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Horseshoe Slough,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Hugh Boyd,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Iona Beach,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Katsura,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Ketcheson,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Kidd,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Kilby,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Kilgour,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,King George / Cambie,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Kingswood,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Kozier,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Lang,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Lansdowne Linear,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Lee Slough,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,London / Steveston,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,London Farm,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,London's Wharf,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Lord Byng,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Lynas Lane (unopened Road),exclude,manual override: excluded non-park/support record
+Richmond,Macneill,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Manoah Steves,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Maple Lane,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mariners Village,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Marrington,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mccallan,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mcdonald Beach,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mckay,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mckinney,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mclean,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mcmath,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mcnair,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Miller,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Minoru,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mitchell,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Mitchell Esa,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Morris,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,North East Bog Forest,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Odlin,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Odlinwood,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Odlinwood Ela,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Olympic Oval Site,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Paulik,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Quilchena,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Richmond High,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Richmond Street,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Rideau,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Sandiford Tot Lot,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Sea Island Community Centre,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,South Arm,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,South Dyke Agricultural,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Steveston,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Sturgeon Banks Natural Area,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,T. Homma,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Tait,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Talmey,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Terra Nova,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Terra Nova Natural,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Terra Nova South,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Thompson,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Tomsett,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Toyota,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Walter Lee,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Westwind,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Woodward,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Woodwards Slough,include,manual override: Richmond official park/open space name lacks keyword
+Richmond,Wowk,include,manual override: Richmond official park/open space name lacks keyword
+Vancouver,5th and Pine,include,manual override: official pop-up park / Burrard Slopes park area
+Vancouver,6th and Fir,include,manual override: official park / Burrard Slopes park area
+Vancouver,Kinross Corridor - South,include,manual override: official public park/open-space corridor
+Vancouver,Lilian To,include,manual override: official Vancouver park
+Vancouver,Slidey Slides,include,manual override: official Vancouver park/play space
+Vancouver,Spanish Banks Extension,include,manual override: official beach/park area
+Vancouver,{no name}/Street Ends,exclude,"manual override: unnamed street-end parcel, not regular park experience"
+Vancouver,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow),include,official Vancouver park and reviewed sentiment park
+Vancouver,Street End - Wall St @ Penticton,include,official named Vancouver street-end park in reviewed sentiment inventory
+Burnaby,Brunette River Conservation Area,include,manual override: official conservation/open space
+Burnaby,Burnaby 200 Conservation Area,include,manual override: official conservation/open space
+Burnaby,Burnaby Lk Sports Complex - East,include,manual override: public outdoor recreation complex
+Burnaby,Burnaby Lk Sports Complex - West,include,manual override: public outdoor recreation complex
+Burnaby,Burnaby Mountain Conservation Area,include,manual override: official conservation area park
+Burnaby,Burrard Inlet Conservation Area,include,manual override: official conservation/open space
+Burnaby,Capitol Hill Conservation Area,include,manual override: official conservation/open space
+Burnaby,Cariboo Conservation Area,include,manual override: official conservation/open space
+Burnaby,Discovery Place Conservation Area,include,manual override: official conservation/open space
+Burnaby,Marshland Avenue Bog Forest,include,manual override: public natural open space
+Burnaby,Riverway Sports Complex,include,manual override: public outdoor recreation complex
+Burnaby,Sample's Pathway,include,manual override: public pathway/open space
+Burnaby,Still Creek Conservation Area,include,manual override: official conservation/open space
+Burnaby,Suncrest School Park,include,official Burnaby park retained in Keun's reviewed Vancouver-context inventory
+Burnaby,Burnaby Mountain Golf Course,exclude,"manual override: golf course, specialized paid recreation not regular park experience"
+Burnaby,Riverway Golf Course,exclude,"manual override: golf course, specialized paid recreation not regular park experience"
+Burnaby,Lochdale Community Hall,exclude,manual override: community hall / facility grounds
+Coquitlam,Burke Mtn Creek Natural Area,include,manual override: natural area/open space
+Coquitlam,Cape Horn Tot Lot,include,manual override: official park/tot lot
+Coquitlam,Galloway to Smiling Creek Connector,include,manual override: public connector/open space
+Coquitlam,Harrier Tot Lot,include,manual override: public tot lot
+Coquitlam,Hyde Creek Natural Areas,include,manual override: official natural area/open space
+Coquitlam,Ozada Tot Lot,include,manual override: official tot lot
+Coquitlam,Riverview Forest,include,manual override: official forest park/trail area
+Coquitlam,Smiling Creek Natural Areas,include,manual override: official natural area/open space
+Coquitlam,Westwood Summit Tot Lot,include,manual override: public tot lot
+Coquitlam,City Centre Aquatic Centre Grounds,exclude,manual override: facility grounds
+Coquitlam,Glen Pine Pavilion,exclude,manual override: facility grounds
+Coquitlam,Pitt River Boat Launch,exclude,"manual override: boat launch facility, not regular park experience"
+Coquitlam,Place Maillardville Grounds,exclude,manual override: facility grounds
+Coquitlam,Poirier Civic Grounds,exclude,manual override: civic/facility grounds
+Coquitlam,Poirier Library Grounds,exclude,manual override: library/facility grounds
+Surrey,Blackie Spit,include,manual override: official Surrey park
+Surrey,Charles Richardson Nature Reserve,include,manual override: official nature reserve/open space
+Surrey,Crescent Beach,include,manual override: official beach/park area
+Surrey,Fergus Watershed Biodiversity Preserve,include,manual override: official biodiversity preserve park
+Surrey,Godwin Farm Biodiversity Preserve,include,manual override: official biodiversity preserve park
+Surrey,North Slope Buffer,include,manual override: official North Slope Park / natural area
+Surrey,Surrey Bend,include,manual override: official regional park
+Surrey,Surrey Lake,include,manual override: official Surrey Lake Park
+Surrey,The Glades,include,manual override: official woodland garden park
+Surrey,21C - Tot-Lot,include,manual override: public tot lot
+Surrey,24L - Tot-Lot,include,manual override: public tot lot
+Surrey,33C - Tot-Lot,include,manual override: public tot lot
+Surrey,68B - Tot-Lot,include,manual override: public tot lot
+Surrey,77G - Tot-Lot,include,manual override: public tot lot
+Surrey,Jack 'n Jill Tot-Lot,include,manual override: public tot lot
+Surrey,Cloverdale Easement,exclude,"manual override: easement, not regular park experience"
+Surrey,Guildford Recreation Centre,exclude,manual override: recreation centre/facility grounds
+Surrey,Port Kells Community Hall,exclude,manual override: community hall/facility grounds
+Surrey,Surrey Public Wharf,exclude,"manual override: wharf facility, not regular park experience"
+Surrey,121I - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,121O - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,124A - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,124F - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,135A - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,135D - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,23I - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,23K - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,24E - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,24M - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,32O - Detention pond,exclude,manual override: detention pond / stormwater facility
+Surrey,33E - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,33M - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,44B - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,44E - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,50G - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,61C - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,61F - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,61H - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,61J - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,61K - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,71B - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,71C - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,71F - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,71M - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,77E - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,78C - Detention Pond,exclude,manual override: detention pond / stormwater facility
+Surrey,kml_100,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_144,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_211,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_264,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_443,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_448,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_528,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_572,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_687,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Surrey,kml_865,exclude,"manual override: unnamed kml parcel, not regular park experience"
+Coquitlam,Blackwater Slopes,include,manual override: confirmed park/open space
+Surrey,Dunsmuir Farm,include,manual override: conservation / park area
+Surrey,Morgan Grove,include,manual override: park/open space in city park layer; planning documentation supports park land in area
+Surrey,Rosemary Wynde,include,manual override: confirmed park / maintained park landscape site
+Surrey,Christopherson Steps - 120E,include,manual override: Christopherson Steps official Surrey waterfront park/trail access
+City of Langley,Brydon Lagoon,include,omission audit: municipal natural area
+City of Langley,Derek Doubleday Arboretum,include,omission audit: municipal city-wide park and arboretum
+City of Langley,Fraser Hwy & Production Way,include,omission audit: municipal open space
+City of Langley,Innes Corners,include,omission audit: municipal urban plaza
+City of Langley,Langley Prairie Neighbourhood,include,omission audit: municipal neighbourhood park
+City of Langley,Nicomekl Floodplain,include,omission audit: municipal natural area
+Coquitlam,Sandstone,include,omission audit: municipal natural green space
+Coquitlam,Schoolhouse Creek Ravine and Natural Areas,include,omission audit: official natural green space incorrectly excluded by school substring
+Delta,Arbour Pl Environmental Reserve,include,omission audit: municipal park reserve and natural open space
+Delta,Cougar Canyon Environmental Reserve,include,omission audit: publicly accessible municipal environmental reserve
+Delta,Delta Nature Reserve,include,omission audit: publicly accessible municipal nature reserve
+Delta,East Ladner Bicycle Route Reserve,include,omission audit: public recreational route reserve
+Delta,Huff Hydo Corridor Reserve,exclude,omission audit: hydro utility corridor rather than a park experience
+Delta,Patrick Island Foreshore Reserve,include,omission audit: municipal foreshore reserve subject to entrance validation
+Delta,Seaquam Cliff Environmental Reserve,include,omission audit: municipal park reserve and natural open space
+Delta,Sheaves Rd Environmental Reserve,include,omission audit: municipal park reserve and natural open space
+New Westminster,Anvil Centre,exclude,omission audit: city facility rather than park
+New Westminster,Glenbrook Community Centre,include,omission audit: classified as a community park in the municipal parks plan
+New Westminster,Poplar Island,include,omission audit: classified as regional park subject to entrance validation
+New Westminster,Canada Games Athletic Field and Firehall No 1,include,omission audit: public athletic field incorrectly excluded by firehall substring
+New Westminster,City Hall / Friendship Gardens,include,omission audit: municipal community park and accessible public garden
+New Westminster,Westburnco Reservoir Sports Courts,include,omission audit: public sports courts incorrectly excluded by reservoir substring
+Port Coquitlam,Colony Farm,include,omission audit: public regional park
+Port Coquitlam,Donald Pathway,include,omission audit: public recreational pathway
+Port Coquitlam,Douglas Island,include,omission audit: municipal natural open space subject to entrance validation
+Port Coquitlam,Hyde Creek Nature Reserve,include,omission audit: municipal nature reserve
+Port Coquitlam,Hyde Creek Recreation Centre,exclude,omission audit: recreation facility rather than park polygon
+Port Coquitlam,Port Coquitlam Recreation Centre,exclude,omission audit: recreation facility rather than park polygon
+Port Moody,Suter Brook Creek,include,omission audit: municipal creek and natural open space
+Richmond,Middle Arm Dyke Trail,include,omission audit: official recreational trail incorrectly excluded by middle substring
+Richmond,Middle Arm Waterfront Greenway,include,omission audit: official linear park incorrectly excluded by middle substring
+Surrey,125D - Nature Preserve,include,omission audit: municipal nature preserve consistent with included preserves
+Surrey,Clover Ridge Berm,exclude,omission audit: berm rather than a park experience
+Surrey,Churchland Park,include,omission audit: official public park incorrectly excluded by church substring
+Township of Langley,197 & 30,exclude,omission audit: ambiguous special parcel without verified park identity
+Township of Langley,197 & 44b,exclude,omission audit: ambiguous special parcel without verified park identity
+Township of Langley,Aldergrove Tot Lot,include,omission audit: municipal neighbourhood tot lot
+Township of Langley,Derek Doubleday Arboretum,include,omission audit: municipal arboretum parcel
+Township of Langley,Fort Langley National Historic Site,exclude,omission audit: historic facility rather than municipal park
+Township of Langley,Hope Redwoods Natural Area,include,omission audit: municipal natural area
+Township of Langley,Richard Bulpitt Elem,exclude,omission audit: school grounds
+Township of Langley,Salmon River Natural Area,include,omission audit: municipal natural area
+Township of Langley,South Carvolth,exclude,omission audit: source classifies parcel as school land
+Township of Langley,Topham Elem,exclude,omission audit: school grounds
+White Rock,Civic Centre,exclude,omission audit: civic facility rather than park
+White Rock,Ruth Johnston,include,omission audit: official public nature park with trails and recreation
+White Rock,Totem Site,exclude,omission audit: unverified site without clear park or recreational function

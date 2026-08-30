@@ -1,0 +1,161 @@
+project:
+  name: "Park Performance Analysis"
+  study_area_label: "Six-city Metro Vancouver study area"
+
+crs:
+  projected: "EPSG:3005"
+  geographic: "EPSG:4326"
+  statcan_lambert: "EPSG:3347"
+
+network:
+  slug: "metro"
+  network_type: "walk"
+  retain_all: true
+  truncate_by_edge: true
+  # The network context is wider than the six-city analysis to reduce edge effects.
+  boundary_csd_codes:
+    - "5915001"  # City of Langley
+    - "5915002"  # Township of Langley
+    - "5915004"  # Surrey
+    - "5915007"  # White Rock
+    - "5915011"  # Delta
+    - "5915015"  # Richmond
+    - "5915020"  # Electoral Area A / UBC
+    - "5915022"  # Vancouver
+    - "5915025"  # Burnaby
+    - "5915029"  # New Westminster
+    - "5915034"  # Coquitlam
+    - "5915039"  # Port Coquitlam
+    - "5915043"  # Port Moody
+
+paths:
+  # Paths are relative to the configured data root.
+  census_gaf: "raw/census/2021_92-151_X.csv"
+  census_profile: "raw/census/98-401-X2021006_BC_CB_eng_CSV/98-401-X2021006_English_CSV_data_BritishColumbia.csv"
+  canale: "raw/census/CanALE_2021.csv"
+  da_boundaries: "raw/census/lda_000b21a_e/lda_000b21a_e.shp"
+  db_boundaries: "raw/census/ldb_000b21a_e/ldb_000b21a_e.shp"
+  parks_source: "raw/parks/all parks in Metro Vancouver (2022)/merged.shp"
+  regional_parks_source: "raw/parks/Metro Vancouver Regional Parks/RegionalParksBoundaries_OpenData.shp"
+  vancouver_parks_supplement: "raw/parks/Vancouver/parks-polygon-representation/parks-polygon-representation.shp"
+  parks: "processed/parks/metro_parks_cleaned.gpkg"
+  entrances: "processed/parks/metro_park_entrances.gpkg"
+  google_ratings: "raw/google/metro_google_ratings.csv"
+  google_ratings_validated: "processed/google/metro_google_ratings_validated.csv"
+  google_candidates: "interim/google/metro/metro_google_place_candidates.csv"
+
+overrides:
+  # These paths are relative to the repository root and are tracked by Git.
+  park_eligibility: "config/overrides/park_eligibility.csv"
+  park_small_exceptions: "config/overrides/park_small_exceptions.csv"
+  park_entrances: "config/overrides/park_entrances.csv"
+  park_entities: "config/overrides/park_entities.csv"
+  google_matches: "config/overrides/google_matches.csv"
+  google_place_ids: "config/overrides/google_place_ids.csv"
+  google_shared_entities: "config/overrides/google_shared_entities.csv"
+
+parks_source:
+  name_field: "Park_Name"
+  city_field: "Municipali"
+  csd_municipality_names:
+    "5915001": "City of Langley"
+    "5915002": "Township of Langley"
+    "5915004": "Surrey"
+    "5915007": "White Rock"
+    "5915011": "Delta"
+    "5915015": "Richmond"
+    "5915020": "Electoral Area A / UBC"
+    "5915022": "Vancouver"
+    "5915025": "Burnaby"
+    "5915029": "New Westminster"
+    "5915034": "Coquitlam"
+    "5915039": "Port Coquitlam"
+    "5915043": "Port Moody"
+  # This broader context matches the shared pedestrian network. Later stages
+  # select the six study municipalities from these prepared park artifacts.
+  municipalities:
+    - "Vancouver"
+    - "Burnaby"
+    - "New Westminster"
+    - "Coquitlam"
+    - "Richmond"
+    - "Surrey"
+    - "Delta"
+    - "Port Coquitlam"
+    - "Port Moody"
+    - "White Rock"
+    - "City of Langley"
+    - "Township of Langley"
+
+regional_parks_source:
+  name_field: "parkname"
+  municipality_label: "Metro Vancouver Regional Parks"
+
+# The 2022 merged layer predates Rainbow Park and collapses named street-end
+# parks into one generic multipart record. Retain only the three features that
+# are part of Keun's reviewed Vancouver sentiment inventory.
+vancouver_parks_supplement:
+  name_field: "PARK_NAME"
+  municipality_label: "Vancouver"
+  include_names:
+    - "sθәqәlxenәm ts'exwts'áxwi7 (Rainbow)"
+    - "Street End - Wall St @ Nanaimo"
+    - "Street End - Wall St @ Penticton"
+
+fields:
+  park_id: "park_id"
+  park_name: "park_name"
+  park_city: "municipality"
+  da_id: "DAUID"
+  db_id: "DBUID"
+  db_representative_x: "DBRPLAMX"
+  db_representative_y: "DBRPLAMY"
+  gaf_csd_id: "CSDUID_SDRIDU"
+  gaf_da_id: "DAUID_ADIDU"
+  gaf_db_id: "DBUID_IDIDU"
+  gaf_db_population: "DBPOP2021_IDPOP2021"
+
+analysis:
+  network_distance_m: 400
+  minimum_park_area_ha: 0.1
+  entrance_buffer_m: 10
+  entrance_cluster_m: 25
+  entrance_snap_warning_m: 50
+  db_snap_warning_m: 50
+  fallback_entrance_first_m: 50
+  fallback_entrance_max_m: 100
+  park_area_cap_ha: 20
+  park_area_sensitivity_cap_ha: 10
+  high_coverage_threshold: 0.80
+  coverage_sensitivity_threshold: 0.50
+  minimum_google_reviews: 10
+  supply_area_threshold: "analysis_area_median"
+  experience_threshold: "analysis_area_median"
+  experience_aggregation: "mean_unique_reachable_parks"
+
+experience:
+  primary_source: "rating"
+  sentiment:
+    enabled: false
+    path: null
+    entity_id_field: "PlaceID"
+    score_field: "MeanSentiment"
+    # Boolean flag identifying Place IDs with at least 10 text reviews.
+    eligibility_field: "has_valid_sentiment"
+
+google_matching:
+  # Automatic matches must be close to the park polygon, have a compatible
+  # Google place type, and have a reasonably similar normalized name.
+  auto_accept_polygon_distance_m: 250
+  auto_accept_name_similarity: 0.60
+  ambiguous_score_margin: 10
+
+plot:
+  dpi: 300
+  palette:
+    HH: "#01665E"
+    LH: "#80CDC1"
+    HL: "#DFC27D"
+    LL: "#8C510A"
+    insufficient_experience: "#CCCCCC"
+    insufficient_population: "#F2F2F2"

@@ -1,0 +1,8 @@
+analysis_area,experience_variant,variable,variable_label,n,queen_directed_edge_count,island_da_count,weights,moran_i,expected_i_randomization,permutation_p_value_two_sided,permutations,significance
+Vancouver,sentiment,park_access_pop_coverage,Population park-access coverage,1016,6534,0,"Queen contiguity, row standardized",0.3592650377616284,-0.0009852216748768472,0.001,999,**
+Vancouver,sentiment,supply_ha_per_1000_cap20,"Accessible park area (ha per 1,000)",1016,6534,0,"Queen contiguity, row standardized",0.5316348609633808,-0.0009852216748768472,0.001,999,**
+Vancouver,sentiment,experience_sentiment_mean,Mean sentiment score,852,4848,0,"Queen contiguity, row standardized",0.659628826463378,-0.0011750881316098707,0.001,999,**
+Vancouver,sentiment,divergence_HH,HH divergence membership,852,4848,0,"Queen contiguity, row standardized",0.4076705193388341,-0.0011750881316098707,0.001,999,**
+Vancouver,sentiment,divergence_LH,LH divergence membership,852,4848,0,"Queen contiguity, row standardized",0.33156816364482605,-0.0011750881316098707,0.001,999,**
+Vancouver,sentiment,divergence_HL,HL divergence membership,852,4848,0,"Queen contiguity, row standardized",0.31635155435388396,-0.0011750881316098707,0.001,999,**
+Vancouver,sentiment,divergence_LL,LL divergence membership,852,4848,0,"Queen contiguity, row standardized",0.39245383611047113,-0.0011750881316098707,0.001,999,**
