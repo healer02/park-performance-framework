@@ -973,6 +973,7 @@ def _semantic_rebuild_comparison(
         raise ValueError("Rebuild removed a previously validated park-node entrance")
 
     return {
+        "reference_artifacts_available": True,
         "reference_final_parks": len(reference_parks),
         "reference_eligibility_rows": len(reference_eligibility),
         "reference_entrances": len(reference_entrances),
@@ -1014,7 +1015,22 @@ def build_parks(
             temp_paths, eligibility, parks, entrances, candidates, isolated
         )
         validated = validate_parks(config, temp_paths)
-        comparison = _semantic_rebuild_comparison(reference_paths, temp_paths)
+        reference_keys = ("parks_gpkg", "eligibility_gpkg", "entrances_gpkg")
+        if all(reference_paths[key].exists() for key in reference_keys):
+            comparison = _semantic_rebuild_comparison(reference_paths, temp_paths)
+        else:
+            comparison = {
+                "reference_artifacts_available": False,
+                "reference_final_parks": None,
+                "reference_eligibility_rows": None,
+                "reference_entrances": None,
+                "park_ids_added_vs_reference": None,
+                "park_ids_removed_vs_reference": None,
+                "inventory_ids_added_vs_reference": None,
+                "inventory_ids_removed_vs_reference": None,
+                "entrance_pairs_added_vs_reference": None,
+                "entrance_pairs_removed_vs_reference": None,
+            }
         for key, target in final_paths.items():
             source = temp_paths[key]
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -1362,6 +1378,7 @@ def write_summary(
 
     if status == "rebuilt":
         comparison_keys = [
+            "reference_artifacts_available",
             "reference_final_parks",
             "reference_eligibility_rows",
             "reference_entrances",
