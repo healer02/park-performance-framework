@@ -1,0 +1,43 @@
+park_id,park_name,municipality,override_place_id,override_reason
+park_00464,Queens Park,New Westminster,ChIJHTtJAgrYhVQR1fxvihZ0PyA,Use the rated Queen's Park Google park result instead of the neighbourhood/political result.
+park_00191,Deboville Slough Trail Management Area,Coquitlam,ChIJcZ0jIEl_hlQR12YTztxolNQ,manual QA: official/credible park candidate selected from Google candidates; DeBoville Slough South Trailhead
+park_00243,Noons Creek Ravine and Natural Areas,Coquitlam,ChIJScFxmc1-hlQRuzvXuX5i7Uw,manual QA: official/credible park candidate selected from Google candidates; Noons Creek Park
+park_00273,Sheffield Roadside Garden,Coquitlam,ChIJR4G2pjp_hlQRCyOtiH3LLog,manual QA: official/credible park candidate selected from Google candidates; Sheffield Park
+park_00720,Tait Waterfront,Richmond,ChIJuaW-HfV1hlQR-Nr8h1_BJaw,manual QA: official/credible park candidate selected from Google candidates; Tait Riverfront Community Park
+park_00724,Terra Nova Rural Park,Richmond,ChIJZbpCCxsLhlQRrLu7A-1SfPY,manual QA: official/credible park candidate selected from Google candidates; Terra Nova Adventure Play Environment
+park_01409,South Surrey Athletic Park,Surrey,ChIJkxKanmDDhVQRZvCaKkCwvoc,manual QA: official/credible park candidate selected from Google candidates; South Surrey Athletic Park
+park_01075,68H - Neighbourhood Park,Surrey,ChIJA0C760XQhVQR-0ZI6zdtL1c,manual QA: selected close park candidate North Creek Duck Pond (68H Park)
+park_01867,Choklit Park,Vancouver,ChIJmYd6Q8RzhlQRnQcUS9mQFVo,Verified Google place for the proposal's sub-0.1 ha exception
+park_01868,Major Matthews Park,Vancouver,ChIJ2Zs7K-FzhlQRUrWRcS8n4jE,Verified Google place for the proposal's sub-0.1 ha exception
+park_01869,Willow Park,Vancouver,ChIJI6DcWsNzhlQRkRpRrXP9q0w,Verified Google place for the proposal's sub-0.1 ha exception
+park_01402,Senator Reid Park,Surrey,ChIJdXRhL-TbhVQRIO8BxSBYnEU,City of Surrey renamed Senator Reid Park to North Ridge Park on 2025-10-29
+park_00023,Burnaby Lk Sports Complex - West,Burnaby,ChIJu2VDQPJ-C0ERTZxpdereLzQ,Exact on-polygon outdoor sports-complex entity retained after context-type review
+park_00113,Riverway Sports Complex,Burnaby,ChIJcctiuBJ2hlQREh533IdsJq4,Exact on-polygon outdoor sports-complex entity retained after context-type review
+park_00542,Shaughnessy St Bike Skills Park,Port Coquitlam,ChIJSQkBG0Z_hlQRUqS--0Eo2k4,On-polygon outdoor bike-skills park retained after context-type review
+park_00588,PoMo Rotary SK8 Park,Port Moody,ChIJzfRBwuF4hlQROWcW976_7cE,Exact on-polygon outdoor skateboard park retained after context-type review
+park_00663,London Farm,Richmond,ChIJ9z44SbThhVQRLPiBYNLGAdU,Exact on-polygon outdoor heritage-park entity retained after context-type review
+park_00701,Richmond High,Richmond,ChIJW8nBtLcKhlQRMl_NDELDd18,On-polygon outdoor artificial-turf entity retained after context-type review
+park_01236,Cloverdale Ball Park,Surrey,ChIJJTSmvnXQhVQR-JOMrmaDzls,Exact on-polygon outdoor ball-park entity retained after context-type review
+park_01357,North Surrey Community Park,Surrey,ChIJ8zN_F2TXhVQRpzRdqvOIq2M,Exact on-polygon outdoor community-park entity retained after context-type review
+park_01416,Sullivan Heights Park,Surrey,ChIJm5UB9U3ahVQRIH-7c9T3vKU,Exact on-polygon outdoor park entity retained after context-type review
+park_01544,Langley Skateboard Park,Township of Langley,ChIJG-8JHsPRhVQRYGyk6sIYYgM,Exact on-polygon outdoor skateboard park retained after context-type review
+park_01678,Empire Fields - Hastings Park,Vancouver,ChIJ5dMn9ttwhlQRM_LDU4RVMzI,On-polygon outdoor athletic-field entity retained after context-type review
+park_01800,Spanish Banks Extension,Vancouver,ChIJXRC8b41yhlQRLSiIqsnw5m0,Reviewed shared Spanish Banks Beach entity omitted from this polygon's Text Search candidates
+park_01870,Aldergrove Regional Park,Metro Vancouver Regional Parks,ChIJl40TwfbJhVQR5TDZKR41lQQ,Exact-name park listing located within the official regional boundary
+park_01873,Boundary Bay Regional Park,Metro Vancouver Regional Parks,ChIJp0vFq_DdhVQR15Gltp6Uets,Exact-name regional park listing selected over the separate dyke-trail listing
+park_01874,Brae Island Regional Park,Metro Vancouver Regional Parks,ChIJGUiNaPfShVQRP39NwP7G5_M,Exact-name park listing located within the official regional boundary
+park_01876,Burnaby Lake Regional Park,Metro Vancouver Regional Parks,ChIJw29eFXZ3hlQR-bg8K4TSOEo,Exact-name regional park listing shared with the municipal nature-park record
+park_01878,Campbell Valley Regional Park,Metro Vancouver Regional Parks,ChIJLXl-KwbGhVQRtoVk1IRBH9U,Exact-name park listing located within the official regional boundary
+park_01882,Deas Island Regional Park,Metro Vancouver Regional Parks,ChIJAYnYN8zfhVQRves7o5BO21s,Exact-name park listing located within the official regional boundary
+park_01883,Delta South Surrey Regional Greenway,Metro Vancouver Regional Parks,ChIJE41SDTzbhVQRMTvAfFFsI1g,Unique exact-name hiking-area listing retained for the linear regional greenway
+park_01884,Derby Reach Regional Park,Metro Vancouver Regional Parks,ChIJdaixrQzThVQRaMUqZLQflZg,Exact-name park listing located within the official regional boundary
+park_01886,Glen Valley Regional Park,Metro Vancouver Regional Parks,ChIJd1csBnPFhVQRZeodxjkuEPo,Exact-name listing within the regional polygon selected over the distant listing with the same name
+park_01893,Pacific Spirit Regional Park,Metro Vancouver Regional Parks,ChIJEaF3zSVzhlQRoHELsXvwmDM,Exact-name main park listing at 5495 Chancellor Boulevard and the Place ID used in the Vancouver sentiment data
+park_01897,Surrey Bend Regional Park,Metro Vancouver Regional Parks,ChIJWU4tO5TWhVQRlgZcrUePMrY,Exact-name park listing located within the official regional boundary
+park_00128,Suncrest School Park,Burnaby,ChIJk2ojTWV2hlQRDpU3m6pEVlM,Exact reviewed park listing retained in Keun's Vancouver-context sentiment inventory
+park_01679,English Bay Beach Park,Vancouver,ChIJ86zkaC9yhlQR4GhBA8iTiy4,Exact public beach and park listing used in Keun's reviewed sentiment data; coordinates fall inside the official park polygon
+park_01782,Riley Park,Vancouver,ChIJk2TkDgp0hlQRkWrt4bl_2QM,Exact park listing used in Keun's reviewed sentiment data; coordinates fall inside the official park polygon
+park_01903,Street End - Wall St @ Nanaimo,Vancouver,ChIJV6yYZh1xhlQRJb41JgTpR54,Reviewed Place ID from Keun's park-level sentiment inventory
+park_01904,Street End - Wall St @ Penticton,Vancouver,ChIJCSGA_eJwhlQRJo-DM9T0oVw,Reviewed Place ID from Keun's park-level sentiment inventory
+park_01905,sθәqәlxenәm ts'exwts'áxwi7 (Rainbow),Vancouver,ChIJ91Xo0aRxhlQRRaOE88piwQ4,Exact reviewed park listing from Keun's park-level sentiment inventory
+park_01901,təmtəmíxʷtən / Belcarra Regional Park,Metro Vancouver Regional Parks,ChIJ-0Vr_uR7hlQRg3DT-z7WB30,Exact current official-name park listing selected over picnic-area and parking listings

@@ -1,0 +1,7 @@
+analysis_area,experience_variant,predictor,predictor_label,vif
+Vancouver,sentiment,pct_age_0_14,Children aged 0-14 (%),1.5903672424425166
+Vancouver,sentiment,pct_age_65plus,Age 65+ (%),1.1922981450804597
+Vancouver,sentiment,pct_visible_minority,Visible minority (%),1.5753735891047649
+Vancouver,sentiment,pct_LIM_AT,LIM-AT (%),1.1745647784114432
+Vancouver,sentiment,pct_bachelor_plus,Education (bachelor's+),1.5766829835714602
+Vancouver,sentiment,ALE_index,Active living environment,1.8465359137026027

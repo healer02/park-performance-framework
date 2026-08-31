@@ -1,0 +1,2 @@
+n,sentiment_median,rating_median,agreement_n,agreement_percent,cohen_kappa,sentiment_high_rating_low_n,sentiment_low_rating_high_n
+852,0.7092083333333332,4.329166666666667,682,80.04694835680752,0.6009389671361502,85,85

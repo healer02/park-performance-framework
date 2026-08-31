@@ -1,0 +1,25 @@
+amenity,amenity_label,outcome,outcome_label,n,spearman_rho,p_value,significance
+amenity_type_count,Amenity type count,MeanSentiment,Mean sentiment,202,0.3293067575448117,1.706167106600112e-06,***
+amenity_type_count,Amenity type count,AvgRating,Google star rating,202,0.370341007516567,5.7952476884077405e-08,***
+playground,Playground,MeanSentiment,Mean sentiment,202,0.0640714291200559,0.3649855325513875,ns
+playground,Playground,AvgRating,Google star rating,202,0.00019425025499213633,0.9978108614427098,ns
+sports_fields,Sports fields,MeanSentiment,Mean sentiment,202,-0.023539967667005484,0.7394848333108672,ns
+sports_fields,Sports fields,AvgRating,Google star rating,202,0.051184630685533875,0.4694156742260723,ns
+courts,Courts,MeanSentiment,Mean sentiment,202,0.01160622264228353,0.8697805377683367,ns
+courts,Courts,AvgRating,Google star rating,202,0.04720966134356113,0.5046549001548402,ns
+trails,Trails,MeanSentiment,Mean sentiment,202,0.329762099100213,1.647580351803464e-06,***
+trails,Trails,AvgRating,Google star rating,202,0.36089020477558875,1.31833186605922e-07,***
+dog_offleash,Dog off-leash,MeanSentiment,Mean sentiment,202,0.18673966704918094,0.007789791865833616,**
+dog_offleash,Dog off-leash,AvgRating,Google star rating,202,0.20336879208207098,0.0036975525629549108,**
+water_play,Water play,MeanSentiment,Mean sentiment,202,0.20833614173380852,0.0029264960149995227,**
+water_play,Water play,AvgRating,Google star rating,202,0.17912259405424008,0.010751468157132831,*
+beach_waterfront,Beach/waterfront,MeanSentiment,Mean sentiment,202,0.464851043330939,3.1834852826044773e-12,***
+beach_waterfront,Beach/waterfront,AvgRating,Google star rating,202,0.535045005474999,2.346870488403507e-16,***
+picnic,Picnic area,MeanSentiment,Mean sentiment,202,0.22341622643093634,0.0013928301713042762,**
+picnic,Picnic area,AvgRating,Google star rating,202,0.22052194055783972,0.001612309119174059,**
+washroom,Washroom,MeanSentiment,Mean sentiment,202,0.23698448070277328,0.0006843239913047117,***
+washroom,Washroom,AvgRating,Google star rating,202,0.32837140611709514,1.8328077640057097e-06,***
+community_garden,Community garden,MeanSentiment,Mean sentiment,202,-0.06775373045701172,0.33801891704111436,ns
+community_garden,Community garden,AvgRating,Google star rating,202,-0.04736275432895433,0.5032725334666724,ns
+seating_shelter,Seating & shelter,MeanSentiment,Mean sentiment,202,0.21936379469553458,0.0017086576848553425,**
+seating_shelter,Seating & shelter,AvgRating,Google star rating,202,0.18298705998314482,0.009143499809968965,**

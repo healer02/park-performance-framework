@@ -1,0 +1,18 @@
+municipality,park_name,exception_basis,evidence
+Coquitlam,Blue Jay Tot Lot,distinct recreational infrastructure,2022 municipal inventory classifies it as a neighbourhood park and tot lot
+Coquitlam,Tanglewood Tot Lot,distinct recreational infrastructure,2022 municipal inventory classifies it as a neighbourhood park and tot lot
+Coquitlam,Turnberry Tot Lot,distinct recreational infrastructure,2022 municipal inventory classifies it as a neighbourhood park and tot lot
+Richmond,Elmbridge Way Dog Park,distinct recreational infrastructure,2022 municipal inventory identifies a dedicated dog park
+Surrey,110A - Games Court,distinct recreational infrastructure,2022 municipal inventory identifies a games court
+Surrey,23C - Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,24N - Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,30A - Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,33F - Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,Alexandra Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,Cottontail Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,Evergreen Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Surrey,Tom Thumb Tot-Lot,distinct recreational infrastructure,2022 municipal inventory identifies a public tot lot
+Vancouver,Choklit Park,verified Google Places presence,Verified Place ID ChIJmYd6Q8RzhlQRnQcUS9mQFVo with 86 Google reviews
+Vancouver,Major Matthews Park,verified Google Places presence,Verified Place ID ChIJ2Zs7K-FzhlQRUrWRcS8n4jE with 37 Google reviews
+Vancouver,Willow Park,verified Google Places presence,Verified Place ID ChIJI6DcWsNzhlQRkRpRrXP9q0w with 77 Google reviews
+Vancouver,Street End - Wall St @ Nanaimo,official named park and valid sentiment record,Official Vancouver polygon and Keun reviewed sentiment inventory; area is approximately 0.064 ha

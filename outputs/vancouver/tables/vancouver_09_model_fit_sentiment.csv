@@ -1,0 +1,2 @@
+analysis_area,experience_variant,model,n,HH_count,LH_count,HL_count,LL_count,minimum_model_n,minimum_class_n,model_eligible,status,log_likelihood,null_log_likelihood,likelihood_ratio_p_value,mcfadden_r2,cox_snell_r2,nagelkerke_r2
+Vancouver,sentiment,Multinomial logit; reference = LL,844,198,227,140,279,100,20,True,fitted,-1092.4188281546303,-1145.5221531518462,1.5931724026930563e-14,0.04635730950388406,0.11824167021001597,0.1266292862764921

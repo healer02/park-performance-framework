@@ -1,0 +1,6 @@
+analysis_area,experience_variant,x_variable,x_label,y_variable,y_label,n,spearman_rho,p_value,significance
+Vancouver,sentiment,park_access_pop_coverage,Park coverage,experience_sentiment_mean,Mean sentiment score,852,0.016840244037758766,0.6235228601280376,ns
+Vancouver,sentiment,supply_ha_per_1000_cap20,"Accessible park area (ha/1,000)",experience_sentiment_mean,Mean sentiment score,852,0.31532794958652427,4.0125042407773835e-21,***
+Vancouver,sentiment,park_access_pop_coverage,Park coverage,digital_salience_reviews_per_1000,"Digital salience (reviews/1,000)",1016,0.526943189671609,1.1355015326424156e-73,***
+Vancouver,sentiment,supply_ha_per_1000_cap20,"Accessible park area (ha/1,000)",digital_salience_reviews_per_1000,"Digital salience (reviews/1,000)",1016,0.7765369990711055,1.2296225161396238e-205,***
+Vancouver,sentiment,experience_sentiment_mean,Mean sentiment score,digital_salience_reviews_per_1000,"Digital salience (reviews/1,000)",852,0.3294830233275974,5.064356003576318e-23,***

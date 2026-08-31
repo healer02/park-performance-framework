@@ -1,0 +1,31 @@
+analysis_area:
+  name: "Vancouver"
+  slug: "vancouver"
+  analysis_csd_codes:
+    - "5915022"
+
+# Vancouver sentiment runs alongside ratings as the primary paper branch.
+# Keun's park-level metrics preserve the reviewed 208-park aggregation used in
+# the proposal; the PlaceID table remains available to Stage 11 for validation.
+experience:
+  sentiment:
+    enabled: true
+    primary_linkage: "park_metrics"
+    path: "raw/sentiment/vancouver_park_sentiment.csv"
+    # Stage 11 uses review text for validation and perceived amenities.
+    review_text_path: "raw/google/08a-text-reviews-with-sentiment.csv"
+    park_metrics_path: "raw/google/08c-park-metrics.csv"
+    official_facilities_path: "raw/parks/Vancouver/parks-facilities.csv"
+    official_washrooms_path: "raw/parks/Vancouver/public-washrooms.csv"
+    entity_id_field: "PlaceID"
+    score_field: "MeanSentiment"
+    eligibility_field: "has_valid_sentiment"
+    park_metrics_id_field: "park_id"
+    park_metrics_name_field: "park_name"
+    legacy_source_municipalities:
+      Vancouver: "Vancouver"
+      Burnaby: "Burnaby"
+      MetroVancouver: "Metro Vancouver Regional Parks"
+    park_key_overrides:
+      # The legacy shapefile truncated this renamed park's name.
+      Vancouver_160: "vancouver__park_site_on_point_grey_at_trutch"

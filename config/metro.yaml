@@ -1,0 +1,10 @@
+analysis_area:
+  name: "Six-city Metro Vancouver study area"
+  slug: "metro"
+  analysis_csd_codes:
+    - "5915004"  # Surrey
+    - "5915015"  # Richmond
+    - "5915022"  # Vancouver
+    - "5915025"  # Burnaby
+    - "5915029"  # New Westminster
+    - "5915034"  # Coquitlam

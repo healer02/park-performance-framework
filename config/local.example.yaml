@@ -1,0 +1,3 @@
+local:
+  # Absolute paths are supported. Relative paths are resolved from the repo root.
+  data_root: "../park-performance-framework/data"
