@@ -19,7 +19,7 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.stats import spearmanr
+from scipy.stats import kruskal, spearmanr
 
 from equity_methods import equity_strata
 from project_config import (
@@ -32,12 +32,16 @@ from project_config import (
 )
 
 
-STYLE_VERSION = "divergence_2x2_titleless_v4"
+STYLE_VERSION = "divergence_2x2_titleless_v5"
 EQUITY_STYLE_VERSION = "equity_profiles_proposal_profile_v6"
 RELATIONSHIP_STYLE_VERSION = "proposal_figure2_rating_v3"
 STACKED_STYLE_VERSION = "equity_strata_stacked_dynamic_v2"
-TRANSFERABILITY_STYLE_VERSION = "six_city_equal_2x3_v1"
+TRANSFERABILITY_STYLE_VERSION = "six_city_equal_2x3_v2"
+INSUFFICIENT_EQUITY_STYLE_VERSION = "insufficient_equity_profile_v1"
 EQUITY_X_LIMIT = 0.8
+INSUFFICIENT_EQUITY_MIN_X_LIMIT = 1.2
+PARK_EDGE_COLOR = "#4D4D4D"
+MAP_CONTEXT_METRES = 500.0
 TRANSFERABILITY_CITIES = [
     ("vancouver", "Vancouver", "Vancouver"),
     ("burnaby", "Burnaby", "Burnaby"),
@@ -78,6 +82,18 @@ SHORT_CLASS_LABELS = {
     "HL": "High supply, low experience",
     "LL": "Low supply, low experience",
 }
+INSUFFICIENT_GROUP_ORDER = [
+    "HH",
+    "LH",
+    "HL",
+    "LL",
+    "no_reachable_park",
+    "reachable_no_usable_experience",
+]
+INSUFFICIENT_GROUP_COLORS = {
+    "no_reachable_park": "#4D4D4D",
+    "reachable_no_usable_experience": "#A6A6A6",
+}
 STRATUM_LABELS = {
     "pct_bachelor_plus": ["Low (<30%)", "Middle (30–50%)", "High (>50%)"],
     "ALE_index": ["Low", "Middle", "High"],
@@ -94,6 +110,11 @@ def experience_variants(config: dict[str, Any]) -> list[str]:
     if config.get("experience", {}).get("sentiment", {}).get("enabled", False):
         variants.append("sentiment")
     return variants
+
+
+def insufficient_diagnostic_enabled(config: dict[str, Any]) -> bool:
+    city_slugs = {slug for slug, _, _ in TRANSFERABILITY_CITIES}
+    return config["analysis_area"]["slug"] in city_slugs
 
 
 def _variant_spec(variant: str) -> dict[str, str]:
@@ -138,6 +159,17 @@ def figure_paths(
         paths[f"{variant}_stacked_png"] = (
             base / "figures" / f"{slug}_equity_strata_stacked{suffix}.png"
         )
+        if insufficient_diagnostic_enabled(config):
+            paths[f"{variant}_insufficient_equity_png"] = (
+                base
+                / "figures"
+                / f"{slug}_insufficient_experience_equity{suffix}.png"
+            )
+            paths[f"{variant}_insufficient_equity_csv"] = (
+                base
+                / "tables"
+                / f"{slug}_insufficient_experience_equity{suffix}.csv"
+            )
     if slug == "metro":
         paths["transferability_map_png"] = (
             base / "maps" / "six_city_divergence_comparison.png"
@@ -156,6 +188,17 @@ def divergence_path(config: dict[str, Any]) -> Path:
         / "divergence"
         / slug
         / f"{slug}_da_divergence.gpkg"
+    )
+
+
+def reachability_path(config: dict[str, Any]) -> Path:
+    slug = config["analysis_area"]["slug"]
+    return (
+        workspace_data_root(config)
+        / "interim"
+        / "reach"
+        / slug
+        / f"{slug}_db_park_reachability.csv"
     )
 
 
@@ -225,8 +268,9 @@ def _figure_caption(
         f"and accessible park area, using a 20 ha per-park cap, at or above the "
         f"analysis-area median ({supply_threshold:.3f} ha per 1,000 residents). "
         f"High experience indicates a mean {spec['score_label']} at or above the "
-        f"analysis-area median ({experience_threshold:.3f}). Green outlines show "
-        f"park polygons. Grey areas lack sufficient {spec['missing_label']} data "
+        f"analysis-area median ({experience_threshold:.3f}). Dark-grey outlines show "
+        f"parks referenced in the 400 m reachability analysis. Grey areas lack "
+        f"sufficient {spec['missing_label']} data "
         f"(n={missing:,})."
     )
     if zero_population:
@@ -289,12 +333,31 @@ def _source_data(
 
     parks_path = data_path(config, "parks")
     parks = gpd.read_file(parks_path, layer="parks_cleaned")
+    if "park_id" not in parks.columns:
+        raise ValueError("The cleaned park inventory is missing park_id")
     if parks.crs != divergence.crs:
         parks = parks.to_crs(divergence.crs)
-    study_geometry = divergence.geometry.union_all()
-    parks = parks.loc[parks.geometry.intersects(study_geometry)].copy()
+
+    reach_path = reachability_path(config)
+    if not reach_path.exists():
+        raise FileNotFoundError(f"Missing Stage 04 reachability table: {reach_path}")
+    reachability = pd.read_csv(reach_path, usecols=["park_id"], dtype="string")
+    reachable_park_ids = set(reachability["park_id"].dropna().astype(str))
+    if not reachable_park_ids:
+        raise ValueError("Stage 04 reachability has no referenced parks")
+    inventory_park_ids = set(parks["park_id"].dropna().astype(str))
+    missing_park_ids = reachable_park_ids - inventory_park_ids
+    if missing_park_ids:
+        examples = ", ".join(sorted(missing_park_ids)[:5])
+        raise ValueError(
+            "Stage 04 reachability references parks absent from the cleaned "
+            f"inventory: {examples}"
+        )
+    parks = parks.loc[
+        parks["park_id"].astype("string").isin(reachable_park_ids)
+    ].copy()
     if parks.empty:
-        raise ValueError("No cleaned parks intersect the selected analysis area")
+        raise ValueError("No cleaned parks are referenced by Stage 04 reachability")
 
     counts = {
         name: int(divergence["divergence_class"].eq(name).sum())
@@ -340,14 +403,14 @@ def render_map(
     parks.plot(
         ax=ax,
         facecolor="none",
-        edgecolor="#2D6A2D",
+        edgecolor=PARK_EDGE_COLOR,
         linewidth=0.8,
         zorder=2,
     )
 
     xmin, ymin, xmax, ymax = divergence.total_bounds
-    x_padding = max((xmax - xmin) * 0.015, 1)
-    y_padding = max((ymax - ymin) * 0.015, 1)
+    x_padding = max((xmax - xmin) * 0.015, MAP_CONTEXT_METRES)
+    y_padding = max((ymax - ymin) * 0.015, MAP_CONTEXT_METRES)
     ax.set_xlim(xmin - x_padding, xmax + x_padding)
     ax.set_ylim(ymin - y_padding, ymax + y_padding)
 
@@ -358,6 +421,14 @@ def render_map(
         for name in CLASS_ORDER
         if counts[name] > 0 or name != "insufficient_population"
     ]
+    patches.append(
+        mpatches.Patch(
+            facecolor="none",
+            edgecolor=PARK_EDGE_COLOR,
+            linewidth=1.2,
+            label="Reachable park",
+        )
+    )
     ax.legend(
         handles=patches,
         title="Divergence class",
@@ -460,6 +531,7 @@ def render_map(
         "file_size_bytes": destination.stat().st_size,
         "source_divergence_sha256": _sha256(divergence_path(config)),
         "source_parks_sha256": _sha256(data_path(config, "parks")),
+        "source_reachability_sha256": _sha256(reachability_path(config)),
         "supply_area_threshold": supply_threshold,
         "experience_threshold": experience_threshold,
         "experience_threshold_column": spec["threshold_column"],
@@ -546,6 +618,7 @@ def build_transferability_summary() -> pd.DataFrame:
                     "high supply also requires >=80% park coverage"
                 ),
                 "source_divergence_sha256": _sha256(source),
+                "source_reachability_sha256": _sha256(reachability_path(config)),
             }
         )
     return pd.DataFrame(rows)
@@ -585,13 +658,13 @@ def render_transferability_map(config: dict[str, Any], destination: Path) -> dic
         parks.plot(
             ax=axis,
             facecolor="none",
-            edgecolor="#2D6A2D",
+            edgecolor=PARK_EDGE_COLOR,
             linewidth=0.45,
             zorder=2,
         )
         xmin, ymin, xmax, ymax = divergence.total_bounds
-        x_pad = max((xmax - xmin) * 0.02, 1)
-        y_pad = max((ymax - ymin) * 0.02, 1)
+        x_pad = max((xmax - xmin) * 0.02, MAP_CONTEXT_METRES)
+        y_pad = max((ymax - ymin) * 0.02, MAP_CONTEXT_METRES)
         axis.set_xlim(xmin - x_pad, xmax + x_pad)
         axis.set_ylim(ymin - y_pad, ymax + y_pad)
         axis.set_title(city_name, fontsize=12, fontweight="bold", pad=3)
@@ -609,6 +682,14 @@ def render_transferability_map(config: dict[str, Any], destination: Path) -> dic
         mpatches.Patch(color=palette[name], label=legend_labels[name])
         for name in legend_order
     ]
+    handles.append(
+        mpatches.Patch(
+            facecolor="none",
+            edgecolor=PARK_EDGE_COLOR,
+            linewidth=1.2,
+            label="Reachable park",
+        )
+    )
     fig.legend(
         handles=handles,
         loc="lower center",
@@ -647,6 +728,13 @@ def validate_transferability(paths: dict[str, Path]) -> dict[str, Any]:
         ].iloc[0]
         if observed != _sha256(divergence_path(load_config(slug))):
             raise ValueError(f"Table 3 is stale relative to {city_name} Stage 07")
+        observed_reachability = table.loc[
+            table["City"].eq(city_name), "source_reachability_sha256"
+        ].iloc[0]
+        if observed_reachability != _sha256(reachability_path(load_config(slug))):
+            raise ValueError(
+                f"Figure 8 is stale relative to {city_name} Stage 04 reachability"
+            )
     width, height = _png_dimensions(map_path)
     if width < 2500 or height < 1600 or map_path.stat().st_size < 50_000:
         raise ValueError(
@@ -876,6 +964,315 @@ def _equity_da_source(config: dict[str, Any], variant: str) -> pd.DataFrame:
             "Stage 08 DA equity table is missing: " + ", ".join(sorted(missing))
         )
     return frame
+
+
+def _significance_marker(p_value: float) -> str:
+    if not np.isfinite(p_value):
+        return ""
+    if p_value < 0.001:
+        return "***"
+    if p_value < 0.01:
+        return "**"
+    if p_value < 0.05:
+        return "*"
+    return ""
+
+
+def _insufficient_group_labels(variant: str) -> dict[str, str]:
+    missing_label = (
+        "Reachable park(s), no eligible rating"
+        if variant == "rating"
+        else "Reachable park(s), no usable sentiment"
+    )
+    return {
+        **SHORT_CLASS_LABELS,
+        "no_reachable_park": "No reachable park",
+        "reachable_no_usable_experience": missing_label,
+    }
+
+
+def _insufficient_equity_profile(
+    config: dict[str, Any], variant: str
+) -> pd.DataFrame:
+    """Compare classified DAs with two distinct missing-experience groups."""
+    frame = _equity_da_source(config, variant).copy()
+    primary_profile, _ = _equity_source(config, variant)
+    spec = _variant_spec(variant)
+    class_column = spec["class_column"]
+    required = {"unique_reachable_park_count", class_column}
+    missing = required - set(frame.columns)
+    if missing:
+        raise ValueError(
+            "Insufficient-experience diagnostic is missing: "
+            + ", ".join(sorted(missing))
+        )
+
+    classes = frame[class_column].astype("string")
+    reachable_count = pd.to_numeric(
+        frame["unique_reachable_park_count"], errors="raise"
+    )
+    frame["diagnostic_group"] = classes
+    insufficient = classes.eq("insufficient_experience")
+    frame.loc[
+        insufficient & reachable_count.eq(0), "diagnostic_group"
+    ] = "no_reachable_park"
+    frame.loc[
+        insufficient & reachable_count.gt(0), "diagnostic_group"
+    ] = "reachable_no_usable_experience"
+    unresolved = insufficient & ~frame["diagnostic_group"].isin(
+        INSUFFICIENT_GROUP_ORDER
+    )
+    if unresolved.any():
+        raise ValueError("Some insufficient-experience DAs could not be classified")
+
+    included = frame["diagnostic_group"].isin(INSUFFICIENT_GROUP_ORDER)
+    if not included.any():
+        raise ValueError("No DAs are available for the insufficient-experience diagnostic")
+    observed_groups = set(frame.loc[included, "diagnostic_group"])
+    missing_groups = set(INSUFFICIENT_GROUP_ORDER) - observed_groups
+    if missing_groups:
+        raise ValueError(
+            "Insufficient-experience diagnostic has empty groups: "
+            + ", ".join(sorted(missing_groups))
+        )
+
+    labels = _insufficient_group_labels(variant)
+    source_hash = _sha256(equity_data_path(config))
+    rows: list[dict[str, Any]] = []
+    for field, variable_label in EQUITY_VARIABLES:
+        reference = primary_profile.loc[primary_profile["variable"].eq(field)]
+        standardization_mean = _single_numeric(reference, "standardization_mean")
+        standardization_sd = _single_numeric(reference, "standardization_sd")
+        if standardization_sd <= 0:
+            raise ValueError(f"{field} has a non-positive standardization SD")
+        raw = pd.to_numeric(frame[field], errors="coerce")
+        z_score = (raw - standardization_mean) / standardization_sd
+        valid = included & raw.notna()
+        test_groups = [
+            raw.loc[valid & frame["diagnostic_group"].eq(group)].to_numpy(
+                dtype="float64"
+            )
+            for group in INSUFFICIENT_GROUP_ORDER
+        ]
+        if any(len(group) == 0 for group in test_groups) or raw.loc[valid].nunique() < 2:
+            statistic = np.nan
+            p_value = np.nan
+            eta_squared = np.nan
+        else:
+            statistic, p_value = kruskal(*test_groups)
+            sample_size = int(valid.sum())
+            group_count = len(test_groups)
+            eta_squared = max(
+                0.0,
+                float((statistic - group_count + 1) / (sample_size - group_count)),
+            )
+        for group in INSUFFICIENT_GROUP_ORDER:
+            group_mask = included & frame["diagnostic_group"].eq(group)
+            values = raw.loc[group_mask]
+            z_values = z_score.loc[group_mask]
+            rows.append(
+                {
+                    "analysis_area": config["analysis_area"]["slug"],
+                    "experience_variant": variant,
+                    "variable": field,
+                    "variable_label": variable_label,
+                    "diagnostic_group": group,
+                    "diagnostic_group_label": labels[group],
+                    "group_da_count": int(group_mask.sum()),
+                    "n": int(values.notna().sum()),
+                    "mean_raw": values.mean(),
+                    "sd_raw": values.std(ddof=1),
+                    "mean_z": z_values.mean(),
+                    "standardization_mean": standardization_mean,
+                    "standardization_sd": standardization_sd,
+                    "standardization_scope": (
+                        "classified DAs in analysis area; applied unchanged to "
+                        "insufficient-experience DAs"
+                    ),
+                    "profile_test": (
+                        "Kruskal-Wallis comparison of continuous indicator across "
+                        "four divergence quadrants and two insufficient-experience groups"
+                    ),
+                    "profile_test_statistic": statistic,
+                    "profile_test_p_value": p_value,
+                    "profile_test_eta_squared": eta_squared,
+                    "significance_marker": _significance_marker(float(p_value)),
+                    "source_equity_da_sha256": source_hash,
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def render_insufficient_equity(
+    config: dict[str, Any], figure_path: Path, table_path: Path, variant: str
+) -> dict[str, Any]:
+    table = _insufficient_equity_profile(config, variant)
+    primary_profile, _ = _equity_source(config, variant)
+    palette = _palette(config)
+    colours = {**palette, **INSUFFICIENT_GROUP_COLORS}
+    labels = _insufficient_group_labels(variant)
+    dpi = int(config["plot"]["dpi"])
+    figure_path.parent.mkdir(parents=True, exist_ok=True)
+    table_path.parent.mkdir(parents=True, exist_ok=True)
+    table.to_csv(table_path, index=False)
+
+    profile_order = (
+        primary_profile.drop_duplicates("variable")
+        .set_index("variable")["experience_mean_difference"]
+        .sort_values(ascending=False)
+        .index.tolist()
+    )
+    variable_rows = table.drop_duplicates("variable").set_index("variable")
+    y_positions = np.arange(len(profile_order))[::-1]
+    fig, ax = plt.subplots(figsize=(8.4, 6.2))
+    for y_position, field in zip(y_positions, profile_order, strict=True):
+        values = pd.to_numeric(
+            table.loc[table["variable"].eq(field), "mean_z"], errors="coerce"
+        )
+        ax.hlines(
+            y_position,
+            values.min(),
+            values.max(),
+            color="#BDBDBD",
+            linewidth=0.9,
+            zorder=1,
+        )
+    group_counts: dict[str, int] = {}
+    for group in INSUFFICIENT_GROUP_ORDER:
+        subset = table.loc[table["diagnostic_group"].eq(group)].set_index(
+            "variable"
+        )
+        x_values = [subset.loc[field, "mean_z"] for field in profile_order]
+        group_count = int(subset["group_da_count"].iloc[0])
+        group_counts[group] = group_count
+        ax.scatter(
+            x_values,
+            y_positions,
+            s=68,
+            color=colours[group],
+            label=f"{labels[group]} (n={group_count:,})",
+            alpha=0.95,
+            edgecolor="none",
+            zorder=3,
+        )
+
+    maximum = float(pd.to_numeric(table["mean_z"], errors="coerce").abs().max())
+    x_limit = max(
+        INSUFFICIENT_EQUITY_MIN_X_LIMIT,
+        float(np.ceil(maximum / 0.2) * 0.2),
+    )
+    ax.axvline(0, color="#777777", linestyle="--", linewidth=0.9, alpha=0.85)
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels(
+        [
+            f"{variable_rows.loc[field, 'variable_label']} "
+            f"{variable_rows.loc[field, 'significance_marker']}".rstrip()
+            for field in profile_order
+        ],
+        fontsize=9,
+    )
+    ax.set_xlabel("Mean standardized value (z-score) by DA group", fontsize=9)
+    ax.set_xlim(-x_limit, x_limit)
+    ax.set_xticks(np.arange(-x_limit, x_limit + 0.01, 0.2))
+    ax.tick_params(axis="x", labelsize=9)
+    ax.grid(axis="y", alpha=0.26, linewidth=0.8)
+    for spine in ["top", "right"]:
+        ax.spines[spine].set_visible(False)
+    ax.legend(
+        title="DA group",
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.13),
+        ncol=2,
+        frameon=False,
+        fontsize=7.7,
+        title_fontsize=8,
+        markerscale=0.9,
+    )
+    fig.subplots_adjust(left=0.27, right=0.99, bottom=0.27, top=0.98)
+    fig.savefig(figure_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    width, height = _png_dimensions(figure_path)
+    return {
+        "insufficient_equity_style_version": INSUFFICIENT_EQUITY_STYLE_VERSION,
+        "insufficient_equity_width_px": width,
+        "insufficient_equity_height_px": height,
+        "insufficient_equity_file_size_bytes": figure_path.stat().st_size,
+        "insufficient_equity_x_limit": x_limit,
+        "source_insufficient_equity_da_sha256": _sha256(equity_data_path(config)),
+        **{
+            f"insufficient_equity_{group}_da_count": count
+            for group, count in group_counts.items()
+        },
+    }
+
+
+def validate_insufficient_equity(
+    config: dict[str, Any], figure_path: Path, table_path: Path, variant: str
+) -> dict[str, Any]:
+    table = pd.read_csv(table_path)
+    required = {
+        "analysis_area",
+        "experience_variant",
+        "variable",
+        "diagnostic_group",
+        "group_da_count",
+        "n",
+        "mean_z",
+        "profile_test_p_value",
+        "significance_marker",
+        "source_equity_da_sha256",
+    }
+    missing = required - set(table.columns)
+    if missing:
+        raise ValueError(
+            "Insufficient-experience table is missing: "
+            + ", ".join(sorted(missing))
+        )
+    expected_rows = len(EQUITY_VARIABLES) * len(INSUFFICIENT_GROUP_ORDER)
+    if len(table) != expected_rows:
+        raise ValueError("Insufficient-experience table has the wrong row count")
+    if set(table["diagnostic_group"]) != set(INSUFFICIENT_GROUP_ORDER):
+        raise ValueError("Insufficient-experience table has the wrong DA groups")
+    if set(table["variable"]) != {field for field, _ in EQUITY_VARIABLES}:
+        raise ValueError("Insufficient-experience table has the wrong indicators")
+    if not table["analysis_area"].eq(config["analysis_area"]["slug"]).all():
+        raise ValueError("Insufficient-experience table has the wrong analysis area")
+    if not table["experience_variant"].eq(variant).all():
+        raise ValueError("Insufficient-experience table has the wrong variant")
+    source_hash = _sha256(equity_data_path(config))
+    if not table["source_equity_da_sha256"].eq(source_hash).all():
+        raise ValueError("Insufficient-experience diagnostic is stale relative to Stage 08")
+    if table.loc[pd.to_numeric(table["n"]).gt(0), "mean_z"].isna().any():
+        raise ValueError("Insufficient-experience table has a missing group mean")
+    counts = (
+        table.groupby("diagnostic_group")["group_da_count"]
+        .agg(["min", "max"])
+        .astype("int64")
+    )
+    if not counts["min"].eq(counts["max"]).all() or counts["min"].le(0).any():
+        raise ValueError("Insufficient-experience group counts are inconsistent")
+    width, height = _png_dimensions(figure_path)
+    if width < 2000 or height < 1300 or figure_path.stat().st_size < 25_000:
+        raise ValueError(
+            f"Insufficient-experience figure is unexpectedly small: {width}x{height}"
+        )
+    maximum = float(pd.to_numeric(table["mean_z"], errors="coerce").abs().max())
+    x_limit = max(
+        INSUFFICIENT_EQUITY_MIN_X_LIMIT,
+        float(np.ceil(maximum / 0.2) * 0.2),
+    )
+    return {
+        "insufficient_equity_style_version": INSUFFICIENT_EQUITY_STYLE_VERSION,
+        "insufficient_equity_width_px": width,
+        "insufficient_equity_height_px": height,
+        "insufficient_equity_file_size_bytes": figure_path.stat().st_size,
+        "insufficient_equity_x_limit": x_limit,
+        "source_insufficient_equity_da_sha256": source_hash,
+        **{
+            f"insufficient_equity_{group}_da_count": int(counts.loc[group, "min"])
+            for group in INSUFFICIENT_GROUP_ORDER
+        },
+    }
 
 
 def _relationship_caption(
@@ -1151,8 +1548,7 @@ def write_summary(
     path.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     for variant in experience_variants(config):
-        rows.append(
-            {
+        row = {
                 **metrics_by_variant[variant],
                 "status": status,
                 "map_png_path": str(paths[f"{variant}_map_png"]),
@@ -1163,12 +1559,20 @@ def write_summary(
                 "equity_stacked_png_path": str(paths[f"{variant}_stacked_png"]),
                 "source_divergence_path": str(divergence_path(config)),
                 "source_parks_path": str(data_path(config, "parks")),
+                "source_reachability_path": str(reachability_path(config)),
                 "source_equity_da_path": str(equity_data_path(config)),
                 "source_equity_profile_path": str(
                     equity_profile_path(config, variant)
                 ),
             }
-        )
+        if insufficient_diagnostic_enabled(config):
+            row["insufficient_equity_png_path"] = str(
+                paths[f"{variant}_insufficient_equity_png"]
+            )
+            row["insufficient_equity_csv_path"] = str(
+                paths[f"{variant}_insufficient_equity_csv"]
+            )
+        rows.append(row)
     pd.DataFrame(rows).to_csv(path, index=False)
     return path
 
@@ -1238,6 +1642,28 @@ def validate_figure(
                 f"{stacked_width}x{stacked_height}, "
                 f"{stacked_path.stat().st_size:,} bytes"
             )
+        insufficient_metrics: dict[str, Any] = {}
+        if insufficient_diagnostic_enabled(config):
+            insufficient_metrics = validate_insufficient_equity(
+                config,
+                paths[f"{variant}_insufficient_equity_png"],
+                paths[f"{variant}_insufficient_equity_csv"],
+                variant,
+            )
+            if (
+                row.get("insufficient_equity_style_version")
+                != INSUFFICIENT_EQUITY_STYLE_VERSION
+            ):
+                raise ValueError(
+                    "Insufficient-experience diagnostic uses an old style version; "
+                    "rebuild with --force"
+                )
+            if row.get("source_insufficient_equity_da_sha256") != _sha256(
+                equity_data_path(config)
+            ):
+                raise ValueError(
+                    "Insufficient-experience diagnostic is stale relative to Stage 08"
+                )
         if row.get("style_version") != STYLE_VERSION:
             raise ValueError("Divergence map uses an old style version; rebuild with --force")
         if row.get("equity_style_version") != EQUITY_STYLE_VERSION:
@@ -1250,6 +1676,10 @@ def validate_figure(
             raise ValueError("Divergence map is stale relative to Stage 07")
         if row.get("source_parks_sha256") != _sha256(data_path(config, "parks")):
             raise ValueError("Divergence map is stale relative to the cleaned park inventory")
+        if row.get("source_reachability_sha256") != _sha256(
+            reachability_path(config)
+        ):
+            raise ValueError("Divergence map is stale relative to Stage 04 reachability")
         if row.get("source_equity_profile_sha256") != _sha256(
             equity_profile_path(config, variant)
         ):
@@ -1284,6 +1714,7 @@ def validate_figure(
             "file_size_bytes": map_path.stat().st_size,
             "source_divergence_sha256": row["source_divergence_sha256"],
             "source_parks_sha256": row["source_parks_sha256"],
+            "source_reachability_sha256": row["source_reachability_sha256"],
             "equity_style_version": EQUITY_STYLE_VERSION,
             "equity_width_px": equity_width,
             "equity_height_px": equity_height,
@@ -1307,6 +1738,7 @@ def validate_figure(
             "stacked_height_px": stacked_height,
             "stacked_file_size_bytes": stacked_path.stat().st_size,
             "stacked_figure_caption": _stacked_caption(config, variant),
+            **insufficient_metrics,
             "supply_area_threshold": supply_threshold,
             "experience_threshold": experience_threshold,
             "experience_threshold_column": spec["threshold_column"],
@@ -1343,6 +1775,15 @@ def build_figure(
                     config, temp_paths[f"{variant}_stacked_png"], variant
                 ),
             }
+            if insufficient_diagnostic_enabled(config):
+                metrics[variant].update(
+                    render_insufficient_equity(
+                        config,
+                        temp_paths[f"{variant}_insufficient_equity_png"],
+                        temp_paths[f"{variant}_insufficient_equity_csv"],
+                        variant,
+                    )
+                )
         if slug == "metro":
             temp_paths["transferability_table_csv"].parent.mkdir(
                 parents=True, exist_ok=True
@@ -1400,6 +1841,9 @@ def main(area: str, force: bool = False) -> int:
         print(f"Saved: {paths[f'{variant}_equity_png']}")
         print(f"Saved: {paths[f'{variant}_relationships_png']}")
         print(f"Saved: {paths[f'{variant}_stacked_png']}")
+        if insufficient_diagnostic_enabled(config):
+            print(f"Saved: {paths[f'{variant}_insufficient_equity_png']}")
+            print(f"Saved: {paths[f'{variant}_insufficient_equity_csv']}")
     if slug == "metro":
         transferability = validate_transferability(paths)
         print(
