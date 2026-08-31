@@ -32,8 +32,9 @@ outputs/*
 !outputs/.gitkeep
 !outputs/README.md
 
-# Keep only manuscript-facing Vancouver sentiment outputs and their supporting
-# final tables. Other generated diagnostics remain local and reproducible.
+# Keep manuscript-facing Vancouver sentiment outputs and the new
+# insufficient-experience diagnostics. Other generated city outputs remain
+# local and reproducible.
 !outputs/vancouver/
 outputs/vancouver/*
 !outputs/vancouver/figures/
@@ -44,6 +45,8 @@ outputs/vancouver/figures/*
 !outputs/vancouver/figures/vancouver_sentiment_rating_validation.png
 !outputs/vancouver/figures/vancouver_pairwise_relationships_sentiment.png
 !outputs/vancouver/figures/vancouver_amenity_heatmap_sentiment.png
+!outputs/vancouver/figures/vancouver_insufficient_experience_equity.png
+!outputs/vancouver/figures/vancouver_insufficient_experience_equity_sentiment.png
 !outputs/vancouver/maps/
 outputs/vancouver/maps/*
 !outputs/vancouver/maps/vancouver_da_divergence_sentiment.png
@@ -69,6 +72,51 @@ outputs/vancouver/tables/*
 !outputs/vancouver/tables/vancouver_11_sentiment_rating_validation.csv
 !outputs/vancouver/tables/vancouver_11_sentiment_weighting_sensitivity.csv
 !outputs/vancouver/tables/vancouver_11_vancouver_extension_summary.csv
+!outputs/vancouver/tables/vancouver_insufficient_experience_equity.csv
+!outputs/vancouver/tables/vancouver_insufficient_experience_equity_sentiment.csv
+
+# Keep the rating-based insufficient-experience diagnostic for each of the
+# other five study cities.
+!outputs/burnaby/
+outputs/burnaby/*
+!outputs/burnaby/figures/
+outputs/burnaby/figures/*
+!outputs/burnaby/figures/burnaby_insufficient_experience_equity.png
+!outputs/burnaby/tables/
+outputs/burnaby/tables/*
+!outputs/burnaby/tables/burnaby_insufficient_experience_equity.csv
+!outputs/richmond/
+outputs/richmond/*
+!outputs/richmond/figures/
+outputs/richmond/figures/*
+!outputs/richmond/figures/richmond_insufficient_experience_equity.png
+!outputs/richmond/tables/
+outputs/richmond/tables/*
+!outputs/richmond/tables/richmond_insufficient_experience_equity.csv
+!outputs/surrey/
+outputs/surrey/*
+!outputs/surrey/figures/
+outputs/surrey/figures/*
+!outputs/surrey/figures/surrey_insufficient_experience_equity.png
+!outputs/surrey/tables/
+outputs/surrey/tables/*
+!outputs/surrey/tables/surrey_insufficient_experience_equity.csv
+!outputs/new_westminster/
+outputs/new_westminster/*
+!outputs/new_westminster/figures/
+outputs/new_westminster/figures/*
+!outputs/new_westminster/figures/new_westminster_insufficient_experience_equity.png
+!outputs/new_westminster/tables/
+outputs/new_westminster/tables/*
+!outputs/new_westminster/tables/new_westminster_insufficient_experience_equity.csv
+!outputs/coquitlam/
+outputs/coquitlam/*
+!outputs/coquitlam/figures/
+outputs/coquitlam/figures/*
+!outputs/coquitlam/figures/coquitlam_insufficient_experience_equity.png
+!outputs/coquitlam/tables/
+outputs/coquitlam/tables/*
+!outputs/coquitlam/tables/coquitlam_insufficient_experience_equity.csv
 
 # Keep the paper-ready six-city transferability outputs.
 !outputs/metro/
